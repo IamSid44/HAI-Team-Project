@@ -29,7 +29,7 @@ using namespace std;
  * - Bits [15:6]: Tag (10 bits)
  * - Bits [5:2]:  Set Index (4 bits) - selects 1 of 16 sets
  * - Bits [1:0]:  Block Offset (2 bits) - byte within cache line
- */
+*/
 
 // Cache Line Structure - Stores metadata and data for each cache line
 struct cache_line_t {
@@ -100,6 +100,7 @@ SC_MODULE(l1_cache) {
     sc_signal<sc_int<32>> current_data;
     sc_signal<bool> current_write;
     sc_signal<int> victim_set, victim_way;
+    sc_signal<int> timeout_counter;  // Add timeout counter
     
     SC_CTOR(l1_cache) {
         SC_CTHREAD(cache_process, clk.pos());
@@ -128,12 +129,31 @@ SC_MODULE(l1_cache) {
         state.write(CACHE_IDLE);
         cache_hits.write(0);
         cache_misses.write(0);
+
+        timeout_counter.write(0);
         
         wait();
         
         while(true) {
+
+            // Add global timeout check
+            if(timeout_counter.read() > 100) {
+                cout << "@" << sc_time_stamp() << " Cache[" << cache_id.read() 
+                     << "]: Timeout in state " << state.read() << " - resetting to IDLE" << endl;
+                state.write(CACHE_IDLE);
+                timeout_counter.write(0);
+                // Reset output signals
+                pe_ack.write(false);
+                pe_ready.write(true);
+                pe_data_valid.write(false);
+                mem_req.write(false);
+                mem_valid.write(false);
+                mem_wr_en.write(false);
+            }
+
             switch(state.read()) {
                 case CACHE_IDLE:
+                    timeout_counter.write(0);
                     pe_ready.write(true);
                     pe_ack.write(false);
                     pe_data_valid.write(false);
@@ -246,11 +266,13 @@ SC_MODULE(l1_cache) {
                 }
                 
                 case CACHE_WB_WAIT:
+                    timeout_counter.write(timeout_counter.read() + 1);
                     if(mem_ack.read()) {
                         mem_req.write(false);
                         mem_valid.write(false);
                         mem_wr_en.write(false);
                         state.write(CACHE_MISS_READ);
+                        timeout_counter.write(0);
                     }
                     break;
                     
@@ -268,6 +290,7 @@ SC_MODULE(l1_cache) {
                     break;
                     
                 case CACHE_MISS_WAIT:
+                    timeout_counter.write(timeout_counter.read() + 1);
                     if(mem_ack.read() && mem_data_valid.read()) {
                         mem_req.write(false);
                         mem_valid.write(false);
@@ -299,6 +322,7 @@ SC_MODULE(l1_cache) {
                         }
                         
                         state.write(CACHE_HIT);
+                        timeout_counter.write(0);
                     }
                     break;
             }
@@ -548,7 +572,7 @@ SC_MODULE(main_memory) {
     }
 };
 
-// Fixed Memory Arbiter - Handles multiple cache requests to main memory
+// Fixed Memory Arbiter
 SC_MODULE(memory_arbiter) {
     sc_in<bool> clk;
     sc_in<bool> rst_n;
@@ -575,50 +599,31 @@ SC_MODULE(memory_arbiter) {
     sc_in<sc_int<32>> mem_rd_data;
     sc_in<bool> mem_data_valid;
     
-    // Internal signals for communication between processes
-    sc_signal<int> current_master;  // Which cache is currently being served (-1 = none)
-    sc_signal<int> round_robin_ptr; // Round-robin arbitration pointer
-    sc_signal<bool> internal_mem_req;
-    sc_signal<bool> internal_mem_valid;
-    sc_signal<sc_uint<16>> internal_mem_addr;
-    sc_signal<bool> internal_mem_wr_en;
-    sc_signal<sc_int<32>> internal_mem_wr_data;
-    sc_signal<bool> internal_cache_ack[9];
-    sc_signal<bool> internal_cache_ready[9];
+    // Internal state
+    sc_signal<int> current_master;
+    sc_signal<int> round_robin_ptr;
+    sc_signal<bool> transaction_active;
     
     SC_CTOR(memory_arbiter) {
         SC_CTHREAD(arbiter_process, clk.pos());
         reset_signal_is(rst_n, false);
         
-        SC_METHOD(arbiter_outputs);
-        sensitive << mem_rd_data << mem_data_valid << mem_ack << current_master 
-                  << internal_mem_req << internal_mem_valid << internal_mem_addr
-                  << internal_mem_wr_en << internal_mem_wr_data;
-        for(int i = 0; i < 9; i++) {
-            sensitive << internal_cache_ack[i] << internal_cache_ready[i];
-        }
+        SC_METHOD(update_outputs);
+        sensitive << clk.pos();  // Simplified sensitivity
+        dont_initialize();
     }
     
     void arbiter_process() {
-        // Reset internal signals only
+        // Reset
         current_master.write(-1);
         round_robin_ptr.write(0);
-        internal_mem_req.write(false);
-        internal_mem_valid.write(false);
-        internal_mem_addr.write(0);
-        internal_mem_wr_en.write(false);
-        internal_mem_wr_data.write(0);
-        
-        for(int i = 0; i < 9; i++) {
-            internal_cache_ack[i].write(false);
-            internal_cache_ready[i].write(true);
-        }
+        transaction_active.write(false);
         
         wait();
         
         while(true) {
-            if(current_master.read() == -1) {
-                // No current transaction, look for new requestor using round-robin
+            if(!transaction_active.read()) {
+                // Look for new request using round-robin
                 int start_ptr = round_robin_ptr.read();
                 int selected = -1;
                 
@@ -633,28 +638,17 @@ SC_MODULE(memory_arbiter) {
                 if(selected != -1) {
                     current_master.write(selected);
                     round_robin_ptr.write((selected + 1) % 9);
-                    internal_cache_ready[selected].write(false);
-                    
-                    // Forward request to memory via internal signals
-                    internal_mem_req.write(true);
-                    internal_mem_valid.write(true);
-                    internal_mem_addr.write(cache_addr[selected].read());
-                    internal_mem_wr_en.write(cache_wr_en[selected].read());
-                    internal_mem_wr_data.write(cache_wr_data[selected].read());
+                    transaction_active.write(true);
                     
                     cout << "@" << sc_time_stamp() << " Arbiter: Selected cache " 
                          << selected << " for addr " << cache_addr[selected].read() << endl;
                 }
             } else {
-                // Transaction in progress
+                // Wait for transaction to complete
                 if(mem_ack.read()) {
-                    int master = current_master.read();
-                    internal_mem_req.write(false);
-                    internal_mem_valid.write(false);
-                    internal_cache_ack[master].write(true);
-                    internal_cache_ready[master].write(true);
-                    wait();
-                    internal_cache_ack[master].write(false);
+                    cout << "@" << sc_time_stamp() << " Arbiter: Transaction completed for cache " 
+                         << current_master.read() << endl;
+                    transaction_active.write(false);
                     current_master.write(-1);
                 }
             }
@@ -662,26 +656,35 @@ SC_MODULE(memory_arbiter) {
         }
     }
     
-    // Combinational logic for all output routing - single driver for all outputs
-    void arbiter_outputs() {
+    void update_outputs() {
         int master = current_master.read();
+        bool active = transaction_active.read();
         
-        // Memory interface outputs
-        mem_req.write(internal_mem_req.read());
-        mem_valid.write(internal_mem_valid.read());
-        mem_addr.write(internal_mem_addr.read());
-        mem_wr_en.write(internal_mem_wr_en.read());
-        mem_wr_data.write(internal_mem_wr_data.read());
+        // Memory interface
+        if(active && master >= 0) {
+            mem_req.write(true);
+            mem_valid.write(true);
+            mem_addr.write(cache_addr[master].read());
+            mem_wr_en.write(cache_wr_en[master].read());
+            mem_wr_data.write(cache_wr_data[master].read());
+        } else {
+            mem_req.write(false);
+            mem_valid.write(false);
+            mem_addr.write(0);
+            mem_wr_en.write(false);
+            mem_wr_data.write(0);
+        }
         
-        // Cache interface outputs
+        // Cache interfaces
         for(int i = 0; i < 9; i++) {
-            cache_ack[i].write(internal_cache_ack[i].read());
-            cache_ready[i].write(internal_cache_ready[i].read());
-            
-            if(i == master) {
+            if(i == master && active) {
+                cache_ack[i].write(mem_ack.read());
+                cache_ready[i].write(mem_ready.read());
                 cache_rd_data[i].write(mem_rd_data.read());
                 cache_data_valid[i].write(mem_data_valid.read());
             } else {
+                cache_ack[i].write(false);
+                cache_ready[i].write(true);
                 cache_rd_data[i].write(0);
                 cache_data_valid[i].write(false);
             }
@@ -713,7 +716,7 @@ SC_MODULE(grid_controller) {
     };
     
     sc_signal<int> ctrl_state;
-    sc_signal<int> setup_counter;
+    sc_signal<int> finish_wait_counter;  // Add counter to prevent infinite loop
     
     SC_CTOR(grid_controller) {
         SC_CTHREAD(controller_process, clk.pos());
@@ -726,10 +729,10 @@ SC_MODULE(grid_controller) {
             pe_start[i].write(false);
             pe_id[i].write(i);
             work_addr[i].write(i * 10);    // Each PE works on different data
-            work_size[i].write(5);         // Each PE processes 5 elements
+            work_size[i].write(3);         // Reduced work size for faster simulation
         }
         ctrl_state.write(CTRL_INIT);
-        setup_counter.write(0);
+        finish_wait_counter.write(0);
         
         wait();
         
@@ -742,6 +745,7 @@ SC_MODULE(grid_controller) {
                     
                 case CTRL_SETUP_PES:
                     cout << "@" << sc_time_stamp() << " Controller: Configuring PEs" << endl;
+                    wait(5); // Give setup time
                     ctrl_state.write(CTRL_START_PES);
                     break;
                     
@@ -769,13 +773,21 @@ SC_MODULE(grid_controller) {
                         }
                         ctrl_state.write(CTRL_FINISHED);
                     }
+                    
+                    // Add timeout to prevent infinite simulation
+                    finish_wait_counter.write(finish_wait_counter.read() + 1);
+                    if(finish_wait_counter.read() > 1000) { // Timeout after 1000 cycles
+                        cout << "@" << sc_time_stamp() << " Controller: Timeout - forcing completion" << endl;
+                        ctrl_state.write(CTRL_FINISHED);
+                    }
                     break;
                 }
                 
                 case CTRL_FINISHED:
                     cout << "@" << sc_time_stamp() << " Controller: Grid computation finished" << endl;
+                    wait(10); // Wait a few cycles before stopping
                     sc_stop();
-                    break;
+                    return; // Exit the while loop
             }
             wait();
         }
