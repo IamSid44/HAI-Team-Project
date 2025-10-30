@@ -7,7 +7,7 @@
 // Define the dimensions of the Systolic Array
 // You can change these values before including this header
 #ifndef M
-#define M 3 // Default number of rows
+#define M 4 // Default number of rows
 #endif
 
 #ifndef N
