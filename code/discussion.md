@@ -19,4 +19,3 @@
 - Main memory still doesn't have latency of access, but its easy to implement.
 
 ---
-

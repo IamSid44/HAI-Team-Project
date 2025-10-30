@@ -1,0 +1,124 @@
+Time: 0 s
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 10 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 20 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 30 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 40 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 50 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 60 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 70 ns
+Preload Buffer: 0
+Accumulator Buffer: 30
+-----------------------------------------------------
+Time: 80 ns
+Preload Buffer: 0
+Accumulator Buffer: 66
+-----------------------------------------------------
+Time: 90 ns
+Preload Buffer: 0
+Accumulator Buffer: 102
+-----------------------------------------------------
+Time: 100 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 110 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 120 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 130 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 140 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 150 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 160 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 170 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 180 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 190 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 200 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 210 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 220 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 230 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 240 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 250 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 260 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 270 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 280 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 290 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
+Time: 300 ns
+Preload Buffer: 0
+Accumulator Buffer: 0
+-----------------------------------------------------
