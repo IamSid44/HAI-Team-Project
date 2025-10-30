@@ -1,1 +1,3 @@
-./code/Project_Implementation/PE_Outputs/
+code/Project_Implementation/Gemini_Cook/PE_Outputs/
+code/Project_Implementation/Phase2/PE_Outputs/
+code/**/*.{vcd,out}
