@@ -173,7 +173,7 @@ SC_MODULE(MatMul_Controller)
 
 
                         // --- 1.2 Stream A_tile and Drain C_tile ---
-                        int total_cycles = k1 + M + N;
+                        int total_cycles = k1 + min(k2, M) + min(k3, N);
                         
                         for (int clk_cycle = 0; clk_cycle < total_cycles; ++clk_cycle) 
                         {
