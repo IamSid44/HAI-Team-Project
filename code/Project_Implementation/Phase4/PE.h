@@ -53,7 +53,7 @@ SC_MODULE(PE)
         mkdir("PE_Outputs", 0755);
         
         log_filename = "PE_Outputs/PE_" + to_string(array_id) + "_" + to_string(row_id) + "_" + to_string(col_id) + ".txt";
-        cout << "PE Module Created with ID: " << array_id << "_" << row_id << "_" << col_id << endl;
+        // cout << "PE Module Created with ID: " << array_id << "_" << row_id << "_" << col_id << endl;
         SC_THREAD(process);
         sensitive << clk.pos(); // Make sensitive to both clock edge
         dont_initialize();

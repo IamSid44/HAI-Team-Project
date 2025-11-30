@@ -8,11 +8,11 @@
 
 // Define the dimensions of the Systolic Array
 #ifndef M
-#define M 5 // Default number of rows
+#define M 4 // Default number of rows
 #endif
 
 #ifndef N
-#define N 5 // Default number of columns
+#define N 4 // Default number of columns
 #endif
 
 using namespace std;
@@ -124,13 +124,13 @@ SC_MODULE(MatMul_Controller)
    // --- Tiling Control Process (FSM) ---
     void tiling_process() 
     {
-        // ... (reset logic identical) ...
+        // --- MODIFIED: Optimized Reset Sequence ---
         sa_reset.write(true);
         done.write(false);
-        wait();
+        wait(); 
         sa_reset.write(false);
-        wait();
-
+        // REMOVED: Unnecessary wait() here.
+ 
         while(true) 
         {
             while (start.read() == false) wait();
@@ -220,14 +220,15 @@ SC_MODULE(MatMul_Controller)
                 {
                     for (int j_t = 0; j_t < (k3 + N - 1) / N; ++j_t) 
                     {
-                        // --- 2.1 Reset PE Accumulators (identical) ---
+                        // --- 2.1 Reset PE Accumulators (Optimized) ---
                         sa_reset.write(true);
                         wait();
                         sa_reset.write(false);
+                        // REMOVED: Unnecessary wait()
                         
                         // --- 2.2 Accumulate Phase (identical) ---
                         sa_preload_valid.write(false); 
-                        int stream_cycles = k2 + M + N - 1; 
+                        int stream_cycles = k1 + min(k2, M) + min(k3, N); 
                         for (int clk_cycle = 0; clk_cycle < stream_cycles; ++clk_cycle)
                         {
                             for (int i = 0; i < M; ++i) {
@@ -251,16 +252,18 @@ SC_MODULE(MatMul_Controller)
                             wait();
                         } 
 
-                        // --- 2.3 Drain Phase (identical) ---
+                        // --- 2.3 Drain Phase (Optimized) ---
                         sa_preload_valid.write(true); 
                         for(int j=0; j<N; ++j) sa_in_top[j].write(0.0f); 
                         for(int i=0; i<M; ++i) sa_in_left[i].write(0.0f); 
 
-                        int drain_cycles = M;
-                        for(int i = 0; i < 2; i++)
-                        {
-                            wait();
-                        }
+                        int drain_cycles = M;  // Was just M before
+                        
+                        // --- MODIFIED: Reduced from 2 waits to 1 ---
+                        // This single wait is necessary for PEs to see
+                        // preload_valid=true and output their accumulator.
+                        wait();
+                        wait(SC_ZERO_TIME);
 
                         for (int clk_cycle = 0; clk_cycle < drain_cycles; ++clk_cycle)
                         {

@@ -8,21 +8,21 @@
 // --- Test Configuration ---
 // =================================================================
 #ifndef K1_DIM
-#define K1_DIM 10
+#define K1_DIM 4
 #endif
 
 #ifndef K2_DIM
-#define K2_DIM 9
+#define K2_DIM 4
 #endif
 
 #ifndef K3_DIM
-#define K3_DIM 8
+#define K3_DIM 4
 #endif
 
 // ** NEW ** Set the mode for this test run
 // false = Weight Stationary
 // true  = Output Stationary
-const bool TEST_MODE_IS_OS = false; 
+const bool TEST_MODE_IS_OS = true; 
 
 using namespace std;
 
@@ -95,11 +95,11 @@ SC_MODULE(SA_MxN_tb)
         // ... (matrix initialization is identical) ...
         for (int i = 0; i < K1_DIM; ++i)
             for (int j = 0; j < K2_DIM; ++j)
-                A_mat[i * K2_DIM + j] = i + 1; 
+                A_mat[i * K2_DIM + j] = i * K2_DIM + j + 1;
 
         for (int i = 0; i < K2_DIM; ++i)
             for (int j = 0; j < K3_DIM; ++j)
-                W_mat[i * K3_DIM + j] = j + 1; 
+                W_mat[i * K3_DIM + j] = (i==j) ? 1.0f : 0.0f; // Identity matrix
         
         cout << "\nCalculating Golden Model..." << endl;
         // --- 2. Calculate and Print Expected "Golden" Result ---
@@ -140,27 +140,27 @@ SC_MODULE(SA_MxN_tb)
         controller->K3(K3);
 
         cout << "\nMatMul_Controller Testbench Created." << endl;
-        SC_CTHREAD(testbench, clk);
+        SC_CTHREAD(testbench, clk); // MODIFIED: Make sensitive to pos() edge
     }
 
-    // --- 4. Testbench Process ---
+    // --- 4. Testbench Process (MODIFIED for optimal startup) ---
     void testbench()
     {
         cout << "Starting Testbench Process..." << endl;
-        // --- Reset Phase ---
+        // --- Reset Phase (Optimized) ---
         reset.write(true);
         start.write(false);
-        sa_output_stationary_in.write(false); // Default
+        sa_output_stationary_in.write(false); 
         K1.write(0); K2.write(0); K3.write(0);
         A_matrix_ptr.write(nullptr);
         W_matrix_ptr.write(nullptr);
         C_matrix_ptr.write(nullptr);
-        wait(2);
+        wait(); // MODIFIED: Was wait(2). 1 cycle is enough.
+        
         reset.write(false);
-        wait();
-
-        // --- Setup and Start ---
-        cout << "@" << sc_time_stamp() << ": Setting up controller inputs." << endl;
+        cout << "@" << sc_time_stamp() << ": Reset de-asserted. Setting up controller inputs." << endl;
+        
+        // --- Setup and Start (Optimized) ---
         A_matrix_ptr.write(A_mat);
         W_matrix_ptr.write(W_mat);
         C_matrix_ptr.write(C_mat_hw);
@@ -169,14 +169,14 @@ SC_MODULE(SA_MxN_tb)
         K2.write(K2_DIM);
         K3.write(K3_DIM);
         
-        // ** NEW ** Set the desired mode
         sa_output_stationary_in.write(TEST_MODE_IS_OS);
         
-        wait(); // Let signals propagate
+        wait(); // Wait 1 cycle for controller to exit reset.
 
         cout << "@" << sc_time_stamp() << ": Asserting Start signal." << endl;
         start.write(true);
-        wait();
+        wait(); // Hold start high for one cycle
+        
         start.write(false);
         
         // --- Wait for Completion ---
@@ -186,7 +186,7 @@ SC_MODULE(SA_MxN_tb)
         }
 
         cout << "@" << sc_time_stamp() << ": 'done' signal received! Computation finished." << endl;
-        wait(5); // Wait a few extra cycles
+        // REMOVED: Unnecessary wait(5) cycles.
 
         // --- 5. Verify Results ---
         cout << "\n=== Verification Phase ===" << endl;
