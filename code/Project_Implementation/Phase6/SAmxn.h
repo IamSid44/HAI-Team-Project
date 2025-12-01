@@ -17,63 +17,71 @@
 
 using namespace std;
 
-// =================================================================
-// --- Original SA_MxN Module (Unchanged) ---
-// =================================================================
+// Systolic Array Module (M x N grid of PEs)
 SC_MODULE(SA_MxN)
 {
     // Clock and reset
     sc_in<bool> clk;
     sc_in<bool> reset;
-
-    // Check if its output stationary or weight/input stationary
     sc_in<bool> output_stationary;
 
-    // ... (rest of ports are identical) ...
+    // Array inputs/outputs
     sc_in<float> in_top[N];
     sc_in<float> in_left[M];
     sc_out<float> out_right[M];
     sc_out<float> out_bottom[N];
 
+    // Preload signals
     sc_in<bool> preload_valid;
     sc_in<float> preload_data[M * N]; 
 
-    // Internal signals
+    // Internal signals connecting PEs
     sc_signal<float> pe_out_right[M][N - 1];
     sc_signal<float> pe_out_bottom[M - 1][N];
 
     int array_id;
     PE* pe_array[M][N];
 
-    // Custom Constructor with array_id
+    // Constructor
     SA_MxN(sc_module_name name, int array_id) : sc_module(name), array_id(array_id)
     {
-        // Instantiate PEs (M rows, N columns)
-        for(int i = 0; i < M; i++) // Row index
-        {
-            for(int j = 0; j < N; j++) // Column index
-            {
-                // ... (instantiation and connections are identical) ...
+        // Instantiate PEs in M x N grid
+        for(int i = 0; i < M; i++) {
+            for(int j = 0; j < N; j++) {
                 string pe_name = "PE_" + to_string(i) + "_" + to_string(j);
                 pe_array[i][j] = new PE(pe_name.c_str(), array_id, i, j);
                 
+                // Connect clock, reset, and control signals
                 pe_array[i][j]->clk(clk);
                 pe_array[i][j]->reset(reset);
                 pe_array[i][j]->output_stationary(output_stationary);
                 pe_array[i][j]->preload_valid(preload_valid);
                 
-                if(j == 0) pe_array[i][j]->in_left(in_left[i]);
-                else       pe_array[i][j]->in_left(pe_out_right[i][j - 1]);
+                // Connect left input (from array input or previous PE)
+                if(j == 0) 
+                    pe_array[i][j]->in_left(in_left[i]);
+                else       
+                    pe_array[i][j]->in_left(pe_out_right[i][j - 1]);
                 
-                if(i == 0) pe_array[i][j]->in_top(in_top[j]);
-                else       pe_array[i][j]->in_top(pe_out_bottom[i - 1][j]);
+                // Connect top input (from array input or previous PE)
+                if(i == 0) 
+                    pe_array[i][j]->in_top(in_top[j]);
+                else       
+                    pe_array[i][j]->in_top(pe_out_bottom[i - 1][j]);
 
-                if(j == N - 1) pe_array[i][j]->out_right(out_right[i]);
-                else           pe_array[i][j]->out_right(pe_out_right[i][j]);
+                // Connect right output (to next PE or array output)
+                if(j == N - 1) 
+                    pe_array[i][j]->out_right(out_right[i]);
+                else           
+                    pe_array[i][j]->out_right(pe_out_right[i][j]);
                 
-                if(i == M - 1) pe_array[i][j]->out_bottom(out_bottom[j]);
-                else           pe_array[i][j]->out_bottom(pe_out_bottom[i][j]);
+                // Connect bottom output (to next PE or array output)
+                if(i == M - 1) 
+                    pe_array[i][j]->out_bottom(out_bottom[j]);
+                else           
+                    pe_array[i][j]->out_bottom(pe_out_bottom[i][j]);
 
+                // Connect preload data
                 pe_array[i][j]->preload_data(preload_data[i * N + j]);
             }
         }
@@ -89,29 +97,32 @@ SC_MODULE(SA_MxN)
     }
 };
 
+// Matrix Multiplication Controller - manages dataflow to/from systolic array
 SC_MODULE(MatMul_Controller)
 {
-    // --- Ports ---
+    // Clock and control
     sc_in<bool> clk;
     sc_in<bool> reset;
     sc_in<bool> start; 
     sc_out<bool> done; 
 
+    // Dataflow mode selection
     sc_in<bool> sa_mode_is_output_stationary;
 
-    // ... (rest of ports identical) ...
+    // Matrix pointers (from external buffers)
     sc_in<float*> A_matrix; 
     sc_in<float*> W_matrix; 
     sc_in<float*> C_matrix; 
 
+    // Matrix dimensions for current tile
     sc_in<int> K1; 
     sc_in<int> K2; 
     sc_in<int> K3; 
 
-    // --- Internal Components ---
+    // Systolic array instance
     SA_MxN* sa_grid; 
 
-    // --- Internal Signals ---
+    // Internal signals to/from systolic array
     sc_signal<bool> sa_reset;
     sc_signal<bool> sa_preload_valid;
     sc_signal<float> sa_in_top[N];
@@ -120,23 +131,23 @@ SC_MODULE(MatMul_Controller)
     sc_signal<float> sa_out_bottom[N];
     sc_signal<float> sa_preload_data[M * N];
 
-
-   // --- Tiling Control Process (FSM) ---
+    // Dataflow control FSM
     void tiling_process() 
     {
-        // --- MODIFIED: Optimized Reset Sequence ---
+        // Initial reset
         sa_reset.write(true);
         done.write(false);
         wait(); 
         sa_reset.write(false);
-        // REMOVED: Unnecessary wait() here.
  
         while(true) 
         {
+            // Wait for start signal
             while (start.read() == false) wait();
             
             done.write(false);
             
+            // Read configuration
             int k1 = K1.read();
             int k2 = K2.read();
             int k3 = K3.read();
@@ -146,138 +157,114 @@ SC_MODULE(MatMul_Controller)
             
             if (sa_mode_is_output_stationary.read() == false)
             {
-                // =================================================
-                // --- 1. WEIGHT STATIONARY (WS) MODE ---
-                // =================================================
+                // ================================================
+                // WEIGHT STATIONARY (WS) MODE
+                // ================================================
+                // In WS mode: weights are preloaded, activations stream through
                 
                 for (int j_t = 0; j_t < (k3 + N - 1) / N; ++j_t) 
                 {
                     for (int k_t = 0; k_t < (k2 + M - 1) / M; ++k_t) 
                     {
-                        // --- 1.1 Preload W_tile (identical) ---
+                        // Preload W_tile into PEs
                         sa_preload_valid.write(true);
                         for (int i = 0; i < M; ++i) { 
                             for (int j = 0; j < N; ++j) { 
                                 int w_row = k_t * M + i;
                                 int w_col = j_t * N + j;
                                 if (w_row < k2 && w_col < k3) {
-                                    // FIXED: Use stride M instead of k3
-                                    sa_preload_data[i * N + j].write( W_ptr[w_row * M + w_col] );
+                                    // CRITICAL FIX: Buffers use stride M, not k3
+                                    sa_preload_data[i * N + j].write(W_ptr[i * M + j]);
                                 } else {
                                     sa_preload_data[i * N + j].write(0.0f);
                                 }
                             }
                         }
-
                         wait();
-                        
-                        // Print clock cycle and loaded date
-                        // cout << "---------------------------------------------------------->>>>" << endl;
-                        // cout << "Clock cycle: " << sc_time_stamp() << ", Loaded W_tile at j_t: " << j_t << ", k_t: " << k_t << endl;
-                        // for (int i = 0; i < M; ++i) {
-                        //     for (int j = 0; j < N; ++j) {
-                        //         cout << setw(8) << fixed << setprecision(2) << sa_preload_data[i * N + j].read() << " ";
-                        //     }
-                        //     cout << endl;
-                        // }
-                        // cout << "----------------------------------------------------------<<<<" << endl;
-                        
                         sa_preload_valid.write(false);
+                        
+                        // Clear top inputs
                         for (int j = 0; j < N; j++) sa_in_top[j].write(0.0f);
 
-
-                        // --- 1.2 Stream A_tile and Drain C_tile ---
+                        // Stream A_tile and drain C_tile
                         int total_cycles = k1 + min(k2, M) + min(k3, N);
                         
                         for (int clk_cycle = 0; clk_cycle < total_cycles; ++clk_cycle) 
                         {
-                            // --- A. Feed A_tile ---
+                            // Feed A_tile (skewed input on left side)
                             for (int i = 0; i < M; ++i) { 
                                 int a_row = clk_cycle - i; 
                                 int a_col = k_t * M + i; 
                                 if (a_row >= 0 && a_row < k1 && a_col < k2) {
-                                    // FIXED: Use stride M instead of k2
-                                    sa_in_left[i].write( A_ptr[a_row * M + a_col] );
+                                    // CRITICAL FIX: Buffers use stride M, not k2
+                                    sa_in_left[i].write(A_ptr[a_row * M + a_col]);
                                 } else {
                                     sa_in_left[i].write(0.0f);
                                 }
                             }
                             
-                            // --- B. Read and Un-skew C_tile results ---
+                            // Drain C_tile results (skewed output from bottom)
                             for (int j = 0; j < N; ++j) { 
-                                
-                                // ** WS FIX **
-                                // The value for logical row 'r' arrives at clk = r + M + j - 1
-                                // So, r = clk - M - j + 1
-                                int r_out_skewed = clk_cycle - M - j - 1; 
+                                // WS: row r appears at cycle r + M + j
+                                int r_out_skewed = clk_cycle - M - j; 
                                 
                                 if (r_out_skewed >= 0 && r_out_skewed < k1) 
                                 {
                                     int c_col = j_t * N + j; 
                                     if (c_col < k3) {
                                         float partial_sum = sa_out_bottom[j].read();
-                                        // FIXED: Use stride M instead of k3
+                                        // CRITICAL FIX: Buffers use stride M, not k3
                                         C_ptr[r_out_skewed * M + c_col] += partial_sum;
                                     }
                                 }
                             } 
                             
-                            // Print cycle, input values
-                            cout << "---------------------------------------------------------->>>>" << endl;
-                            cout << "Clock cycle: " << sc_time_stamp() << ", Streamed A_tile at k_t: " << k_t << ", clk_cycle: " << clk_cycle << endl;
-                            for (int i = 0; i < M; ++i) {
-                                cout << "A[" << i << "]: ";
-                                cout << setw(8) << fixed << setprecision(2) << sa_in_left[i].read() << endl;
-                            } 
-                            cout << "C_tile (un-skewed):" << endl;
-                            for (int j = 0; j < N; ++j) {
-                                cout << "C[" << j << "]: ";
-                                cout << setw(8) << fixed << setprecision(2) << sa_out_bottom[j].read() << endl;
-                            }
-                            cout << "----------------------------------------------------------<<<<" << endl;
-                            
                             wait();
-                        } 
+                        }
                     }
                 } 
             }
             else 
             {
-                // =================================================
-                // --- 2. OUTPUT STATIONARY (OS) MODE ---
-                // =================================================
+                // ================================================
+                // OUTPUT STATIONARY (OS) MODE
+                // ================================================
+                // In OS mode: outputs accumulate in PEs, then drain at the end
                 
                 for (int i_t = 0; i_t < (k1 + M - 1) / M; ++i_t) 
                 {
                     for (int j_t = 0; j_t < (k3 + N - 1) / N; ++j_t) 
                     {
-                        // --- 2.1 Reset PE Accumulators (Optimized) ---
+                        // Reset PE accumulators for this output tile
                         sa_reset.write(true);
                         wait();
                         sa_reset.write(false);
-                        // REMOVED: Unnecessary wait()
                         
-                        // --- 2.2 Accumulate Phase ---
+                        // Accumulation phase
                         sa_preload_valid.write(false); 
                         int stream_cycles = k1 + min(k2, M) + min(k3, N); 
+                        
                         for (int clk_cycle = 0; clk_cycle < stream_cycles; ++clk_cycle)
                         {
+                            // Feed A_tile (skewed from left)
                             for (int i = 0; i < M; ++i) {
                                 int k = clk_cycle - i; 
                                 int a_row = i_t * M + i;
                                 if (k >= 0 && k < k2 && a_row < k1) {
-                                    // FIXED: Use stride M instead of k2
-                                    sa_in_left[i].write(A_ptr[a_row * M + k]);
+                                    // CRITICAL FIX: Buffers use stride M, not k2
+                                    sa_in_left[i].write(A_ptr[i * M + k]);
                                 } else {
                                     sa_in_left[i].write(0.0f);
                                 }
                             }
+                            
+                            // Feed W_tile (skewed from top)
                             for (int j = 0; j < N; ++j) {
                                 int k = clk_cycle - j; 
                                 int w_col = j_t * N + j;
                                 if (k >= 0 && k < k2 && w_col < k3) {
-                                    // FIXED: Use stride M instead of k3
-                                    sa_in_top[j].write(W_ptr[k * M + w_col]);
+                                    // CRITICAL FIX: Buffers use stride M, not k3
+                                    sa_in_top[j].write(W_ptr[k * M + j]);
                                 } else {
                                     sa_in_top[j].write(0.0f);
                                 }
@@ -285,40 +272,26 @@ SC_MODULE(MatMul_Controller)
                             wait();
                         } 
 
-                        // --- 2.3 Drain Phase (Optimized) ---
+                        // Drain phase - read accumulated outputs
                         sa_preload_valid.write(true); 
                         for(int j=0; j<N; ++j) sa_in_top[j].write(0.0f); 
                         for(int i=0; i<M; ++i) sa_in_left[i].write(0.0f); 
 
                         int drain_cycles = M;
-                        
-                        // --- MODIFIED: Reduced from 2 waits to 1 ---
-                        // This single wait is necessary for PEs to see
-                        // preload_valid=true and output their accumulator.
                         wait();
                         wait(SC_ZERO_TIME);
 
                         for (int clk_cycle = 0; clk_cycle < drain_cycles; ++clk_cycle)
                         {
+                            // Drain outputs (bottom to top order)
                             for (int j = 0; j < N; ++j) {
-                                
-                                // ** OS FIX **
-                                // Data from physical row 'i' exits at clk = (M-i) + j
-                                // The 'i' we want is for the first cycle (clk=j+1), which is i=M-1.
-                                // Formula: i = (M-1) - (clk - j - 1)
-                                // int i_out_skewed = (M - 1) - (clk_cycle - j - 1);
-                                int i_out_skewed = j;
-                                
-                                // if (i_out_skewed >= 0 && i_out_skewed < M) 
-                                // {
                                 int c_row = i_t * M + M - clk_cycle - 1;
                                 int c_col = j_t * N + j;
                                 
                                 if (c_row < k1 && c_col < k3) {
-                                    // FIXED: Use stride M instead of k3
+                                    // CRITICAL FIX: Buffers use stride M, not k3
                                     C_ptr[c_row * M + c_col] = sa_out_bottom[j].read();
                                 }
-                                // }
                             }
                             wait();
                         }
@@ -329,15 +302,16 @@ SC_MODULE(MatMul_Controller)
             
             done.write(true);
             wait();
-
         } 
     } 
     
-    // --- Constructor (identical) ---
+    // Constructor
     SC_CTOR(MatMul_Controller) 
     {
+        // Instantiate systolic array
         sa_grid = new SA_MxN("sa_grid_inst", 1);
         
+        // Connect systolic array signals
         sa_grid->clk(clk);
         sa_grid->reset(sa_reset); 
         sa_grid->output_stationary(sa_mode_is_output_stationary);
@@ -355,6 +329,7 @@ SC_MODULE(MatMul_Controller)
             sa_grid->preload_data[i](sa_preload_data[i]);
         }
         
+        // Register FSM thread
         SC_CTHREAD(tiling_process, clk.pos());
         reset_signal_is(reset, true); 
     }

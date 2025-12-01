@@ -10,34 +10,33 @@
 using namespace std;
 
 // Simple byte-addressed memory module backed by a file
-// Each row is byte-addressed (4 bytes per float)
-// Uninitialized locations store "XXXX"
+// - 4 bytes per float (aligned access required)
+// - Uninitialized locations store "XXXX"
+// - 1 cycle latency for read/write operations
 SC_MODULE(Memory)
 {
-    // Clock and control signals
+    // Clock and control
     sc_in<bool> clk;
     sc_in<bool> reset;
     
     // Memory interface
     sc_in<bool> read_enable;
     sc_in<bool> write_enable;
-    sc_in<int> address;          // Byte address
+    sc_in<int> address;          // Byte address (must be 4-byte aligned)
     sc_in<float> write_data;
     sc_out<float> read_data;
-    sc_out<bool> ready;          // Memory operation complete
+    sc_out<bool> ready;          // Operation complete signal
     
     // Internal storage
     string memory_file;
-    int memory_size_bytes;       // Total memory size in bytes
-    int memory_size_floats;      // Total memory size in floats
+    int memory_size_bytes;
+    int memory_size_floats;
     
     // Constructor
     Memory(sc_module_name name, const char* mem_file, int size_bytes) 
         : sc_module(name), memory_file(mem_file), memory_size_bytes(size_bytes)
     {
-        memory_size_floats = size_bytes / 4;  // 4 bytes per float
-        
-        // Initialize memory file with XXXX for all locations
+        memory_size_floats = size_bytes / 4;
         initialize_memory_file();
         
         SC_THREAD(memory_process);
@@ -82,7 +81,7 @@ SC_MODULE(Memory)
         
         ifstream file(memory_file);
         if (!file.is_open()) {
-            cout<<"Error: Cannot open memory file for reading" << endl;
+            cout << "Error: Cannot open memory file for reading" << endl;
             return 0.0f;
         }
         
@@ -90,6 +89,7 @@ SC_MODULE(Memory)
         int target_index = byte_addr / 4;
         int current_index = 0;
         
+        // Find the target line
         while (getline(file, line)) {
             if (line.empty() || line[0] == '#') continue;
             
@@ -97,8 +97,6 @@ SC_MODULE(Memory)
                 size_t colon_pos = line.find(':');
                 if (colon_pos != string::npos) {
                     string value_str = line.substr(colon_pos + 1);
-                    // cout << value_str << endl;
-                    // Trim whitespace
                     value_str.erase(0, value_str.find_first_not_of(" \t"));
                     value_str.erase(value_str.find_last_not_of(" \t\n\r") + 1);
                     
@@ -114,7 +112,6 @@ SC_MODULE(Memory)
         }
         
         file.close();
-        // cout<<"geydsljsaldjsadjaslkhdasjlkdhasjkhdsajkhdasjkdhasjkdhsajk"<<endl;
         return 0.0f;
     }
     
@@ -163,7 +160,7 @@ SC_MODULE(Memory)
         file_out.close();
     }
     
-    // Memory process - 1 cycle latency for read/write
+    // Memory process - handles read/write with 1 cycle latency
     void memory_process()
     {
         while (true)
@@ -173,14 +170,12 @@ SC_MODULE(Memory)
                 ready.write(false);
             }
             else {
-                // Default: not ready
                 ready.write(false);
                 
                 // Handle read operation
                 if (read_enable.read()) {
                     int addr = address.read();
                     float data = read_from_file(addr);
-                    // cout << "Read from address " << addr << ": " << data << endl;
                     read_data.write(data);
                     ready.write(true);
                 }

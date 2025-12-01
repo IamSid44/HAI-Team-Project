@@ -3,3 +3,15 @@ code/Project_Implementation/Phase2/PE_Outputs/
 code/Project_Implementation/Phase4/PE_Outputs/
 code/Project_Implementation/Phase5/PE_Outputs/
 code/**/*.{vcd,out}
+code/Project_Implementation/Phase6/a.out
+code/Project_Implementation/Phase6/tmp.cpp
+code/Project_Implementation/Phase6/waveform.vcd
+code/Project_Implementation/Phase6/PE_Outputs/PE_1_0_0.txt
+code/Project_Implementation/Phase6/PE_Outputs/PE_1_0_2.txt
+code/Project_Implementation/Phase6/PE_Outputs/PE_1_0_1.txt
+code/Project_Implementation/Phase6/PE_Outputs/PE_1_1_0.txt
+code/Project_Implementation/Phase6/PE_Outputs/PE_1_1_1.txt
+code/Project_Implementation/Phase6/PE_Outputs/PE_1_1_2.txt
+code/Project_Implementation/Phase6/PE_Outputs/PE_1_2_0.txt
+code/Project_Implementation/Phase6/PE_Outputs/PE_1_2_1.txt
+code/Project_Implementation/Phase6/PE_Outputs/PE_1_2_2.txt

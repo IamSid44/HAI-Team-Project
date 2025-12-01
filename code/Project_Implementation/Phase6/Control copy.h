@@ -62,6 +62,7 @@ SC_MODULE(MemoryBackedController)
     SC_CTOR(MemoryBackedController)
     {
         // Allocate FIXED-SIZE buffers: M x M
+        // These buffers never change size regardless of input matrix dimensions
         A_tile = new float[M * M];
         W_tile = new float[M * M];
         C_tile = new float[M * M];
@@ -90,7 +91,7 @@ SC_MODULE(MemoryBackedController)
         matmul_ctrl->A_matrix(A_matrix_ptr);
         matmul_ctrl->W_matrix(W_matrix_ptr);
         matmul_ctrl->C_matrix(C_matrix_ptr);
-        matmul_ctrl->K1(tile_k1);
+        matmul_ctrl->K1(tile_k1);  // Use tile dimensions
         matmul_ctrl->K2(tile_k2);
         matmul_ctrl->K3(tile_k3);
         
@@ -109,6 +110,7 @@ SC_MODULE(MemoryBackedController)
     }
     
     // Helper: Read a tile of matrix A from memory into A_tile buffer
+    // Reads tile starting at (i_tile * M, k_tile * M) with size up to M x M
     void read_A_tile(int a_base, int k1, int k2, int i_tile, int k_tile)
     {
         // Clear tile buffer
@@ -130,15 +132,17 @@ SC_MODULE(MemoryBackedController)
                     wait();
                     wait(SC_ZERO_TIME);
                     
-                    // Store in tile buffer with stride M
+                    // STORE IN TILE BUFFER with stride M (not k2!)
                     A_tile[i * M + j] = mem_read_data.read();
                     mem_read_enable.write(false);
                 }
+                // else: already set to 0.0f (padding for incomplete tiles)
             }
         }
     }
     
     // Helper: Read a tile of matrix W from memory into W_tile buffer
+    // Reads tile starting at (k_tile * M, j_tile * M) with size up to M x M
     void read_W_tile(int w_base, int k2, int k3, int k_tile, int j_tile)
     {
         // Clear tile buffer
@@ -160,8 +164,39 @@ SC_MODULE(MemoryBackedController)
                     wait();
                     wait(SC_ZERO_TIME);
                     
-                    // Store in tile buffer with stride M
+                    // STORE IN TILE BUFFER with stride M (not k3!)
                     W_tile[i * M + j] = mem_read_data.read();
+                    mem_read_enable.write(false);
+                }
+                // else: already set to 0.0f (padding for incomplete tiles)
+            }
+        }
+    }
+    
+    // Helper: Read a tile of matrix C from memory into C_tile buffer (for accumulation)
+    // Reads tile starting at (i_tile * M, j_tile * M) with size up to M x M
+    void read_C_tile(int c_base, int k1, int k3, int i_tile, int j_tile)
+    {
+        // Clear tile buffer
+        for (int i = 0; i < M * M; i++) C_tile[i] = 0.0f;
+        
+        // Read tile elements from memory
+        for (int i = 0; i < M; i++) {
+            for (int j = 0; j < M; j++) {
+                int global_row = i_tile * M + i;
+                int global_col = j_tile * M + j;
+                
+                // Check if this element exists in the actual matrix
+                if (global_row < k1 && global_col < k3) {
+                    int byte_addr = c_base + (global_row * k3 + global_col) * 4;
+                    
+                    mem_address.write(byte_addr);
+                    mem_read_enable.write(true);
+                    mem_write_enable.write(false);
+                    wait();
+                    wait(SC_ZERO_TIME);
+                    
+                    C_tile[i * M + j] = mem_read_data.read();
                     mem_read_enable.write(false);
                 }
             }
@@ -169,6 +204,7 @@ SC_MODULE(MemoryBackedController)
     }
     
     // Helper: Write C_tile buffer back to memory
+    // Writes tile starting at (i_tile * M, j_tile * M)
     void write_C_tile(int c_base, int k1, int k3, int i_tile, int j_tile)
     {
         for (int i = 0; i < M; i++) {
@@ -181,6 +217,7 @@ SC_MODULE(MemoryBackedController)
                     int byte_addr = c_base + (global_row * k3 + global_col) * 4;
                     
                     mem_address.write(byte_addr);
+                    // READ FROM TILE BUFFER with stride M (not k3!)
                     mem_write_data.write(C_tile[i * M + j]);
                     mem_read_enable.write(false);
                     mem_write_enable.write(true);
@@ -192,7 +229,7 @@ SC_MODULE(MemoryBackedController)
         }
     }
     
-    // Main control process with tile-level memory management
+    // Main control process with TILE-LEVEL memory management
     void control_process()
     {
         // Initialize
@@ -222,9 +259,10 @@ SC_MODULE(MemoryBackedController)
             cout << "Matrix W: " << k2 << "x" << k3 << " at byte address " << w_base << endl;
             cout << "Matrix C: " << k1 << "x" << k3 << " at byte address " << c_base << endl;
             cout << "PE Grid Size: " << M << "x" << M << endl;
+            cout << "Tile Size: " << M << "x" << M << " (fixed)" << endl;
             
             // Calculate number of tiles in each dimension
-            int num_i_tiles = (k1 + M - 1) / M;
+            int num_i_tiles = (k1 + M - 1) / M;  // Ceiling division
             int num_j_tiles = (k3 + M - 1) / M;
             int num_k_tiles = (k2 + M - 1) / M;
             
@@ -232,11 +270,16 @@ SC_MODULE(MemoryBackedController)
                  << ", j=" << num_j_tiles 
                  << ", k=" << num_k_tiles << endl << endl;
             
-            // Tiled matrix multiplication: C[i,j] += A[i,k] * W[k,j]
+            // ===================================================
+            // TILED MATRIX MULTIPLICATION
+            // C[i_tile, j_tile] += A[i_tile, k_tile] * W[k_tile, j_tile]
+            // ===================================================
+            
             for (int i_tile = 0; i_tile < num_i_tiles; i_tile++) {
                 for (int j_tile = 0; j_tile < num_j_tiles; j_tile++) {
                     
                     // Initialize C_tile to zero for this output tile
+                    // This is OUTSIDE the k_tile loop - only initialize once per output tile
                     for (int i = 0; i < M * M; i++) C_tile[i] = 0.0f;
                     
                     // Accumulate across k dimension
@@ -246,15 +289,43 @@ SC_MODULE(MemoryBackedController)
                              << "] += A[" << i_tile << "," << k_tile 
                              << "] * W[" << k_tile << "," << j_tile << "]" << endl;
                         
-                        // Read A_tile from memory
+                        // ============================================
+                        // PHASE 1: READ A_tile FROM MEMORY
+                        // ============================================
                         cout << "  Reading A tile[" << i_tile << "," << k_tile << "]..." << endl;
                         read_A_tile(a_base, k1, k2, i_tile, k_tile);
                         
-                        // Read W_tile from memory
+                        // DEBUG: Print what was read
+                        cout << "  A_tile contents:" << endl;
+                        for (int ii = 0; ii < M; ii++) {
+                            cout << "    ";
+                            for (int jj = 0; jj < M; jj++) {
+                                cout << setw(8) << fixed << setprecision(2) << A_tile[ii * M + jj] << " ";
+                            }
+                            cout << endl;
+                        }
+                        cout << endl;
+                        
+                        // ============================================
+                        // PHASE 2: READ W_tile FROM MEMORY
+                        // ============================================
                         cout << "  Reading W tile[" << k_tile << "," << j_tile << "]..." << endl;
                         read_W_tile(w_base, k2, k3, k_tile, j_tile);
                         
-                        // Compute tile multiplication
+                        // DEBUG: Print what was read
+                        cout << "  W_tile contents:" << endl;
+                        for (int ii = 0; ii < M; ii++) {
+                            cout << "    ";
+                            for (int jj = 0; jj < M; jj++) {
+                                cout << setw(8) << fixed << setprecision(2) << W_tile[ii * M + jj] << " ";
+                            }
+                            cout << endl;
+                        };
+                        cout << endl;
+                        
+                        // ============================================
+                        // PHASE 3: COMPUTE TILE MULTIPLICATION
+                        // ============================================
                         cout << "  Computing tile..." << endl;
                         
                         // Calculate actual tile dimensions (may be < M for edge tiles)
@@ -286,9 +357,26 @@ SC_MODULE(MemoryBackedController)
                         wait();
                         
                         cout << "  Tile computation complete" << endl;
+                        
+                        // C_tile now contains accumulated result from this k_tile
+                        // It will be used as input for the next k_tile iteration
+
+                        // Print the details and the entire C tile
+                        cout << "  C_tile contents after accumulation:" << endl;
+                        for (int ii = 0; ii < M; ii++) {
+                            cout << "    ";
+                            for (int jj = 0; jj < M; jj++) {
+                                cout << setw(8) << fixed << setprecision(2) << C_tile[ii * M + jj] << " ";
+                            }
+                            cout << endl;
+                        }
+                        cout << endl;
                     }
                     
-                    // Write C_tile back to memory (after all k_tiles accumulated)
+                    // ============================================
+                    // PHASE 4: WRITE C_tile BACK TO MEMORY
+                    // ============================================
+                    // Only write AFTER all k_tiles have been accumulated
                     cout << "  Writing C tile[" << i_tile << "," << j_tile << "]..." << endl;
                     write_C_tile(c_base, k1, k3, i_tile, j_tile);
                 }
