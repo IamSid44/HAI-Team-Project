@@ -174,7 +174,7 @@ SC_MODULE(MatMul_Controller)
                                 int w_row = k_t * M + i;
                                 int w_col = j_t * N + j;
                                 if (w_row < k2 && w_col < k3) {
-                                    // CRITICAL FIX: Buffers use stride M, not k3
+                                    // Buffer indexing: direct i,j since W_tile is already the tile we want
                                     float w_val = W_ptr[i * M + j];
                                     sa_preload_data[i * N + j].write(w_val);
                                 } else {
@@ -200,8 +200,8 @@ SC_MODULE(MatMul_Controller)
                                 int a_col = k_t * M + i; 
                                 float a_val = 0.0f;
                                 if (a_row >= 0 && a_row < k1 && a_col < k2) {
-                                    // CRITICAL FIX: Buffers use stride M, not k2
-                                    a_val = A_ptr[a_row * M + a_col];
+                                    // Buffer indexing: use (a_col % M) since buffer has stride M
+                                    a_val = A_ptr[a_row * M + (a_col % M)];
                                     sa_in_left[i].write(a_val);
                                 } else {
                                     sa_in_left[i].write(0.0f);
@@ -211,8 +211,10 @@ SC_MODULE(MatMul_Controller)
                             // Wait for computation to complete
                             wait();
                             
+                            // Wait for outputs to settle
+                            wait(SC_ZERO_TIME);
+                            
                             // Drain C_tile results (skewed output from bottom)
-                            // Read outputs AFTER the clock edge
                             for (int j = 0; j < N; ++j) { 
                                 // WS: row r appears at cycle r + M + j
                                 int r_out_skewed = clk_cycle - M - j; 
@@ -222,8 +224,8 @@ SC_MODULE(MatMul_Controller)
                                     int c_col = j_t * N + j; 
                                     if (c_col < k3) {
                                         float partial_sum = sa_out_bottom[j].read();
-                                        // CRITICAL FIX: Buffers use stride M, not k3
-                                        C_ptr[r_out_skewed * M + c_col] += partial_sum;
+                                        // Buffer indexing: use (c_col % M) since buffer has stride M
+                                        C_ptr[r_out_skewed * M + (c_col % M)] += partial_sum;
                                     }
                                 }
                             }
@@ -261,8 +263,8 @@ SC_MODULE(MatMul_Controller)
                                 int a_row = i_t * M + i;
                                 float a_val = 0.0f;
                                 if (k >= 0 && k < k2 && a_row < k1) {
-                                    // CRITICAL FIX: Buffers use stride M, not k2
-                                    a_val = A_ptr[i * M + k];
+                                    // Buffer indexing: use (k % M) since buffer has stride M
+                                    a_val = A_ptr[i * M + (k % M)];
                                     sa_in_left[i].write(a_val);
                                 } else {
                                     sa_in_left[i].write(0.0f);
@@ -275,8 +277,8 @@ SC_MODULE(MatMul_Controller)
                                 int w_col = j_t * N + j;
                                 float w_val = 0.0f;
                                 if (k >= 0 && k < k2 && w_col < k3) {
-                                    // CRITICAL FIX: Buffers use stride M, not k3
-                                    w_val = W_ptr[k * M + j];
+                                    // Buffer indexing: use (k % M) since buffer has stride M
+                                    w_val = W_ptr[(k % M) * M + j];
                                     sa_in_top[j].write(w_val);
                                 } else {
                                     sa_in_top[j].write(0.0f);
@@ -303,8 +305,8 @@ SC_MODULE(MatMul_Controller)
                                 
                                 if (c_row < k1 && c_col < k3) {
                                     float c_val = sa_out_bottom[j].read();
-                                    // CRITICAL FIX: Buffers use stride M, not k3
-                                    C_ptr[c_row * M + c_col] = c_val;
+                                    // Buffer indexing: use (c_col % M) since buffer has stride M
+                                    C_ptr[c_row * M + (c_col % M)] = c_val;
                                 }
                             }
                             wait();

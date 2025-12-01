@@ -8,15 +8,15 @@
 // --- Test Configuration ---
 // =================================================================
 #ifndef K1_DIM
-#define K1_DIM 4
+#define K1_DIM 5
 #endif
 
 #ifndef K2_DIM
-#define K2_DIM 4
+#define K2_DIM 5
 #endif
 
 #ifndef K3_DIM
-#define K3_DIM 4
+#define K3_DIM 5
 #endif
 
 // ** NEW ** Set the mode for this test run

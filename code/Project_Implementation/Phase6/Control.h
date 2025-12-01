@@ -292,9 +292,7 @@ SC_MODULE(MemoryBackedController)
                         W_matrix_ptr.write(W_tile);
                         C_matrix_ptr.write(C_tile);
                         
-                        wait();
-                        
-                        // Start computation
+                        // Start computation (no extra wait before start)
                         matmul_start.write(true);
                         wait();
                         matmul_start.write(false);
@@ -303,7 +301,6 @@ SC_MODULE(MemoryBackedController)
                         while (!matmul_done.read()) {
                             wait();
                         }
-                        wait();
                         
                         cout << "  Tile computation complete" << endl;
                         

@@ -8,11 +8,11 @@
 
 // Define the dimensions of the Systolic Array
 #ifndef M
-#define M 4 // Default number of rows
+#define M 3 // Default number of rows
 #endif
 
 #ifndef N
-#define N 4 // Default number of columns
+#define N 3 // Default number of columns
 #endif
 
 using namespace std;
