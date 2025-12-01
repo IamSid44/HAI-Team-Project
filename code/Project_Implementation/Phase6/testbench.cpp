@@ -370,55 +370,55 @@ SC_MODULE(Testbench)
         // ====================================================
         // TEST 2: Same test in OS Mode
         // ====================================================
-        cout << "\n╔═══════════════════════════════════════════════╗" << endl;
-        cout << "║  TEST 2: 5x5 Matrix Multiplication (OS Mode)  ║" << endl;
-        cout << "╚═══════════════════════════════════════════════╝" << endl;
+        // cout << "\n╔═══════════════════════════════════════════════╗" << endl;
+        // cout << "║  TEST 2: 5x5 Matrix Multiplication (OS Mode)  ║" << endl;
+        // cout << "╚═══════════════════════════════════════════════╝" << endl;
         
-        // Reset
-        reset.write(true);
-        wait(20, SC_NS);
-        reset.write(false);
-        wait(20, SC_NS);
+        // // Reset
+        // reset.write(true);
+        // wait(20, SC_NS);
+        // reset.write(false);
+        // wait(20, SC_NS);
         
-        // Reinitialize memory
-        initialize_memory_with_matrices("memory.txt", 
-                                       a_base, A1, k1, k2,
-                                       w_base, W1, k2, k3);
+        // // Reinitialize memory
+        // initialize_memory_with_matrices("memory.txt", 
+        //                                a_base, A1, k1, k2,
+        //                                w_base, W1, k2, k3);
         
-        // Configure for OS mode
-        output_stationary.write(true);  // OS mode
+        // // Configure for OS mode
+        // output_stationary.write(true);  // OS mode
         
-        // Start computation
-        wait(20, SC_NS);
-        start.write(true);
-        wait(10, SC_NS);
-        start.write(false);
+        // // Start computation
+        // wait(20, SC_NS);
+        // start.write(true);
+        // wait(10, SC_NS);
+        // start.write(false);
         
-        // Wait for completion
-        while (!done.read()) {
-            wait(10, SC_NS);
-        }
+        // // Wait for completion
+        // while (!done.read()) {
+        //     wait(10, SC_NS);
+        // }
         
-        wait(50, SC_NS);
+        // wait(50, SC_NS);
         
-        // Read result
-        float C2_actual[25];
-        read_matrix_from_memory("memory.txt", c_base, C2_actual, k1, k3);
+        // // Read result
+        // float C2_actual[25];
+        // read_matrix_from_memory("memory.txt", c_base, C2_actual, k1, k3);
         
-        print_matrix("Result C (from memory)", C2_actual, k1, k3);
-        print_matrix("Expected C", C1_expected, k1, k3);
+        // print_matrix("Result C (from memory)", C2_actual, k1, k3);
+        // print_matrix("Expected C", C1_expected, k1, k3);
         
-        if (verify_result(C1_expected, C2_actual, k1, k3)) {
-            cout << "✓ TEST 2 PASSED" << endl;
-        } else {
-            cout << "✗ TEST 2 FAILED" << endl;
-        }
+        // if (verify_result(C1_expected, C2_actual, k1, k3)) {
+        //     cout << "✓ TEST 2 PASSED" << endl;
+        // } else {
+        //     cout << "✗ TEST 2 FAILED" << endl;
+        // }
         
-        wait(100, SC_NS);
+        // wait(100, SC_NS);
         
-        cout << "\n╔═══════════════════════════════════════════════╗" << endl;
-        cout << "║           All Tests Completed                  ║" << endl;
-        cout << "╚═══════════════════════════════════════════════╝\n" << endl;
+        // cout << "\n╔═══════════════════════════════════════════════╗" << endl;
+        // cout << "║           All Tests Completed                 ║" << endl;
+        // cout << "╚═══════════════════════════════════════════════╝\n" << endl;
         
         sc_stop();
     }

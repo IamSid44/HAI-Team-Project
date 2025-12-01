@@ -68,9 +68,9 @@ SC_MODULE(MemoryBackedController)
         
         cout << "Fixed-size buffers allocated: " << M << "x" << M 
              << " (" << (M*M) << " floats each)" << endl;
-        
-        // Instantiate memory (64KB = 16384 floats)
-        memory = new Memory("memory_block", "memory.txt", 65536);
+
+        // Instantiate memory (4KB = 1024 floats)
+        memory = new Memory("memory_block", "memory.txt", 4096);
         memory->clk(clk);
         memory->reset(reset);
         memory->read_enable(mem_read_enable);
@@ -249,11 +249,31 @@ SC_MODULE(MemoryBackedController)
                         // Read A_tile from memory
                         cout << "  Reading A tile[" << i_tile << "," << k_tile << "]..." << endl;
                         read_A_tile(a_base, k1, k2, i_tile, k_tile);
-                        
+
+                        // Print A_tile for debugging
+                        cout << "  A_tile:" << endl;
+                        for (int i = 0; i < M; i++) {
+                            cout << "    ";
+                            for (int j = 0; j < M; j++) {
+                                cout << A_tile[i * M + j] << " ";
+                            }
+                            cout << endl;
+                        }
+
                         // Read W_tile from memory
                         cout << "  Reading W tile[" << k_tile << "," << j_tile << "]..." << endl;
                         read_W_tile(w_base, k2, k3, k_tile, j_tile);
-                        
+
+                        // Print W_tile for debugging
+                        cout << "  W_tile:" << endl;
+                        for (int i = 0; i < M; i++) {
+                            cout << "    ";
+                            for (int j = 0; j < M; j++) {
+                                cout << W_tile[i * M + j] << " ";
+                            }
+                            cout << endl;
+                        }
+
                         // Compute tile multiplication
                         cout << "  Computing tile..." << endl;
                         
@@ -286,9 +306,27 @@ SC_MODULE(MemoryBackedController)
                         wait();
                         
                         cout << "  Tile computation complete" << endl;
+                        
+                        // Print C_tile after this k_tile computation
+                        cout << "  C_tile after k_tile " << k_tile << ":" << endl;
+                        for (int i = 0; i < M; i++) {
+                            cout << "    ";
+                            for (int j = 0; j < M; j++) {
+                                cout << C_tile[i * M + j] << " ";
+                            }
+                            cout << endl;
+                        }
                     }
                     
                     // Write C_tile back to memory (after all k_tiles accumulated)
+                    cout << "  Final C_tile for position [" << i_tile << "," << j_tile << "]:" << endl;
+                    for (int i = 0; i < M; i++) {
+                        cout << "    ";
+                        for (int j = 0; j < M; j++) {
+                            cout << C_tile[i * M + j] << " ";
+                        }
+                        cout << endl;
+                    }
                     cout << "  Writing C tile[" << i_tile << "," << j_tile << "]..." << endl;
                     write_C_tile(c_base, k1, k3, i_tile, j_tile);
                 }

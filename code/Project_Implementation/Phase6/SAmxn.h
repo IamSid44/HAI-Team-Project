@@ -167,6 +167,7 @@ SC_MODULE(MatMul_Controller)
                     for (int k_t = 0; k_t < (k2 + M - 1) / M; ++k_t) 
                     {
                         // Preload W_tile into PEs
+                        cout << "    [WS] Preloading weights (k_t=" << k_t << ", j_t=" << j_t << ")" << endl;
                         sa_preload_valid.write(true);
                         for (int i = 0; i < M; ++i) { 
                             for (int j = 0; j < N; ++j) { 
@@ -174,7 +175,8 @@ SC_MODULE(MatMul_Controller)
                                 int w_col = j_t * N + j;
                                 if (w_row < k2 && w_col < k3) {
                                     // CRITICAL FIX: Buffers use stride M, not k3
-                                    sa_preload_data[i * N + j].write(W_ptr[i * M + j]);
+                                    float w_val = W_ptr[i * M + j];
+                                    sa_preload_data[i * N + j].write(w_val);
                                 } else {
                                     sa_preload_data[i * N + j].write(0.0f);
                                 }
@@ -188,6 +190,7 @@ SC_MODULE(MatMul_Controller)
 
                         // Stream A_tile and drain C_tile
                         int total_cycles = k1 + min(k2, M) + min(k3, N);
+                        cout << "    [WS] Streaming and computing (" << total_cycles << " cycles)..." << endl;
                         
                         for (int clk_cycle = 0; clk_cycle < total_cycles; ++clk_cycle) 
                         {
@@ -195,15 +198,21 @@ SC_MODULE(MatMul_Controller)
                             for (int i = 0; i < M; ++i) { 
                                 int a_row = clk_cycle - i; 
                                 int a_col = k_t * M + i; 
+                                float a_val = 0.0f;
                                 if (a_row >= 0 && a_row < k1 && a_col < k2) {
                                     // CRITICAL FIX: Buffers use stride M, not k2
-                                    sa_in_left[i].write(A_ptr[a_row * M + a_col]);
+                                    a_val = A_ptr[a_row * M + a_col];
+                                    sa_in_left[i].write(a_val);
                                 } else {
                                     sa_in_left[i].write(0.0f);
                                 }
                             }
                             
+                            // Wait for computation to complete
+                            wait();
+                            
                             // Drain C_tile results (skewed output from bottom)
+                            // Read outputs AFTER the clock edge
                             for (int j = 0; j < N; ++j) { 
                                 // WS: row r appears at cycle r + M + j
                                 int r_out_skewed = clk_cycle - M - j; 
@@ -217,10 +226,9 @@ SC_MODULE(MatMul_Controller)
                                         C_ptr[r_out_skewed * M + c_col] += partial_sum;
                                     }
                                 }
-                            } 
-                            
-                            wait();
+                            }
                         }
+                        cout << "    [WS] Computation complete" << endl;
                     }
                 } 
             }
@@ -242,7 +250,8 @@ SC_MODULE(MatMul_Controller)
                         
                         // Accumulation phase
                         sa_preload_valid.write(false); 
-                        int stream_cycles = k1 + min(k2, M) + min(k3, N); 
+                        int stream_cycles = k1 + min(k2, M) + min(k3, N);
+                        cout << "    [OS] Accumulating (i_t=" << i_t << ", j_t=" << j_t << ", " << stream_cycles << " cycles)..." << endl;
                         
                         for (int clk_cycle = 0; clk_cycle < stream_cycles; ++clk_cycle)
                         {
@@ -250,9 +259,11 @@ SC_MODULE(MatMul_Controller)
                             for (int i = 0; i < M; ++i) {
                                 int k = clk_cycle - i; 
                                 int a_row = i_t * M + i;
+                                float a_val = 0.0f;
                                 if (k >= 0 && k < k2 && a_row < k1) {
                                     // CRITICAL FIX: Buffers use stride M, not k2
-                                    sa_in_left[i].write(A_ptr[i * M + k]);
+                                    a_val = A_ptr[i * M + k];
+                                    sa_in_left[i].write(a_val);
                                 } else {
                                     sa_in_left[i].write(0.0f);
                                 }
@@ -262,24 +273,26 @@ SC_MODULE(MatMul_Controller)
                             for (int j = 0; j < N; ++j) {
                                 int k = clk_cycle - j; 
                                 int w_col = j_t * N + j;
+                                float w_val = 0.0f;
                                 if (k >= 0 && k < k2 && w_col < k3) {
                                     // CRITICAL FIX: Buffers use stride M, not k3
-                                    sa_in_top[j].write(W_ptr[k * M + j]);
+                                    w_val = W_ptr[k * M + j];
+                                    sa_in_top[j].write(w_val);
                                 } else {
                                     sa_in_top[j].write(0.0f);
                                 }
                             }
                             wait();
-                        } 
+                        }
+                        cout << "    [OS] Accumulation complete" << endl; 
 
                         // Drain phase - read accumulated outputs
+                        cout << "    [OS] Draining results..." << endl;
                         sa_preload_valid.write(true); 
                         for(int j=0; j<N; ++j) sa_in_top[j].write(0.0f); 
                         for(int i=0; i<M; ++i) sa_in_left[i].write(0.0f); 
 
                         int drain_cycles = M;
-                        wait();
-                        wait(SC_ZERO_TIME);
 
                         for (int clk_cycle = 0; clk_cycle < drain_cycles; ++clk_cycle)
                         {
@@ -289,12 +302,14 @@ SC_MODULE(MatMul_Controller)
                                 int c_col = j_t * N + j;
                                 
                                 if (c_row < k1 && c_col < k3) {
+                                    float c_val = sa_out_bottom[j].read();
                                     // CRITICAL FIX: Buffers use stride M, not k3
-                                    C_ptr[c_row * M + c_col] = sa_out_bottom[j].read();
+                                    C_ptr[c_row * M + c_col] = c_val;
                                 }
                             }
                             wait();
                         }
+                        cout << "    [OS] Drain complete" << endl;
                         sa_preload_valid.write(false); 
                     } 
                 } 
