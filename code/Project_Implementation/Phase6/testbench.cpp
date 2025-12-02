@@ -5,7 +5,11 @@
 
 using namespace std;
 
-// Helper: Initialize memory with test matrices
+// =================================================================
+// Helper Functions for Memory Initialization and Verification
+// =================================================================
+
+// Write matrices to memory file
 void initialize_memory_with_matrices(const char* filename,
                                      int a_base, float* A, int k1, int k2,
                                      int w_base, float* W, int k2_w, int k3)
@@ -28,7 +32,7 @@ void initialize_memory_with_matrices(const char* filename,
         for (int j = 0; j < k2; j++) {
             int byte_addr = a_base + (i * k2 + j) * 4;
             int float_index = byte_addr / 4;
-            int line_index = float_index + 4;  // Skip header lines
+            int line_index = float_index + 4;  // Skip 4 header lines
             
             if (line_index < lines.size()) {
                 ostringstream oss;
@@ -44,7 +48,7 @@ void initialize_memory_with_matrices(const char* filename,
         for (int j = 0; j < k3; j++) {
             int byte_addr = w_base + (i * k3 + j) * 4;
             int float_index = byte_addr / 4;
-            int line_index = float_index + 4;  // Skip header lines
+            int line_index = float_index + 4;
             
             if (line_index < lines.size()) {
                 ostringstream oss;
@@ -55,7 +59,7 @@ void initialize_memory_with_matrices(const char* filename,
         }
     }
     
-    // Write back entire file
+    // Write back the entire file
     ofstream file_out(filename, ios::trunc);
     for (const auto& l : lines) {
         file_out << l << endl;
@@ -65,7 +69,7 @@ void initialize_memory_with_matrices(const char* filename,
     cout << "Memory initialized with test matrices" << endl;
 }
 
-// Helper: Read matrix from memory file
+// Read matrix from memory file
 void read_matrix_from_memory(const char* filename, int base_addr, 
                              float* matrix, int rows, int cols)
 {
@@ -107,7 +111,7 @@ void read_matrix_from_memory(const char* filename, int base_addr,
     }
 }
 
-// Helper: Print matrix
+// Print matrix
 void print_matrix(const char* name, float* matrix, int rows, int cols)
 {
     cout << name << " (" << rows << "x" << cols << "):" << endl;
@@ -121,7 +125,7 @@ void print_matrix(const char* name, float* matrix, int rows, int cols)
     cout << endl;
 }
 
-// Helper: Verify result against expected
+// Verify result
 bool verify_result(float* C_expected, float* C_actual, int k1, int k3, float tolerance = 0.001)
 {
     bool passed = true;
@@ -140,7 +144,9 @@ bool verify_result(float* C_expected, float* C_actual, int k1, int k3, float tol
     return passed;
 }
 
-// Testbench module
+// =================================================================
+// Testbench Module
+// =================================================================
 SC_MODULE(Testbench)
 {
     // Clock and reset
@@ -175,6 +181,16 @@ SC_MODULE(Testbench)
         vcd_file = sc_create_vcd_trace_file("waveform");
         vcd_file->set_time_unit(1, SC_NS);
         
+        // Trace signals
+        sc_trace(vcd_file, clk, "clk");
+        sc_trace(vcd_file, reset, "reset");
+        sc_trace(vcd_file, start, "start");
+        sc_trace(vcd_file, done, "done");
+        sc_trace(vcd_file, K1, "K1");
+        sc_trace(vcd_file, K2, "K2");
+        sc_trace(vcd_file, K3, "K3");
+        sc_trace(vcd_file, output_stationary, "output_stationary");
+        
         // Instantiate DUT
         dut = new MemoryBackedController("dut");
         dut->clk(clk);
@@ -189,78 +205,6 @@ SC_MODULE(Testbench)
         dut->C_base_addr(C_base_addr);
         dut->output_stationary(output_stationary);
         
-        // ====================================================
-        // TRACE TOP-LEVEL SIGNALS
-        // ====================================================
-        sc_trace(vcd_file, clk, "clk");
-        sc_trace(vcd_file, reset, "reset");
-        sc_trace(vcd_file, start, "start");
-        sc_trace(vcd_file, done, "done");
-        sc_trace(vcd_file, K1, "K1");
-        sc_trace(vcd_file, K2, "K2");
-        sc_trace(vcd_file, K3, "K3");
-        sc_trace(vcd_file, A_base_addr, "A_base_addr");
-        sc_trace(vcd_file, W_base_addr, "W_base_addr");
-        sc_trace(vcd_file, C_base_addr, "C_base_addr");
-        sc_trace(vcd_file, output_stationary, "output_stationary");
-        
-        // ====================================================
-        // TRACE CONTROLLER INTERNAL SIGNALS
-        // ====================================================
-        sc_trace(vcd_file, dut->mem_read_enable, "mem_read_enable");
-        sc_trace(vcd_file, dut->mem_write_enable, "mem_write_enable");
-        sc_trace(vcd_file, dut->mem_address, "mem_address");
-        sc_trace(vcd_file, dut->mem_write_data, "mem_write_data");
-        sc_trace(vcd_file, dut->mem_read_data, "mem_read_data");
-        sc_trace(vcd_file, dut->mem_ready, "mem_ready");
-        sc_trace(vcd_file, dut->matmul_start, "matmul_start");
-        sc_trace(vcd_file, dut->matmul_done, "matmul_done");
-        
-        // ====================================================
-        // TRACE SYSTOLIC ARRAY SIGNALS
-        // ====================================================
-        // MatMul Controller signals
-        sc_trace(vcd_file, dut->matmul_ctrl->sa_reset, "sa_reset");
-        sc_trace(vcd_file, dut->matmul_ctrl->sa_preload_valid, "sa_preload_valid");
-        
-        // Systolic array inputs (left side - activations)
-        for (int i = 0; i < M; i++) {
-            char name[32];
-            sprintf(name, "sa_in_left[%d]", i);
-            sc_trace(vcd_file, dut->matmul_ctrl->sa_in_left[i], name);
-        }
-        
-        // Systolic array inputs (top side - weights)
-        for (int j = 0; j < N; j++) {
-            char name[32];
-            sprintf(name, "sa_in_top[%d]", j);
-            sc_trace(vcd_file, dut->matmul_ctrl->sa_in_top[j], name);
-        }
-        
-        // Systolic array outputs (right side)
-        for (int i = 0; i < M; i++) {
-            char name[32];
-            sprintf(name, "sa_out_right[%d]", i);
-            sc_trace(vcd_file, dut->matmul_ctrl->sa_out_right[i], name);
-        }
-        
-        // Systolic array outputs (bottom side - results)
-        for (int j = 0; j < N; j++) {
-            char name[32];
-            sprintf(name, "sa_out_bottom[%d]", j);
-            sc_trace(vcd_file, dut->matmul_ctrl->sa_out_bottom[j], name);
-        }
-        
-        // Preload data signals
-        for (int i = 0; i < min(M * N, 9); i++) {  // Limit to first 9 for readability
-            char name[32];
-            sprintf(name, "sa_preload_data[%d]", i);
-            sc_trace(vcd_file, dut->matmul_ctrl->sa_preload_data[i], name);
-        }
-        
-        cout << "VCD tracing enabled: waveform.vcd" << endl;
-        cout << "Tracing " << M*N << " PE array with all I/O signals" << endl;
-        
         SC_THREAD(test_process);
     }
     
@@ -272,34 +216,49 @@ SC_MODULE(Testbench)
     
     void test_process()
     {
-        // ====================================================
-        // TEST 1: 5x5 Matrix Multiplication (WS Mode)
-        // ====================================================
-        cout << "\n╔═══════════════════════════════════════════════╗" << endl;
+        // =======================================================
+        // TEST 1: 5x5 Matrix Multiplication in WS Mode
+        // =======================================================
+        cout << "\n╔════════════════════════════════════════════════╗" << endl;
         cout << "║  TEST 1: 5x5 Matrix Multiplication (WS Mode)  ║" << endl;
-        cout << "╚═══════════════════════════════════════════════╝" << endl;
+        cout << "╚════════════════════════════════════════════════╝" << endl;
         
         int k1 = 5, k2 = 5, k3 = 5;
         
-        // Test matrix A (5x5)
+        // // Test matrices
+        // float A1[25] = {
+        //     1.0, 2.0, 3.0, 4.0, 5.0,
+        //     6.0, 7.0, 8.0, 9.0, 10.0,
+        //     11.0, 12.0, 13.0, 14.0, 15.0,
+        //     16.0, 17.0, 18.0, 19.0, 20.0,
+        //     21.0, 22.0, 23.0, 24.0, 25.0
+        // };
+        
+        // float W1[25] = {
+        //     1.0, 2.0, 3.0, 4.0, 5.0,
+        //     6.0, 7.0, 8.0, 9.0, 10.0,
+        //     11.0, 12.0, 13.0, 14.0, 15.0,
+        //     16.0, 17.0, 18.0, 19.0, 20.0,
+        //     21.0, 22.0, 23.0, 24.0, 25.0
+        // };
+        // Test matrices
         float A1[25] = {
-            1.0, 2.0, 3.0, 4.0, 5.0,
-            6.0, 7.0, 8.0, 9.0, 10.0,
-            11.0, 12.0, 13.0, 14.0, 15.0,
-            16.0, 17.0, 18.0, 19.0, 20.0,
-            21.0, 22.0, 23.0, 24.0, 25.0
+            6.0, -8.0, -7.0, -7.0, 3.0,
+            8.0, -4.0, 9.0, -1.0, -9.0,
+            -7.0, 1.0, 9.0, 8.0, 7.0,
+            8.0, 9.0, 0.0, 6.0, 8.0,
+            3.0, 9.0, 6.0, 9.0, 3.0
         };
         
-        // Test matrix W (5x5 identity)
         float W1[25] = {
-            1.0, 2.0, 3.0, 4.0, 5.0,
-            6.0, 7.0, 8.0, 9.0, 10.0,
-            11.0, 12.0, 13.0, 14.0, 15.0,
-            16.0, 17.0, 18.0, 19.0, 20.0,
-            21.0, 22.0, 23.0, 24.0, 25.0
+            5.0, 4.0, 6.0, -1.0, 0.0,
+            5.0, -9.0, 4.0, -2.0, -1.0,
+            -2.0, -4.0, -3.0, 5.0, 3.0,
+            3.0, -9.0, 9.0, 6.0, 4.0,
+            -6.0, -8.0, -9.0, -6.0, 5.0
         };
         
-        // Calculate expected result (A * I = A)
+        // Compute expected result (A * W)
         float C1_expected[25];
         for (int i = 0; i < 25; i++) C1_expected[i] = 0.0f;
         for (int i = 0; i < k1; i++) {
@@ -315,7 +274,7 @@ SC_MODULE(Testbench)
         int w_base = 256;
         int c_base = 512;
         
-        // Reset sequence
+        // Reset
         reset.write(true);
         start.write(false);
         wait(20, SC_NS);
@@ -338,6 +297,7 @@ SC_MODULE(Testbench)
         
         print_matrix("Input A", A1, k1, k2);
         print_matrix("Input W", W1, k2, k3);
+        print_matrix("Expected C", C1_expected, k1, k3);
         
         // Start computation
         wait(20, SC_NS);
@@ -352,12 +312,11 @@ SC_MODULE(Testbench)
         
         wait(50, SC_NS);
         
-        // Read result from memory
+        // Read and verify result
         float C1_actual[25];
         read_matrix_from_memory("memory.txt", c_base, C1_actual, k1, k3);
         
         print_matrix("Result C (from memory)", C1_actual, k1, k3);
-        print_matrix("Expected C", C1_expected, k1, k3);
         
         if (verify_result(C1_expected, C1_actual, k1, k3)) {
             cout << "✓ TEST 1 PASSED" << endl;
@@ -367,70 +326,75 @@ SC_MODULE(Testbench)
         
         wait(100, SC_NS);
         
-        // ====================================================
-        // TEST 2: Same test in OS Mode
-        // ====================================================
-        // cout << "\n╔═══════════════════════════════════════════════╗" << endl;
-        // cout << "║  TEST 2: 5x5 Matrix Multiplication (OS Mode)  ║" << endl;
-        // cout << "╚═══════════════════════════════════════════════╝" << endl;
+        // =======================================================
+        // TEST 2: 5x5 Matrix Multiplication in OS Mode
+        // =======================================================
+        cout << "\n╔════════════════════════════════════════════════╗" << endl;
+        cout << "║  TEST 2: 5x5 Matrix Multiplication (OS Mode)   ║" << endl;
+        cout << "╚════════════════════════════════════════════════╝" << endl;
         
-        // // Reset
-        // reset.write(true);
-        // wait(20, SC_NS);
-        // reset.write(false);
-        // wait(20, SC_NS);
+        // Same matrices, different mode
+        // Reset
+        reset.write(true);
+        wait(20, SC_NS);
+        reset.write(false);
+        wait(20, SC_NS);
         
-        // // Reinitialize memory
-        // initialize_memory_with_matrices("memory.txt", 
-        //                                a_base, A1, k1, k2,
-        //                                w_base, W1, k2, k3);
+        // Initialize memory again (clear C)
+        initialize_memory_with_matrices("memory.txt", 
+                                       a_base, A1, k1, k2,
+                                       w_base, W1, k2, k3);
         
-        // // Configure for OS mode
-        // output_stationary.write(true);  // OS mode
+        // Configure test dimensions and addresses
+        K1.write(k1);
+        K2.write(k2);
+        K3.write(k3);
+        A_base_addr.write(a_base);
+        W_base_addr.write(w_base);
+        C_base_addr.write(c_base);
+        output_stationary.write(true);  // OS mode
         
-        // // Start computation
-        // wait(20, SC_NS);
-        // start.write(true);
-        // wait(10, SC_NS);
-        // start.write(false);
+        // Start computation
+        wait(20, SC_NS);
+        start.write(true);
+        wait(10, SC_NS);
+        start.write(false);
         
-        // // Wait for completion
-        // while (!done.read()) {
-        //     wait(10, SC_NS);
-        // }
+        // Wait for completion
+        while (!done.read()) {
+            wait(10, SC_NS);
+        }
         
-        // wait(50, SC_NS);
+        wait(50, SC_NS);
         
-        // // Read result
-        // float C2_actual[25];
-        // read_matrix_from_memory("memory.txt", c_base, C2_actual, k1, k3);
+        // Read and verify result
+        float C2_actual[25];
+        read_matrix_from_memory("memory.txt", c_base, C2_actual, k1, k3);
         
-        // print_matrix("Result C (from memory)", C2_actual, k1, k3);
-        // print_matrix("Expected C", C1_expected, k1, k3);
+        print_matrix("Result C (from memory)", C2_actual, k1, k3);
         
-        // if (verify_result(C1_expected, C2_actual, k1, k3)) {
-        //     cout << "✓ TEST 2 PASSED" << endl;
-        // } else {
-        //     cout << "✗ TEST 2 FAILED" << endl;
-        // }
+        if (verify_result(C1_expected, C2_actual, k1, k3)) {
+            cout << "✓ TEST 2 PASSED" << endl;
+        } else {
+            cout << "✗ TEST 2 FAILED" << endl;
+        }
         
-        // wait(100, SC_NS);
+        wait(100, SC_NS);
         
-        // cout << "\n╔═══════════════════════════════════════════════╗" << endl;
-        // cout << "║           All Tests Completed                 ║" << endl;
-        // cout << "╚═══════════════════════════════════════════════╝\n" << endl;
+        cout << "\n╔════════════════════════════════════════════════╗" << endl;
+        cout << "║           All Tests Completed                  ║" << endl;
+        cout << "╚════════════════════════════════════════════════╝\n" << endl;
         
         sc_stop();
     }
 };
 
-// Main function
+// =================================================================
+// Main Function
+// =================================================================
 int sc_main(int argc, char* argv[])
 {
     Testbench tb("tb");
-    
-    // Run simulation
     sc_start();
-    
     return 0;
 }

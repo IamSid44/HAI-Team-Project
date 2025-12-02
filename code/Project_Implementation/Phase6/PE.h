@@ -9,47 +9,46 @@
 
 using namespace std;
 
-// Processing Element (PE) - Basic compute unit in systolic array
-// Supports two dataflow modes:
-// 1. Weight Stationary (WS): Weights preloaded, activations stream through
-// 2. Output Stationary (OS): Outputs accumulate in PE, then drain
+// PE Module with Fixed OS Drain Logic
 SC_MODULE(PE)
 {
     // Clock and reset
     sc_in<bool> clk;
     sc_in<bool> reset;
 
-    // Dataflow mode control
+    // Check if its output stationary or weight/input stationary
     sc_in<bool> output_stationary;
 
-    // Dataflow ports (4-way connectivity)
-    sc_in<float> in_top;        // Input from above
-    sc_in<float> in_left;       // Input from left
-    sc_out<float> out_right;    // Output to right
-    sc_out<float> out_bottom;   // Output to bottom
+    // Input from the top, input from the left, output to the right, output to the bottom
+    sc_in<float> in_top;
+    sc_in<float> in_left;
+    sc_out<float> out_right;
+    sc_out<float> out_bottom;
 
-    // Preload interface (for WS mode)
+    // Preloading buffer and signal
     sc_in<bool> preload_valid;
     sc_in<float> preload_data;
 
-    // Internal state
-    float preload_buffer;       // Holds preloaded weight (WS mode)
-    float accumulator_buffer;   // Accumulates partial sums
-    float right_out_buffer;     // Output register (right)
-    float bottom_out_buffer;    // Output register (bottom)
-    bool drain_value_sent;      // OS drain state tracking
+    // Internal storage
+    float preload_buffer;
+    float accumulator_buffer;
+    float right_out_buffer;
+    float bottom_out_buffer;
 
-    // PE identification for logging
+    // State for OS Drain: tracks if we've sent our accumulated value
+    bool drain_value_sent;
+
+    // PE identification
     int array_id, row_id, col_id;
     string log_filename;
     bool first_write;
 
-    // Constructor with PE coordinates
+    // Custom Constructor with IDs
     PE(sc_module_name name, int array_id, int row_id, int col_id) : 
       sc_module(name), array_id(array_id), row_id(row_id), col_id(col_id), 
       first_write(true), drain_value_sent(false)
     {
-        // Create output directory if needed
+        // Create PE_Outputs directory if it doesn't exist
         mkdir("PE_Outputs", 0755);
         
         log_filename = "PE_Outputs/PE_" + to_string(array_id) + "_" + 
@@ -60,7 +59,7 @@ SC_MODULE(PE)
         dont_initialize();
     }
 
-    // Main PE processing logic
+    // PE Process with Fixed Drain Logic
     void process()
     {
         while(true)
@@ -81,46 +80,66 @@ SC_MODULE(PE)
             {
                 if (output_stationary.read() == true)
                 {
-                    // ============================================
+                    // ===================================
                     // OUTPUT STATIONARY MODE
-                    // ============================================
+                    // ===================================
                     if (preload_valid.read() == true) 
                     {
-                        // DRAIN PHASE: Output accumulated results
-                        if (drain_value_sent == false) {
-                            // First cycle: output our accumulated value
+                        // DRAIN PHASE
+                        // When preload_valid is high, we're draining results
+                        
+                        if (drain_value_sent == false) 
+                        {
+                            // First drain cycle: output our accumulated value
                             bottom_out_buffer = accumulator_buffer;
                             drain_value_sent = true;
-                        } else {
+                        } 
+                        else 
+                        {
                             // Subsequent cycles: pass through from top
                             bottom_out_buffer = in_top.read();
                         }
-                        right_out_buffer = 0;
+                        
+                        right_out_buffer = 0; // Not used during drain
                     } 
                     else 
                     {
-                        // ACCUMULATION PHASE: Compute partial products
+                        // ACCUMULATE PHASE
+                        // When preload_valid is low, we're accumulating
+                        
+                        // MAC operation: accumulator += A * W
                         accumulator_buffer += in_top.read() * in_left.read();
+                        
+                        // Pass inputs to neighbors
                         right_out_buffer = in_left.read();   // Pass A right
                         bottom_out_buffer = in_top.read();   // Pass W down
+                        
+                        // Reset drain state for next drain phase
                         drain_value_sent = false;
                     }
                 }
                 else
                 {
-                    // ============================================
+                    // ===================================
                     // WEIGHT STATIONARY MODE
-                    // ============================================
+                    // ===================================
                     if (preload_valid.read() == true)
                     {
-                        // Load weight into PE
+                        // Preload weight into local buffer
                         preload_buffer = preload_data.read();
                     }
 
-                    // Compute: MAC with preloaded weight
+                    // MAC operation with preloaded weight
+                    // accumulator = A * W_preloaded + partial_sum_from_top
                     accumulator_buffer = in_left.read() * preload_buffer + in_top.read();
+                    
+                    // Output partial sum downward
                     bottom_out_buffer = accumulator_buffer;
+                    
+                    // Pass activation rightward
                     right_out_buffer = in_left.read();
+                    
+                    // Reset OS drain state (not used in WS mode)
                     drain_value_sent = false;
                 }
 
@@ -129,7 +148,7 @@ SC_MODULE(PE)
                 out_bottom.write(bottom_out_buffer);
             }
             
-            // Log PE state every cycle
+            // Log PE state to file every clock cycle
             write_to_file();
             
             wait();
@@ -144,15 +163,21 @@ SC_MODULE(PE)
         if (file.is_open())
         {
             file << "Time: " << sc_time_stamp() << endl;
-            file << "Preload Buffer: " << preload_buffer << endl;
-            file << "Accumulator Buffer: " << accumulator_buffer << endl;
+            file << "  Mode: " << (output_stationary.read() ? "OS" : "WS") << endl;
+            file << "  Preload Buffer: " << preload_buffer << endl;
+            file << "  Accumulator: " << accumulator_buffer << endl;
+            file << "  Inputs: top=" << in_top.read() 
+                 << " left=" << in_left.read() << endl;
+            file << "  Outputs: right=" << right_out_buffer 
+                 << " bottom=" << bottom_out_buffer << endl;
             file << "-----------------------------------------------------" << endl;
             file.close();
             first_write = false;
         }
         else
         {
-            cout << "Error: Unable to open file " << log_filename << " for writing" << endl;
+            cout << "Error: Unable to open file " << log_filename 
+                 << " for writing" << endl;
         }
     }
 };

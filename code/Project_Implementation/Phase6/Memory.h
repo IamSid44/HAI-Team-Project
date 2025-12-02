@@ -10,33 +10,34 @@
 using namespace std;
 
 // Simple byte-addressed memory module backed by a file
-// - 4 bytes per float (aligned access required)
-// - Uninitialized locations store "XXXX"
-// - 1 cycle latency for read/write operations
+// Each row is byte-addressed (4 bytes per float)
+// Uninitialized locations store "XXXX"
 SC_MODULE(Memory)
 {
-    // Clock and control
+    // Clock and control signals
     sc_in<bool> clk;
     sc_in<bool> reset;
     
     // Memory interface
     sc_in<bool> read_enable;
     sc_in<bool> write_enable;
-    sc_in<int> address;          // Byte address (must be 4-byte aligned)
+    sc_in<int> address;          // Byte address
     sc_in<float> write_data;
     sc_out<float> read_data;
-    sc_out<bool> ready;          // Operation complete signal
+    sc_out<bool> ready;          // Memory operation complete
     
     // Internal storage
     string memory_file;
-    int memory_size_bytes;
-    int memory_size_floats;
+    int memory_size_bytes;       // Total memory size in bytes
+    int memory_size_floats;      // Total memory size in floats
     
     // Constructor
     Memory(sc_module_name name, const char* mem_file, int size_bytes) 
         : sc_module(name), memory_file(mem_file), memory_size_bytes(size_bytes)
     {
-        memory_size_floats = size_bytes / 4;
+        memory_size_floats = size_bytes / 4;  // 4 bytes per float
+        
+        // Initialize memory file with XXXX for all locations
         initialize_memory_file();
         
         SC_THREAD(memory_process);
@@ -89,7 +90,6 @@ SC_MODULE(Memory)
         int target_index = byte_addr / 4;
         int current_index = 0;
         
-        // Find the target line
         while (getline(file, line)) {
             if (line.empty() || line[0] == '#') continue;
             
@@ -97,6 +97,7 @@ SC_MODULE(Memory)
                 size_t colon_pos = line.find(':');
                 if (colon_pos != string::npos) {
                     string value_str = line.substr(colon_pos + 1);
+                    // Trim whitespace
                     value_str.erase(0, value_str.find_first_not_of(" \t"));
                     value_str.erase(value_str.find_last_not_of(" \t\n\r") + 1);
                     
@@ -160,7 +161,8 @@ SC_MODULE(Memory)
         file_out.close();
     }
     
-    // Memory process - handles read/write with 1 cycle latency
+    // Memory process - 1 cycle latency for read/write
+    // FIX: Made read and write mutually exclusive to avoid race conditions
     void memory_process()
     {
         while (true)
@@ -170,22 +172,29 @@ SC_MODULE(Memory)
                 ready.write(false);
             }
             else {
+                // Default: not ready
                 ready.write(false);
                 
-                // Handle read operation
-                if (read_enable.read()) {
+                // FIX: Use if-else to make operations mutually exclusive
+                // This prevents race conditions when both enables are high
+                if (read_enable.read() && !write_enable.read()) {
+                    // Handle read operation
                     int addr = address.read();
                     float data = read_from_file(addr);
                     read_data.write(data);
                     ready.write(true);
                 }
-                
-                // Handle write operation
-                if (write_enable.read()) {
+                else if (write_enable.read() && !read_enable.read()) {
+                    // Handle write operation
                     int addr = address.read();
                     float data = write_data.read();
                     write_to_file(addr, data);
                     ready.write(true);
+                }
+                // If both are high, do nothing (error condition)
+                else if (read_enable.read() && write_enable.read()) {
+                    cout << "ERROR: Both read and write enabled at " 
+                         << sc_time_stamp() << endl;
                 }
             }
             

@@ -17,25 +17,29 @@
 
 using namespace std;
 
-// Systolic Array Module (M x N grid of PEs)
+// =================================================================
+// Systolic Array Module (MxN grid of PEs)
+// =================================================================
 SC_MODULE(SA_MxN)
 {
     // Clock and reset
     sc_in<bool> clk;
     sc_in<bool> reset;
+
+    // Dataflow mode selection
     sc_in<bool> output_stationary;
 
-    // Array inputs/outputs
+    // Array inputs and outputs
     sc_in<float> in_top[N];
     sc_in<float> in_left[M];
     sc_out<float> out_right[M];
     sc_out<float> out_bottom[N];
 
-    // Preload signals
+    // Preloading interface
     sc_in<bool> preload_valid;
     sc_in<float> preload_data[M * N]; 
 
-    // Internal signals connecting PEs
+    // Internal signals for inter-PE connections
     sc_signal<float> pe_out_right[M][N - 1];
     sc_signal<float> pe_out_bottom[M - 1][N];
 
@@ -45,37 +49,39 @@ SC_MODULE(SA_MxN)
     // Constructor
     SA_MxN(sc_module_name name, int array_id) : sc_module(name), array_id(array_id)
     {
-        // Instantiate PEs in M x N grid
-        for(int i = 0; i < M; i++) {
-            for(int j = 0; j < N; j++) {
+        // Instantiate PEs in MxN grid
+        for(int i = 0; i < M; i++) // Row index
+        {
+            for(int j = 0; j < N; j++) // Column index
+            {
                 string pe_name = "PE_" + to_string(i) + "_" + to_string(j);
                 pe_array[i][j] = new PE(pe_name.c_str(), array_id, i, j);
                 
-                // Connect clock, reset, and control signals
+                // Connect common signals
                 pe_array[i][j]->clk(clk);
                 pe_array[i][j]->reset(reset);
                 pe_array[i][j]->output_stationary(output_stationary);
                 pe_array[i][j]->preload_valid(preload_valid);
                 
-                // Connect left input (from array input or previous PE)
+                // Connect left input: from external or from PE on left
                 if(j == 0) 
                     pe_array[i][j]->in_left(in_left[i]);
                 else       
                     pe_array[i][j]->in_left(pe_out_right[i][j - 1]);
                 
-                // Connect top input (from array input or previous PE)
+                // Connect top input: from external or from PE above
                 if(i == 0) 
                     pe_array[i][j]->in_top(in_top[j]);
                 else       
                     pe_array[i][j]->in_top(pe_out_bottom[i - 1][j]);
 
-                // Connect right output (to next PE or array output)
+                // Connect right output: to external or to PE on right
                 if(j == N - 1) 
                     pe_array[i][j]->out_right(out_right[i]);
                 else           
                     pe_array[i][j]->out_right(pe_out_right[i][j]);
                 
-                // Connect bottom output (to next PE or array output)
+                // Connect bottom output: to external or to PE below
                 if(i == M - 1) 
                     pe_array[i][j]->out_bottom(out_bottom[j]);
                 else           
@@ -85,7 +91,8 @@ SC_MODULE(SA_MxN)
                 pe_array[i][j]->preload_data(preload_data[i * N + j]);
             }
         }
-        cout << "SA_" << M << "x" << N << " Module Created with array_id: " << array_id << endl;
+        cout << "SA_" << M << "x" << N << " Module Created with array_id: " 
+             << array_id << endl;
     }
 
     ~SA_MxN() {
@@ -97,32 +104,34 @@ SC_MODULE(SA_MxN)
     }
 };
 
-// Matrix Multiplication Controller - manages dataflow to/from systolic array
+// =================================================================
+// Matrix Multiplication Controller
+// Handles tiling and dataflow control for the systolic array
+// =================================================================
 SC_MODULE(MatMul_Controller)
 {
-    // Clock and control
+    // --- Ports ---
     sc_in<bool> clk;
     sc_in<bool> reset;
     sc_in<bool> start; 
     sc_out<bool> done; 
 
-    // Dataflow mode selection
     sc_in<bool> sa_mode_is_output_stationary;
 
-    // Matrix pointers (from external buffers)
+    // Matrix pointers (pointing to tile buffers)
     sc_in<float*> A_matrix; 
     sc_in<float*> W_matrix; 
     sc_in<float*> C_matrix; 
 
-    // Matrix dimensions for current tile
+    // ACTUAL tile dimensions (may be < M for edge tiles)
     sc_in<int> K1; 
     sc_in<int> K2; 
     sc_in<int> K3; 
 
-    // Systolic array instance
+    // --- Internal Components ---
     SA_MxN* sa_grid; 
 
-    // Internal signals to/from systolic array
+    // --- Internal Signals ---
     sc_signal<bool> sa_reset;
     sc_signal<bool> sa_preload_valid;
     sc_signal<float> sa_in_top[N];
@@ -131,7 +140,9 @@ SC_MODULE(MatMul_Controller)
     sc_signal<float> sa_out_bottom[N];
     sc_signal<float> sa_preload_data[M * N];
 
-    // Dataflow control FSM
+   // =================================================================
+   // Main Tiling Control Process
+   // =================================================================
     void tiling_process() 
     {
         // Initial reset
@@ -139,6 +150,7 @@ SC_MODULE(MatMul_Controller)
         done.write(false);
         wait(); 
         sa_reset.write(false);
+        wait();
  
         while(true) 
         {
@@ -147,182 +159,155 @@ SC_MODULE(MatMul_Controller)
             
             done.write(false);
             
-            // Read configuration
+            // Read dimensions (these are ACTUAL tile dimensions, may be < M)
             int k1 = K1.read();
             int k2 = K2.read();
             int k3 = K3.read();
+            
+            // Get buffer pointers
             float* A_ptr = A_matrix.read();
             float* W_ptr = W_matrix.read();
             float* C_ptr = C_matrix.read();
             
+            // =================================================
+            // MODE SELECTION: WS or OS
+            // =================================================
             if (sa_mode_is_output_stationary.read() == false)
             {
-                // ================================================
-                // WEIGHT STATIONARY (WS) MODE
-                // ================================================
-                // In WS mode: weights are preloaded, activations stream through
+                // =============================================
+                // WEIGHT STATIONARY MODE
+                // =============================================
                 
-                for (int j_t = 0; j_t < (k3 + N - 1) / N; ++j_t) 
-                {
-                    for (int k_t = 0; k_t < (k2 + M - 1) / M; ++k_t) 
-                    {
-                        // Preload W_tile into PEs
-                        cout << "    [WS] Preloading weights (k_t=" << k_t << ", j_t=" << j_t << ")" << endl;
-                        sa_preload_valid.write(true);
-                        for (int i = 0; i < M; ++i) { 
-                            for (int j = 0; j < N; ++j) { 
-                                int w_row = k_t * M + i;
-                                int w_col = j_t * N + j;
-                                if (w_row < k2 && w_col < k3) {
-                                    // Buffer indexing: direct i,j since W_tile is already the tile we want
-                                    float w_val = W_ptr[i * M + j];
-                                    sa_preload_data[i * N + j].write(w_val);
-                                } else {
-                                    sa_preload_data[i * N + j].write(0.0f);
-                                }
-                            }
+                // --- Phase 1: Preload Weights ---
+                sa_preload_valid.write(true);
+                
+                for (int i = 0; i < M; ++i) { 
+                    for (int j = 0; j < N; ++j) { 
+                        // Use buffer stride M
+                        if (i < k2 && j < k3) {
+                            sa_preload_data[i * N + j].write(W_ptr[i * M + j]);
+                        } else {
+                            sa_preload_data[i * N + j].write(0.0f);
                         }
-                        wait();
-                        sa_preload_valid.write(false);
-                        
-                        // Clear top inputs
-                        for (int j = 0; j < N; j++) sa_in_top[j].write(0.0f);
-
-                        // Stream A_tile and drain C_tile
-                        int total_cycles = k1 + min(k2, M) + min(k3, N);
-                        cout << "    [WS] Streaming and computing (" << total_cycles << " cycles)..." << endl;
-                        
-                        for (int clk_cycle = 0; clk_cycle < total_cycles; ++clk_cycle) 
-                        {
-                            // Feed A_tile (skewed input on left side)
-                            for (int i = 0; i < M; ++i) { 
-                                int a_row = clk_cycle - i; 
-                                int a_col = k_t * M + i; 
-                                float a_val = 0.0f;
-                                if (a_row >= 0 && a_row < k1 && a_col < k2) {
-                                    // Buffer indexing: use (a_col % M) since buffer has stride M
-                                    a_val = A_ptr[a_row * M + (a_col % M)];
-                                    sa_in_left[i].write(a_val);
-                                } else {
-                                    sa_in_left[i].write(0.0f);
-                                }
-                            }
-                            
-                            // Wait for computation to complete
-                            wait();
-                            
-                            // Wait for outputs to settle
-                            wait(SC_ZERO_TIME);
-                            
-                            // Drain C_tile results (skewed output from bottom)
-                            for (int j = 0; j < N; ++j) { 
-                                // WS: row r appears at cycle r + M + j
-                                int r_out_skewed = clk_cycle - M - j; 
-                                
-                                if (r_out_skewed >= 0 && r_out_skewed < k1) 
-                                {
-                                    int c_col = j_t * N + j; 
-                                    if (c_col < k3) {
-                                        float partial_sum = sa_out_bottom[j].read();
-                                        // Buffer indexing: use (c_col % M) since buffer has stride M
-                                        C_ptr[r_out_skewed * M + (c_col % M)] += partial_sum;
-                                    }
-                                }
-                            }
-                        }
-                        cout << "    [WS] Computation complete" << endl;
                     }
-                } 
+                }
+
+                wait();
+                
+                sa_preload_valid.write(false);
+                for (int j = 0; j < N; j++) sa_in_top[j].write(0.0f);
+
+                // --- Phase 2: Stream A_tile and Drain C_tile ---
+                int total_cycles = k1 + M + N;
+                
+                for (int clk_cycle = 0; clk_cycle < total_cycles; ++clk_cycle) 
+                {
+                    // Feed A_tile with skew
+                    for (int i = 0; i < M; ++i) { 
+                        int a_row = clk_cycle - i;
+                        
+                        if (a_row >= 0 && a_row < k1 && i < k2) {
+                            sa_in_left[i].write(A_ptr[a_row * M + i]);
+                        } else {
+                            sa_in_left[i].write(0.0f);
+                        }
+                    }
+                    
+                    // Read and un-skew C_tile results
+                    for (int j = 0; j < N; ++j) { 
+                        int r_out = clk_cycle - M - j - 1; 
+                        
+                        if (r_out >= 0 && r_out < k1 && j < k3) {
+                            float partial_sum = sa_out_bottom[j].read();
+                            C_ptr[r_out * M + j] += partial_sum;
+                        }
+                    } 
+                    
+                    wait();
+                }
             }
             else 
             {
-                // ================================================
-                // OUTPUT STATIONARY (OS) MODE
-                // ================================================
-                // In OS mode: outputs accumulate in PEs, then drain at the end
+                // =============================================
+                // OUTPUT STATIONARY MODE
+                // =============================================
                 
-                for (int i_t = 0; i_t < (k1 + M - 1) / M; ++i_t) 
+                // --- Phase 1: Reset PE Accumulators ---
+                sa_reset.write(true);
+                wait();
+                sa_reset.write(false);
+                wait(); // CRITICAL: Give PEs one cycle to complete reset
+                
+                // --- Phase 2: Accumulate Phase ---
+                sa_preload_valid.write(false);
+                
+                int stream_cycles = k2 + M + N + 1;
+                
+                for (int clk_cycle = 0; clk_cycle < stream_cycles; ++clk_cycle)
                 {
-                    for (int j_t = 0; j_t < (k3 + N - 1) / N; ++j_t) 
-                    {
-                        // Reset PE accumulators for this output tile
-                        sa_reset.write(true);
+                    // Stream A_tile from left with skew
+                    for (int i = 0; i < M; ++i) {
+                        int k = clk_cycle - i;
+                        
+                        if (k >= 0 && k < k2 && i < k1) {
+                            sa_in_left[i].write(A_ptr[i * M + k]);
+                        } else {
+                            sa_in_left[i].write(0.0f);
+                        }
+                    }
+                    
+                    // Stream W_tile from top with skew
+                    for (int j = 0; j < N; ++j) {
+                        int k = clk_cycle - j;
+                        
+                        if (k >= 0 && k < k2 && j < k3) {
+                            sa_in_top[j].write(W_ptr[k * M + j]);
+                        } else {
+                            sa_in_top[j].write(0.0f);
+                        }
+                    }
+                    wait();
+                }
+                
+                // --- Phase 3: Drain Phase ---
+                // Clear inputs during drain
+                for(int j=0; j<N; ++j) sa_in_top[j].write(0.0f); 
+                for(int i=0; i<M; ++i) sa_in_left[i].write(0.0f); 
+                
+                // Set preload_valid to trigger drain in PEs
+                sa_preload_valid.write(true); 
+                wait(); // First wait: let PEs see preload_valid and output their accumulators
+                wait(1, SC_NS); // Small delay to ensure signal propagation
+                
+                // Drain for M cycles to get all rows
+                for (int clk_cycle = 0; clk_cycle < M; ++clk_cycle)
+                {
+                    for (int j = 0; j < N; ++j) {
+                        int i_out = M - 1 - clk_cycle;
+                        
+                        if (i_out >= 0 && i_out < k1 && j < k3) {
+                            float result = sa_out_bottom[j].read();
+                            C_ptr[i_out * M + j] += result;  // ACCUMULATE across k-tiles
+                        }
+                    }
+                    
+                    // Wait for next drain cycle (except after last one)
+                    if (clk_cycle < M - 1) {
                         wait();
-                        sa_reset.write(false);
-                        
-                        // Accumulation phase
-                        sa_preload_valid.write(false); 
-                        int stream_cycles = k1 + min(k2, M) + min(k3, N);
-                        cout << "    [OS] Accumulating (i_t=" << i_t << ", j_t=" << j_t << ", " << stream_cycles << " cycles)..." << endl;
-                        
-                        for (int clk_cycle = 0; clk_cycle < stream_cycles; ++clk_cycle)
-                        {
-                            // Feed A_tile (skewed from left)
-                            for (int i = 0; i < M; ++i) {
-                                int k = clk_cycle - i; 
-                                int a_row = i_t * M + i;
-                                float a_val = 0.0f;
-                                if (k >= 0 && k < k2 && a_row < k1) {
-                                    // Buffer indexing: use (k % M) since buffer has stride M
-                                    a_val = A_ptr[i * M + (k % M)];
-                                    sa_in_left[i].write(a_val);
-                                } else {
-                                    sa_in_left[i].write(0.0f);
-                                }
-                            }
-                            
-                            // Feed W_tile (skewed from top)
-                            for (int j = 0; j < N; ++j) {
-                                int k = clk_cycle - j; 
-                                int w_col = j_t * N + j;
-                                float w_val = 0.0f;
-                                if (k >= 0 && k < k2 && w_col < k3) {
-                                    // Buffer indexing: use (k % M) since buffer has stride M
-                                    w_val = W_ptr[(k % M) * M + j];
-                                    sa_in_top[j].write(w_val);
-                                } else {
-                                    sa_in_top[j].write(0.0f);
-                                }
-                            }
-                            wait();
-                        }
-                        cout << "    [OS] Accumulation complete" << endl; 
-
-                        // Drain phase - read accumulated outputs
-                        cout << "    [OS] Draining results..." << endl;
-                        sa_preload_valid.write(true); 
-                        for(int j=0; j<N; ++j) sa_in_top[j].write(0.0f); 
-                        for(int i=0; i<M; ++i) sa_in_left[i].write(0.0f); 
-
-                        int drain_cycles = M;
-
-                        for (int clk_cycle = 0; clk_cycle < drain_cycles; ++clk_cycle)
-                        {
-                            // Drain outputs (bottom to top order)
-                            for (int j = 0; j < N; ++j) {
-                                int c_row = i_t * M + M - clk_cycle - 1;
-                                int c_col = j_t * N + j;
-                                
-                                if (c_row < k1 && c_col < k3) {
-                                    float c_val = sa_out_bottom[j].read();
-                                    // Buffer indexing: use (c_col % M) since buffer has stride M
-                                    C_ptr[c_row * M + (c_col % M)] = c_val;
-                                }
-                            }
-                            wait();
-                        }
-                        cout << "    [OS] Drain complete" << endl;
-                        sa_preload_valid.write(false); 
-                    } 
-                } 
+                    }
+                }
+                
+                sa_preload_valid.write(false); 
             } 
             
+            // Signal completion
             done.write(true);
             wait();
+            done.write(false);
         } 
     } 
     
-    // Constructor
+    // --- Constructor ---
     SC_CTOR(MatMul_Controller) 
     {
         // Instantiate systolic array
@@ -346,7 +331,7 @@ SC_MODULE(MatMul_Controller)
             sa_grid->preload_data[i](sa_preload_data[i]);
         }
         
-        // Register FSM thread
+        // Register control process
         SC_CTHREAD(tiling_process, clk.pos());
         reset_signal_is(reset, true); 
     }
