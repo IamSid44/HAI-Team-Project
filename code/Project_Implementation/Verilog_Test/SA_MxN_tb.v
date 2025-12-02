@@ -62,6 +62,49 @@ module SA_MxN_tb;
         $dumpfile("sa_mxn_test.vcd");
         $dumpvars(0, SA_MxN_tb);
         
+        // Dump individual array elements for better waveform viewing
+        $dumpvars(1, in_top_array[0], in_top_array[1], in_top_array[2]);
+        $dumpvars(1, in_left_array[0], in_left_array[1], in_left_array[2]);
+        $dumpvars(1, out_bottom_array[0], out_bottom_array[1], out_bottom_array[2]);
+        $dumpvars(1, out_right_array[0], out_right_array[1], out_right_array[2]);
+        $dumpvars(1, preload_array[0], preload_array[1], preload_array[2]);
+        $dumpvars(1, preload_array[3], preload_array[4], preload_array[5]);
+        $dumpvars(1, preload_array[6], preload_array[7], preload_array[8]);
+        
+        // Dump PE internal signals for each PE (3x3 array)
+        // Row 0
+        $dumpvars(1, dut.row_gen[0].col_gen[0].pe_inst.in_top_real);
+        $dumpvars(1, dut.row_gen[0].col_gen[0].pe_inst.in_left_real);
+        $dumpvars(1, dut.row_gen[0].col_gen[0].pe_inst.accumulator_real);
+        $dumpvars(1, dut.row_gen[0].col_gen[1].pe_inst.in_top_real);
+        $dumpvars(1, dut.row_gen[0].col_gen[1].pe_inst.in_left_real);
+        $dumpvars(1, dut.row_gen[0].col_gen[1].pe_inst.accumulator_real);
+        $dumpvars(1, dut.row_gen[0].col_gen[2].pe_inst.in_top_real);
+        $dumpvars(1, dut.row_gen[0].col_gen[2].pe_inst.in_left_real);
+        $dumpvars(1, dut.row_gen[0].col_gen[2].pe_inst.accumulator_real);
+        
+        // Row 1
+        $dumpvars(1, dut.row_gen[1].col_gen[0].pe_inst.in_top_real);
+        $dumpvars(1, dut.row_gen[1].col_gen[0].pe_inst.in_left_real);
+        $dumpvars(1, dut.row_gen[1].col_gen[0].pe_inst.accumulator_real);
+        $dumpvars(1, dut.row_gen[1].col_gen[1].pe_inst.in_top_real);
+        $dumpvars(1, dut.row_gen[1].col_gen[1].pe_inst.in_left_real);
+        $dumpvars(1, dut.row_gen[1].col_gen[1].pe_inst.accumulator_real);
+        $dumpvars(1, dut.row_gen[1].col_gen[2].pe_inst.in_top_real);
+        $dumpvars(1, dut.row_gen[1].col_gen[2].pe_inst.in_left_real);
+        $dumpvars(1, dut.row_gen[1].col_gen[2].pe_inst.accumulator_real);
+        
+        // Row 2
+        $dumpvars(1, dut.row_gen[2].col_gen[0].pe_inst.in_top_real);
+        $dumpvars(1, dut.row_gen[2].col_gen[0].pe_inst.in_left_real);
+        $dumpvars(1, dut.row_gen[2].col_gen[0].pe_inst.accumulator_real);
+        $dumpvars(1, dut.row_gen[2].col_gen[1].pe_inst.in_top_real);
+        $dumpvars(1, dut.row_gen[2].col_gen[1].pe_inst.in_left_real);
+        $dumpvars(1, dut.row_gen[2].col_gen[1].pe_inst.accumulator_real);
+        $dumpvars(1, dut.row_gen[2].col_gen[2].pe_inst.in_top_real);
+        $dumpvars(1, dut.row_gen[2].col_gen[2].pe_inst.in_left_real);
+        $dumpvars(1, dut.row_gen[2].col_gen[2].pe_inst.accumulator_real);
+        
         $display("=======================================================");
         $display("          SA_MxN Module Testbench (3x3)");
         $display("=======================================================");
