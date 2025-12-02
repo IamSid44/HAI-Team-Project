@@ -39,6 +39,13 @@ module PE_tb;
         $dumpfile("pe_test.vcd");
         $dumpvars(0, PE_tb);
         
+        // Dump individual real values for better waveform viewing
+        $dumpvars(1, dut.in_top_real);
+        $dumpvars(1, dut.in_left_real);
+        $dumpvars(1, dut.preload_real);
+        $dumpvars(1, dut.accumulator_real);
+        $dumpvars(1, dut.result_real);
+        
         $display("=======================================================");
         $display("              PE Module Testbench");
         $display("=======================================================");
