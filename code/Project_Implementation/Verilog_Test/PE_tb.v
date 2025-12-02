@@ -1,3 +1,5 @@
+`include "PE.v"
+
 module PE_tb;
 
     reg clk;
