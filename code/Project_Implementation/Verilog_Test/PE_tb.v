@@ -181,9 +181,12 @@ module PE_tb;
         
         errors = 0;
         reset = 1;
+        in_left = 64'h0;
+        in_top = 64'h0;
         #10;
         reset = 0;
-        #10;
+        
+        @(posedge clk);
         
         output_stationary = 1;
         preload_valid = 0;
@@ -202,17 +205,16 @@ module PE_tb;
         @(posedge clk);
         in_left = $realtobits(3.0);
         in_top = $realtobits(4.0);
-        
+
         @(posedge clk);
-        #1;
+        in_left = 64'h0;
+        in_top = 64'h0;
         
-        // Drain the accumulated value
         @(posedge clk);
         preload_valid = 1;
         in_left = 64'h0;
         in_top = 64'h0;
         
-        @(posedge clk);
         #1;
         
         expected_output = 20.0;
@@ -253,11 +255,14 @@ module PE_tb;
         in_top = $realtobits(2.0);
         
         @(posedge clk);
-        preload_valid = 1;
         in_left = 64'h0;
         in_top = 64'h0;
         
         @(posedge clk);
+        preload_valid = 1;
+        in_left = 64'h0;
+        in_top = 64'h0;
+        
         #1;
         
         actual_output = $bitstoreal(out_bottom);
@@ -286,14 +291,14 @@ module PE_tb;
         in_top = $realtobits(1.0);
         
         @(posedge clk);
-        #1;
+        in_left = 64'h0;
+        in_top = 64'h0;
         
         @(posedge clk);
         preload_valid = 1;
         in_left = 64'h0;
         in_top = 64'h0;
         
-        @(posedge clk);
         #1;
         
         actual_output = $bitstoreal(out_bottom);
