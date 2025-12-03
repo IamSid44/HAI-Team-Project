@@ -71,3 +71,9 @@ code/Project_Implementation/Phase7/PE_Outputs/*.txt
 code/Project_Implementation/Phase6/PE_Outputs/*.txt
 code/Project_Implementation/Phase7/a.out
 code/Project_Implementation/Phase7/*.vcd
+
+code/Project_Implementation/Phase9/COMPARISON.txt
+code/Project_Implementation/Phase9/DATA_REUSE_OPTIMIZATION.md
+code/Project_Implementation/Phase9/PE_Outputs/*.txt
+code/Project_Implementation/Phase9/*.vcd
+code/Project_Implementation/Phase9/*.out
