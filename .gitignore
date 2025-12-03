@@ -77,3 +77,7 @@ code/Project_Implementation/Phase9/DATA_REUSE_OPTIMIZATION.md
 code/Project_Implementation/Phase9/PE_Outputs/*.txt
 code/Project_Implementation/Phase9/*.vcd
 code/Project_Implementation/Phase9/*.out
+code/Project_Implementation/Phase6/memory.txt
+code/Project_Implementation/Phase8/a.out
+.gitignore
+code/Project_Implementation/Phase8/waveform.vcd
