@@ -52,6 +52,7 @@ SC_MODULE(MemoryBackedController)
         
         cout << "Fixed-size buffers allocated: " << M << "x" << M 
              << " (" << (M*M) << " floats each)" << endl;
+        cout << "PE Grid Size: " << M << "x" << N << endl;
         
         memory = new Memory("memory_block", "memory.txt", 65536);
         memory->clk(clk);
@@ -115,14 +116,14 @@ SC_MODULE(MemoryBackedController)
         }
     }
     
-    void read_W_tile(int w_base, int k2, int k3, int k_tile, int j_tile)
+    void read_W_tile(int w_base, int k2, int k3, int k_tile, int j_tile, int tile_width)
     {
         for (int i = 0; i < M * M; i++) W_tile[i] = 0.0f;
         
         for (int i = 0; i < M; i++) {
             for (int j = 0; j < M; j++) {
                 int global_row = k_tile * M + i;
-                int global_col = j_tile * M + j;
+                int global_col = j_tile * tile_width + j;  // Use tile_width for column tiling
                 
                 if (global_row < k2 && global_col < k3) {
                     int byte_addr = w_base + (global_row * k3 + global_col) * 4;
@@ -140,12 +141,12 @@ SC_MODULE(MemoryBackedController)
         }
     }
     
-    void write_C_tile(int c_base, int k1, int k3, int i_tile, int j_tile)
+    void write_C_tile(int c_base, int k1, int k3, int i_tile, int j_tile, int tile_width)
     {
         for (int i = 0; i < M; i++) {
             for (int j = 0; j < M; j++) {
                 int global_row = i_tile * M + i;
-                int global_col = j_tile * M + j;
+                int global_col = j_tile * tile_width + j;  // Use tile_width for column tiling
                 
                 if (global_row < k1 && global_col < k3) {
                     int byte_addr = c_base + (global_row * k3 + global_col) * 4;
@@ -188,11 +189,17 @@ SC_MODULE(MemoryBackedController)
             cout << "Matrix A: " << k1 << "x" << k2 << " at byte address " << a_base << endl;
             cout << "Matrix W: " << k2 << "x" << k3 << " at byte address " << w_base << endl;
             cout << "Matrix C: " << k1 << "x" << k3 << " at byte address " << c_base << endl;
-            cout << "PE Grid Size: " << M << "x" << M << endl;
+            cout << "PE Grid Size: " << M << "x" << N << endl;
             
-            int num_i_tiles = (k1 + M - 1) / M;
-            int num_j_tiles = (k3 + M - 1) / M;
-            int num_k_tiles = (k2 + M - 1) / M;
+            // Effective tile dimensions:
+            // - Row tiles: M rows (PE rows)
+            // - Col tiles: min(M,N) cols (limited by both PE rows and cols)
+            // - K tiles: M elements (PE rows for weights)
+            int tile_width = (M < N) ? M : N;  // min(M, N)
+            
+            int num_i_tiles = (k1 + M - 1) / M;  // Rows: based on M (PE rows)
+            int num_j_tiles = (k3 + tile_width - 1) / tile_width;  // Cols: based on min(M,N)
+            int num_k_tiles = (k2 + M - 1) / M;  // K-dim: based on M (PE rows=weight rows)
             
             cout << "Number of tiles: i=" << num_i_tiles 
                  << ", j=" << num_j_tiles 
@@ -213,13 +220,13 @@ SC_MODULE(MemoryBackedController)
                         read_A_tile(a_base, k1, k2, i_tile, k_tile);
                         
                         cout << "  Reading W tile..." << endl;
-                        read_W_tile(w_base, k2, k3, k_tile, j_tile);
+                        read_W_tile(w_base, k2, k3, k_tile, j_tile, tile_width);
                         
                         cout << "  Computing tile..." << endl;
                         
                         int actual_i = min(M, k1 - i_tile * M);
                         int actual_k = min(M, k2 - k_tile * M);
-                        int actual_j = min(M, k3 - j_tile * M);
+                        int actual_j = min(tile_width, k3 - j_tile * tile_width);  // Use tile_width
                         
                         tile_k1.write(actual_i);
                         tile_k2.write(actual_k);
@@ -243,7 +250,7 @@ SC_MODULE(MemoryBackedController)
                     }
                     
                     cout << "  Writing C tile to memory..." << endl;
-                    write_C_tile(c_base, k1, k3, i_tile, j_tile);
+                    write_C_tile(c_base, k1, k3, i_tile, j_tile, tile_width);
                 }
             }
             

@@ -7,13 +7,18 @@
 #include <algorithm>  
 
 // Define the dimensions of the Systolic Array
-#ifndef M
-#define M 7 // Default number of rows
+// Use PE_ROWS and PE_COLS to avoid conflicts with SystemC template parameters
+#ifndef PE_ROWS
+#define PE_ROWS 2 // Default number of rows
 #endif
 
-#ifndef N
-#define N 7  // Default number of columns
+#ifndef PE_COLS
+#define PE_COLS 7  // Default number of columns
 #endif
+
+// Backward compatibility aliases
+#define M PE_ROWS
+#define N PE_COLS
 
 using namespace std;
 
@@ -119,6 +124,7 @@ SC_MODULE(MatMul_Controller)
     sc_in<bool> sa_mode_is_output_stationary;
 
     // Matrix pointers (pointing to tile buffers)
+    // NOTE: All tile buffers are M×M with stride M, regardless of PE grid shape (M×N)
     sc_in<float*> A_matrix; 
     sc_in<float*> W_matrix; 
     sc_in<float*> C_matrix; 
@@ -183,7 +189,7 @@ SC_MODULE(MatMul_Controller)
                 
                 for (int i = 0; i < M; ++i) { 
                     for (int j = 0; j < N; ++j) { 
-                        // Use buffer stride M
+                        // Buffer stride is M (M×M tiles) regardless of PE grid shape
                         if (i < k2 && j < k3) {
                             sa_preload_data[i * N + j].write(W_ptr[i * M + j]);
                         } else {
@@ -249,6 +255,7 @@ SC_MODULE(MatMul_Controller)
                     for (int i = 0; i < M; ++i) {
                         int k = clk_cycle - i;
                         
+                        // Buffer stride is M (M×M tiles)
                         if (k >= 0 && k < k2 && i < k1) {
                             sa_in_left[i].write(A_ptr[i * M + k]);
                         } else {
@@ -260,6 +267,7 @@ SC_MODULE(MatMul_Controller)
                     for (int j = 0; j < N; ++j) {
                         int k = clk_cycle - j;
                         
+                        // Buffer stride is M (M×M tiles)
                         if (k >= 0 && k < k2 && j < k3) {
                             sa_in_top[j].write(W_ptr[k * M + j]);
                         } else {
@@ -285,6 +293,7 @@ SC_MODULE(MatMul_Controller)
                     for (int j = 0; j < N; ++j) {
                         int i_out = M - 1 - clk_cycle;
                         
+                        // Buffer stride is M (M×M tiles)
                         if (i_out >= 0 && i_out < k1 && j < k3) {
                             float result = sa_out_bottom[j].read();
                             C_ptr[i_out * M + j] += result;  // ACCUMULATE across k-tiles

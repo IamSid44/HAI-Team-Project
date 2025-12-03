@@ -216,6 +216,9 @@ SC_MODULE(Testbench)
     
     void test_process()
     {
+        // print SA grid size
+        cout << "SA Grid Size: " << PE_ROWS << "x" << PE_COLS << endl;
+
         int tests_passed = 0;
         int tests_failed = 0;
         // =======================================================
@@ -694,8 +697,10 @@ SC_MODULE(Testbench)
         
         if (verify_result(C5_expected, C6_actual, k1, k3)) {
             cout << "✓ TEST 6 PASSED" << endl;
+            tests_passed++;
         } else {
             cout << "✗ TEST 6 FAILED" << endl;
+            tests_failed++;
         }
         
         wait(100, SC_NS);
@@ -973,8 +978,6 @@ SC_MODULE(Testbench)
         }
 
         wait(100, SC_NS);
-
-
         
         cout << "\n╔════════════════════════════════════════════════╗" << endl;
         cout << "║           All Tests Completed                  ║" << endl;
