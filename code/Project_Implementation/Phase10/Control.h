@@ -79,7 +79,7 @@ SC_MODULE(MemoryBackedController)
         cout << "Tile stride: " << tile_stride << endl;
         cout << "Data Reuse Optimization: ENABLED" << endl;
         
-        memory = new Memory("memory_block", "memory.txt", 65536);
+        memory = new Memory("memory_block", "memory.txt", 262144); // In BYTES (256KB)
         memory->clk(clk);
         memory->reset(reset);
         memory->read_enable(mem_read_enable);

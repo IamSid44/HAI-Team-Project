@@ -836,9 +836,9 @@ SC_MODULE(Testbench)
 
         // Memory layout - use high addresses to avoid overlap
         // 50x50 = 2500 floats = 10000 bytes each
-        a_base = 0;    // Start at 4KB
-        w_base = 10000;   // 4096 + 40960 (with gap)
-        c_base = 20000;   // 45056 + 40960 (with gap)
+        a_base = 0;   
+        w_base = 32768;
+        c_base = 65536;
 
         // Reset
         reset.write(true);

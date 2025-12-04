@@ -9,11 +9,11 @@
 // Define the dimensions of the Systolic Array
 // Use PE_ROWS and PE_COLS to avoid conflicts with SystemC template parameters
 #ifndef PE_ROWS
-#define PE_ROWS 2 // Default number of rows
+#define PE_ROWS 32 // Default number of rows
 #endif
 
 #ifndef PE_COLS
-#define PE_COLS 7  // Default number of columns (supports MxN grids)
+#define PE_COLS 32  // Default number of columns (supports MxN grids)
 #endif
 
 // Backward compatibility aliases
