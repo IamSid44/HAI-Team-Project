@@ -1,0 +1,221 @@
+
+        SystemC 3.0.2-Accellera --- Oct 31 2025 14:39:38
+        Copyright (c) 1996-2025 by all Contributors,
+        ALL RIGHTS RESERVED
+
+Info: (I703) tracing timescale unit set: 1 ns (waveform.vcd)
+Fixed-size buffers allocated: 7x7 (49 floats each)
+PE Grid Size: 7x7 (SQUARE)
+Tile stride: 7
+Data Reuse Optimization: ENABLED
+Memory initialized: memory.txt (65536 bytes, 16384 floats)
+SA_7x7 Module Created with array_id: 1
+SA Grid Size: 7x7
+
+╔════════════════════════════════════════════════╗
+║  TEST 1: 5x5 Matrix Multiplication (WS Mode)  ║
+╚════════════════════════════════════════════════╝
+Memory initialized with test matrices
+Input A (5x5):
+      6.0000    -8.0000    -7.0000    -7.0000     3.0000 
+      8.0000    -4.0000     9.0000    -1.0000    -9.0000 
+     -7.0000     1.0000     9.0000     8.0000     7.0000 
+      8.0000     9.0000     0.0000     6.0000     8.0000 
+      3.0000     9.0000     6.0000     9.0000     3.0000 
+
+Input W (5x5):
+      5.0000     4.0000     6.0000    -1.0000     0.0000 
+      5.0000    -9.0000     4.0000    -2.0000    -1.0000 
+     -2.0000    -4.0000    -3.0000     5.0000     3.0000 
+      3.0000    -9.0000     9.0000     6.0000     4.0000 
+     -6.0000    -8.0000    -9.0000    -6.0000     5.0000 
+
+Expected C (5x5):
+    -35.0000   163.0000   -65.0000   -85.0000   -26.0000 
+     53.0000   113.0000    77.0000    93.0000   -18.0000 
+    -66.0000  -201.0000   -56.0000    56.0000    93.0000 
+     55.0000  -167.0000    66.0000   -38.0000    55.0000 
+     57.0000  -198.0000    90.0000    45.0000    60.0000 
+
+
+=== Tile-Based Matrix Multiplication (DATA REUSE) ===
+Matrix A: 5x5 at byte address 0
+Matrix W: 5x5 at byte address 256
+Matrix C: 5x5 at byte address 512
+PE Grid Size: 7x7 (SQUARE)
+Number of tiles: i=1, j=1, k=1
+Tiling strategy: K-STATIONARY (k→i→j loop order)
+
+========================================
+K-Tile 0/1 - Loading tiles...
+========================================
+  Loading A tiles: A[:,0]
+    → Loaded 1 A tiles (reusable across 1 j-tiles)
+  Loading W tiles: W[0,:]
+    → Loaded 1 W tiles (reusable across 1 i-tiles)
+
+  Computing output tiles using cached data...
+    C[0,0] += A[0,0] * W[0,0] (from cache)
+  → Computed 1 output tiles using cached inputs
+
+========================================
+Writing final results to memory...
+Done writing results
+
+========================================
+=== Tiled Multiplication Complete ===
+========================================
+Memory Access Statistics:
+  Total Reads:  50
+  Total Writes: 25
+  Baseline (no reuse): 98 reads
+  With data reuse:     98 reads
+  Memory traffic reduction: 0.0%
+
+Result C (from memory) (5x5):
+    -41.0000    67.0000    97.0000    48.0000   -52.0000 
+     36.0000    96.0000  -117.0000   152.0000    21.0000 
+     31.0000  -103.0000  -122.0000   -76.0000    34.0000 
+     36.0000    21.0000  -128.0000    -7.0000   -14.0000 
+     69.0000     1.0000  -157.0000     6.0000    13.0000 
+
+Mismatch at C[0][0]: expected -35.0000, got -41.0000 (diff: 6.0000)
+Mismatch at C[0][1]: expected 163.0000, got 67.0000 (diff: 96.0000)
+Mismatch at C[0][2]: expected -65.0000, got 97.0000 (diff: 162.0000)
+Mismatch at C[0][3]: expected -85.0000, got 48.0000 (diff: 133.0000)
+Mismatch at C[0][4]: expected -26.0000, got -52.0000 (diff: 26.0000)
+Mismatch at C[1][0]: expected 53.0000, got 36.0000 (diff: 17.0000)
+Mismatch at C[1][1]: expected 113.0000, got 96.0000 (diff: 17.0000)
+Mismatch at C[1][2]: expected 77.0000, got -117.0000 (diff: 194.0000)
+Mismatch at C[1][3]: expected 93.0000, got 152.0000 (diff: 59.0000)
+Mismatch at C[1][4]: expected -18.0000, got 21.0000 (diff: 39.0000)
+Mismatch at C[2][0]: expected -66.0000, got 31.0000 (diff: 97.0000)
+Mismatch at C[2][1]: expected -201.0000, got -103.0000 (diff: 98.0000)
+Mismatch at C[2][2]: expected -56.0000, got -122.0000 (diff: 66.0000)
+Mismatch at C[2][3]: expected 56.0000, got -76.0000 (diff: 132.0000)
+Mismatch at C[2][4]: expected 93.0000, got 34.0000 (diff: 59.0000)
+Mismatch at C[3][0]: expected 55.0000, got 36.0000 (diff: 19.0000)
+Mismatch at C[3][1]: expected -167.0000, got 21.0000 (diff: 188.0000)
+Mismatch at C[3][2]: expected 66.0000, got -128.0000 (diff: 194.0000)
+Mismatch at C[3][3]: expected -38.0000, got -7.0000 (diff: 31.0000)
+Mismatch at C[3][4]: expected 55.0000, got -14.0000 (diff: 69.0000)
+Mismatch at C[4][0]: expected 57.0000, got 69.0000 (diff: 12.0000)
+Mismatch at C[4][1]: expected -198.0000, got 1.0000 (diff: 199.0000)
+Mismatch at C[4][2]: expected 90.0000, got -157.0000 (diff: 247.0000)
+Mismatch at C[4][3]: expected 45.0000, got 6.0000 (diff: 39.0000)
+Mismatch at C[4][4]: expected 60.0000, got 13.0000 (diff: 47.0000)
+✗ TEST 1 FAILED
+
+╔════════════════════════════════════════════════╗
+║  TEST 2: 5x5 Matrix Multiplication (OS Mode)   ║
+╚════════════════════════════════════════════════╝
+Memory initialized with test matrices
+
+=== Tile-Based Matrix Multiplication (DATA REUSE) ===
+Matrix A: 5x5 at byte address 0
+Matrix W: 5x5 at byte address 256
+Matrix C: 5x5 at byte address 512
+PE Grid Size: 7x7 (SQUARE)
+Number of tiles: i=1, j=1, k=1
+Tiling strategy: K-STATIONARY (k→i→j loop order)
+
+========================================
+K-Tile 0/1 - Loading tiles...
+========================================
+  Loading A tiles: A[:,0]
+    → Loaded 1 A tiles (reusable across 1 j-tiles)
+  Loading W tiles: W[0,:]
+    → Loaded 1 W tiles (reusable across 1 i-tiles)
+
+  Computing output tiles using cached data...
+    C[0,0] += A[0,0] * W[0,0] (from cache)
+  → Computed 1 output tiles using cached inputs
+
+========================================
+Writing final results to memory...
+Done writing results
+
+========================================
+=== Tiled Multiplication Complete ===
+========================================
+Memory Access Statistics:
+  Total Reads:  50
+  Total Writes: 25
+  Baseline (no reuse): 98 reads
+  With data reuse:     98 reads
+  Memory traffic reduction: 0.0%
+
+Result C (from memory) (5x5):
+     36.0000    96.0000  -117.0000   152.0000    21.0000 
+     31.0000  -103.0000  -122.0000   -76.0000    34.0000 
+     36.0000    21.0000  -128.0000    -7.0000   -14.0000 
+     69.0000     1.0000  -157.0000     6.0000    13.0000 
+      0.0000     0.0000     0.0000     0.0000     0.0000 
+
+Mismatch at C[0][0]: expected -35.0000, got 36.0000 (diff: 71.0000)
+Mismatch at C[0][1]: expected 163.0000, got 96.0000 (diff: 67.0000)
+Mismatch at C[0][2]: expected -65.0000, got -117.0000 (diff: 52.0000)
+Mismatch at C[0][3]: expected -85.0000, got 152.0000 (diff: 237.0000)
+Mismatch at C[0][4]: expected -26.0000, got 21.0000 (diff: 47.0000)
+Mismatch at C[1][0]: expected 53.0000, got 31.0000 (diff: 22.0000)
+Mismatch at C[1][1]: expected 113.0000, got -103.0000 (diff: 216.0000)
+Mismatch at C[1][2]: expected 77.0000, got -122.0000 (diff: 199.0000)
+Mismatch at C[1][3]: expected 93.0000, got -76.0000 (diff: 169.0000)
+Mismatch at C[1][4]: expected -18.0000, got 34.0000 (diff: 52.0000)
+Mismatch at C[2][0]: expected -66.0000, got 36.0000 (diff: 102.0000)
+Mismatch at C[2][1]: expected -201.0000, got 21.0000 (diff: 222.0000)
+Mismatch at C[2][2]: expected -56.0000, got -128.0000 (diff: 72.0000)
+Mismatch at C[2][3]: expected 56.0000, got -7.0000 (diff: 63.0000)
+Mismatch at C[2][4]: expected 93.0000, got -14.0000 (diff: 107.0000)
+Mismatch at C[3][0]: expected 55.0000, got 69.0000 (diff: 14.0000)
+Mismatch at C[3][1]: expected -167.0000, got 1.0000 (diff: 168.0000)
+Mismatch at C[3][2]: expected 66.0000, got -157.0000 (diff: 223.0000)
+Mismatch at C[3][3]: expected -38.0000, got 6.0000 (diff: 44.0000)
+Mismatch at C[3][4]: expected 55.0000, got 13.0000 (diff: 42.0000)
+Mismatch at C[4][0]: expected 57.0000, got 0.0000 (diff: 57.0000)
+Mismatch at C[4][1]: expected -198.0000, got 0.0000 (diff: 198.0000)
+Mismatch at C[4][2]: expected 90.0000, got 0.0000 (diff: 90.0000)
+Mismatch at C[4][3]: expected 45.0000, got 0.0000 (diff: 45.0000)
+Mismatch at C[4][4]: expected 60.0000, got 0.0000 (diff: 60.0000)
+✗ TEST 2 FAILED
+
+╔════════════════════════════════════════════════╗
+║  TEST 3: 10x10 Matrix Multiplication (WS Mode)  ║
+╚════════════════════════════════════════════════╝
+Memory initialized with test matrices
+Input A (10x10):
+      6.0000    -7.0000     3.0000     4.0000    -1.0000    -4.0000     5.0000     6.0000    -3.0000    -8.0000 
+      8.0000     9.0000    -9.0000    -9.0000    -2.0000     3.0000    -5.0000    -5.0000     6.0000    -8.0000 
+     -7.0000     9.0000     7.0000    -4.0000     5.0000     3.0000     0.0000     6.0000     2.0000     1.0000 
+      8.0000     0.0000     8.0000    -9.0000     6.0000    -6.0000     4.0000    -5.0000     1.0000     5.0000 
+      3.0000     6.0000     3.0000    -8.0000    -6.0000    -7.0000     7.0000     8.0000     8.0000     8.0000 
+     -8.0000    -7.0000     5.0000     6.0000     0.0000     0.0000     9.0000    -3.0000    -4.0000    -7.0000 
+     -4.0000    -1.0000     5.0000     4.0000    -1.0000     9.0000     1.0000    -6.0000     5.0000     1.0000 
+      1.0000     8.0000    -2.0000    -3.0000     3.0000    -3.0000    -7.0000    -5.0000     5.0000    -1.0000 
+      9.0000     6.0000     3.0000     9.0000     4.0000     2.0000    -7.0000     2.0000    -2.0000    -9.0000 
+      9.0000     9.0000    -6.0000    -9.0000     5.0000    -5.0000    -5.0000    -1.0000     1.0000    -3.0000 
+
+Input W (10x10):
+     -6.0000    -1.0000    -7.0000    -1.0000     7.0000    -2.0000     5.0000    -5.0000     1.0000     8.0000 
+      6.0000    -8.0000     9.0000     8.0000     2.0000    -9.0000    -2.0000    -3.0000    -4.0000     5.0000 
+     -4.0000    -5.0000    -9.0000    -6.0000    -3.0000     8.0000    -5.0000     6.0000     5.0000     0.0000 
+      1.0000     8.0000     5.0000    -4.0000     0.0000     8.0000    -2.0000    -9.0000    -6.0000    -1.0000 
+     -6.0000    -7.0000     6.0000    -7.0000    -2.0000     0.0000    -8.0000    -9.0000     4.0000    -1.0000 
+      2.0000     6.0000     7.0000    -7.0000    -8.0000     0.0000    -7.0000    -6.0000    -6.0000    -4.0000 
+     -5.0000     1.0000    -8.0000     7.0000    -5.0000    -3.0000     8.0000     3.0000    -2.0000     0.0000 
+      3.0000     9.0000    -2.0000     2.0000    -7.0000     8.0000     9.0000     4.0000     2.0000     0.0000 
+      4.0000    -8.0000    -5.0000     1.0000    -6.0000    -2.0000     1.0000     3.0000     5.0000     6.0000 
+      5.0000    -1.0000     6.0000    -7.0000    -5.0000    -7.0000    -8.0000    -1.0000    -8.0000     6.0000 
+
+Expected C (10x10):
+   -147.0000   141.0000  -231.0000    39.0000    44.0000   202.0000   212.0000    44.0000    96.0000   -40.0000 
+     45.0000  -165.0000    42.0000   164.0000   145.0000  -222.0000    65.0000   -49.0000    49.0000    96.0000 
+     71.0000  -112.0000    82.0000     4.0000  -145.0000    -6.0000   -93.0000    52.0000    32.0000    -6.0000 
+   -143.0000  -252.0000  -176.0000   -36.0000    52.0000  -113.0000   -40.0000    61.0000   109.0000   127.0000 
+     81.0000  -123.0000  -183.0000   167.0000   -87.0000  -129.0000   173.0000   222.0000    38.0000   192.0000 
+   -113.0000   108.0000  -110.0000     0.0000   -50.0000   173.0000    34.0000    47.0000    21.0000  -171.0000 
+     28.0000   -14.0000    36.0000  -113.0000  -113.0000    21.0000  -155.0000   -35.0000   -54.0000   -40.0000 
+     58.0000  -209.0000   100.0000    40.0000    92.0000  -136.0000   -86.0000   -48.0000    44.0000    84.0000 
+    -53.0000    20.0000    55.0000   -41.0000   120.0000   128.0000   -14.0000  -184.0000    30.0000    15.0000 
+    -14.0000  -207.0000    41.0000   120.0000   170.0000  -193.0000    46.0000   -55.0000    84.0000   129.0000 
+

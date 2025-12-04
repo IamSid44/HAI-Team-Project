@@ -1,3 +1,5 @@
+# Project Progress
+
 - Phase 2 has a working implementation of a 3x3 systolic array for both OS and WS dataflows.
 - Phase 3 extends it to an mxn systolic array with configurable size.
 - Phase 4 implements tiling 
