@@ -79,5 +79,6 @@ code/Project_Implementation/Phase9/*.vcd
 code/Project_Implementation/Phase9/*.out
 code/Project_Implementation/Phase6/memory.txt
 code/Project_Implementation/Phase8/a.out
-.gitignore
 code/Project_Implementation/Phase8/waveform.vcd
+code/Project_Implementation/Phase4/PE_Outputs/*.txt
+code/Project_Implementation/Phase5/PE_Outputs/*.txt
