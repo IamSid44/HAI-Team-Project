@@ -1,0 +1,137 @@
+* 6T inverter circuit simulation
+.include "TSMC_180nm.txt"
+.param vdd=1.8
+.param LAMBDA=0.09u
+* .param width_N={ 20*LAMBDA }
+.param width_N={ 20*LAMBDA }
+.param width_P_multiplier={ 2 }
+.param width_pc = {40*LAMBDA}
+.param width_P={width_P_multiplier*width_N}
+.global vdd gnd
+
+Vdd vdd gnd dc 1.8
+
+* D G S B
+.subckt 6t_sram bl bl_bar q q_bar wl width_N={width_N} width_N_acc={width_N_acc} width_P={width_P}
+    M1   q    q_bar     gnd    gnd    CMOSN   W={width_N}   L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N} AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}    
+
+    M2   q    wl     bl    gnd    CMOSN   W={width_N_acc}   L={2*LAMBDA}
+    + AS={5*width_N_acc*LAMBDA} PS={10*LAMBDA+2*width_N_acc} AD={5*width_N_acc*LAMBDA} PD={10*LAMBDA+2*width_N_acc}
+
+    M3    q    q_bar     vdd    vdd    CMOSP   W={width_P}   L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P} AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    M4   q_bar    q     gnd    gnd    CMOSN   W={width_N}   L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N} AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}    
+
+    M5   q_bar    wl     bl_bar    gnd    CMOSN   W={width_N_acc}   L={2*LAMBDA}
+    + AS={5*width_N_acc*LAMBDA} PS={10*LAMBDA+2*width_N_acc} AD={5*width_N_acc*LAMBDA} PD={10*LAMBDA+2*width_N_acc}
+
+    M6    q_bar    q     vdd    vdd    CMOSP   W={width_P}   L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P} AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+.ends 6t_sram
+
+*  D G S B
+.subckt sense_amp  bl  bl_bar samp_q samp_qbar samp_en  width_N = {width_N} width_P = {width_P}
+    MP_1    samp_q    samp_qbar    vdd    vdd    CMOSP   W={width_P}   L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P} AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    MN_1    samp_q    samp_qbar    s_n    gnd    CMOSN   W={width_N}   L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N} AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    MP_2    samp_qbar    samp_q    vdd    vdd    CMOSP   W={width_P}   L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P} AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    MN_2    samp_qbar    samp_q    s_n    gnd    CMOSN   W={width_N}   L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N} AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+
+    * MN_en   s_n    samp_en    gnd    gnd    CMOSN   W={width_N}   L={2*LAMBDA}
+    * + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N} AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+    
+    * larger pull down nmos makes reaction time smaller (saturate after 2 times the width)
+    .param nmos_mult = {1}
+    MN_en   s_n    samp_en    gnd    gnd    CMOSN   W={nmos_mult*width_N}   L={2*LAMBDA}
+    + AS={5*nmos_mult*width_N*LAMBDA} PS={10*LAMBDA+2*nmos_mult*width_N} AD={5*nmos_mult*width_N*LAMBDA} PD={10*LAMBDA+2*nmos_mult*width_N}
+    
+    .param pmos_mult = {1}
+    MP_en1   samp_q   samp_en   bl    vdd    CMOSP   W={pmos_mult*width_P}   L={2*LAMBDA}
+    + AS={5*pmos_mult*width_P*LAMBDA} PS={10*LAMBDA+2*pmos_mult*width_P} AD={5*pmos_mult*width_P*LAMBDA} PD={10*LAMBDA+2*pmos_mult*width_P}
+
+    MP_en2   samp_qbar   samp_en    bl_bar    vdd    CMOSP   W={pmos_mult*width_P}   L={2*LAMBDA}
+    + AS={5*pmos_mult*width_P*LAMBDA} PS={10*LAMBDA+2*pmos_mult*width_P} AD={5*pmos_mult*width_P*LAMBDA} PD={10*LAMBDA+2*pmos_mult*width_P}
+.ends sense_amp
+
+* D G S B
+.subckt pre_charge node node_bar pc_en width_P = {width_P}
+    MP_node    node    pc_en    vdd    vdd    CMOSP   W={width_P}   L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P} AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    MP_node_bar    node_bar    pc_en    vdd    vdd    CMOSP   W={width_P}   L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P} AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    MP_balance    node    pc_en    node_bar   vdd    CMOSP   W={width_P}   L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P} AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+.ends pre_charge
+
+x1 bl bl_bar q q_bar wl 6t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N}
+
+.param samp_mult = {1}
+x2 bl bl_bar samp_q samp_qbar samp_en sense_amp width_N={samp_mult*width_N} width_P={samp_mult*width_P}
+
+* Pre-charge circuits for bitlines and sense amp outputs
+x3 bl bl_bar pch pre_charge width_P={width_pc}
+* x4 samp_q samp_qbar pch_sa pre_charge width_P={width_pc}
+
+* Capacitors to model bitline caps
+.param bit_cap = {50fF}
+C1 bl gnd bit_cap
+C2 bl_bar gnd bit_cap
+
+* Time parameters for control signals
+.param init_time = {300ps}
+.param wl_dur = {50ps}
+.param wl_period = {300ps}
+.param samp_dur = {100ps}
+.param samp_period = {wl_period}
+.param samp_start = {init_time + wl_dur}
+.param taper_time = {5ps}
+
+* V_{name} {positive node} {negative node} type [value1 value2 delay rise fall width period cycles(optional)]
+* pc_en is low-level enable
+V_pc_en_bl pch gnd pulse 0 1.8 init_time taper_time taper_time wl_dur wl_period
+V_pc_en_sa pch_sa gnd pulse 0 1.8 init_time taper_time taper_time wl_dur wl_period
+V_wl wl gnd pulse 0 1.8 init_time taper_time taper_time wl_dur wl_period
+V_samp_en samp_en gnd pulse 0 1.8 samp_start taper_time taper_time samp_dur samp_period
+
+.ic V(q) = 1.8
+.ic V(q_bar) = 0
+.ic V(bl) = 0
+.ic V(bl_bar) = 0
+
+.ic V(samp_q) = 1.8
+.ic V(samp_qbar) = 1.8
+* .ic V(samp_q) = 0
+* .ic V(samp_qbar) = 0
+
+* .tran 10ps 80ns 5ns
+.tran 1ps 2ns
+* .measure tran t_delay TRIG V(sa_en) VAL='0.9' RISE=1 TARG V(bl) VAL='0.18' FALL=1
+* .measure tran t_delay TRIG V(sa_en) VAL='0.9' RISE=1 TARG V(bl) VAL='1.72' RISE=1
+
+.control
+set hcopypscolor = 1 
+set color0=white 
+set color1=black
+set color7=Brown
+* brushwidth
+set xbrushwidth=3
+set xfont_size = 15
+
+run
+let x = -(Vdd#branch)
+* plot x
+
+* plot bl, bl_bar+2, pch+4, wl+6, samp_en+8, samp_q+10, samp_qbar+10, q+12, q_bar+14
+plot bl, bl_bar+2, wl+4, samp_en+6, samp_q+8, samp_qbar+8
+.endc

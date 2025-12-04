@@ -1,0 +1,685 @@
+* Auto-generated SRAM array instances
+* M=18, N=16, row_in1=1, row_in2=17, row_out=18
+
+Xcell_r1_c1 wbl_1 wbl_bar_1 q_r1_c1 q_bar_r1_c1 wwl_1 rwl_1 rbl_1 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r1_c2 wbl_2 wbl_bar_2 q_r1_c2 q_bar_r1_c2 wwl_1 rwl_1 rbl_2 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r1_c3 wbl_3 wbl_bar_3 q_r1_c3 q_bar_r1_c3 wwl_1 rwl_1 rbl_3 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r1_c4 wbl_4 wbl_bar_4 q_r1_c4 q_bar_r1_c4 wwl_1 rwl_1 rbl_4 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r1_c5 wbl_5 wbl_bar_5 q_r1_c5 q_bar_r1_c5 wwl_1 rwl_1 rbl_5 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r1_c6 wbl_6 wbl_bar_6 q_r1_c6 q_bar_r1_c6 wwl_1 rwl_1 rbl_6 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r1_c7 wbl_7 wbl_bar_7 q_r1_c7 q_bar_r1_c7 wwl_1 rwl_1 rbl_7 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r1_c8 wbl_8 wbl_bar_8 q_r1_c8 q_bar_r1_c8 wwl_1 rwl_1 rbl_8 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r1_c9 wbl_9 wbl_bar_9 q_r1_c9 q_bar_r1_c9 wwl_1 rwl_1 rbl_9 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r1_c10 wbl_10 wbl_bar_10 q_r1_c10 q_bar_r1_c10 wwl_1 rwl_1 rbl_10 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r1_c11 wbl_11 wbl_bar_11 q_r1_c11 q_bar_r1_c11 wwl_1 rwl_1 rbl_11 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r1_c12 wbl_12 wbl_bar_12 q_r1_c12 q_bar_r1_c12 wwl_1 rwl_1 rbl_12 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r1_c13 wbl_13 wbl_bar_13 q_r1_c13 q_bar_r1_c13 wwl_1 rwl_1 rbl_13 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r1_c14 wbl_14 wbl_bar_14 q_r1_c14 q_bar_r1_c14 wwl_1 rwl_1 rbl_14 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r1_c15 wbl_15 wbl_bar_15 q_r1_c15 q_bar_r1_c15 wwl_1 rwl_1 rbl_15 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r1_c16 wbl_16 wbl_bar_16 q_r1_c16 q_bar_r1_c16 wwl_1 rwl_1 rbl_16 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r2_c1 wbl_1 wbl_bar_1 q_r2_c1 q_bar_r2_c1 wwl_2 rwl_2 rbl_1 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r2_c2 wbl_2 wbl_bar_2 q_r2_c2 q_bar_r2_c2 wwl_2 rwl_2 rbl_2 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r2_c3 wbl_3 wbl_bar_3 q_r2_c3 q_bar_r2_c3 wwl_2 rwl_2 rbl_3 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r2_c4 wbl_4 wbl_bar_4 q_r2_c4 q_bar_r2_c4 wwl_2 rwl_2 rbl_4 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r2_c5 wbl_5 wbl_bar_5 q_r2_c5 q_bar_r2_c5 wwl_2 rwl_2 rbl_5 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r2_c6 wbl_6 wbl_bar_6 q_r2_c6 q_bar_r2_c6 wwl_2 rwl_2 rbl_6 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r2_c7 wbl_7 wbl_bar_7 q_r2_c7 q_bar_r2_c7 wwl_2 rwl_2 rbl_7 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r2_c8 wbl_8 wbl_bar_8 q_r2_c8 q_bar_r2_c8 wwl_2 rwl_2 rbl_8 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r2_c9 wbl_9 wbl_bar_9 q_r2_c9 q_bar_r2_c9 wwl_2 rwl_2 rbl_9 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r2_c10 wbl_10 wbl_bar_10 q_r2_c10 q_bar_r2_c10 wwl_2 rwl_2 rbl_10 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r2_c11 wbl_11 wbl_bar_11 q_r2_c11 q_bar_r2_c11 wwl_2 rwl_2 rbl_11 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r2_c12 wbl_12 wbl_bar_12 q_r2_c12 q_bar_r2_c12 wwl_2 rwl_2 rbl_12 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r2_c13 wbl_13 wbl_bar_13 q_r2_c13 q_bar_r2_c13 wwl_2 rwl_2 rbl_13 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r2_c14 wbl_14 wbl_bar_14 q_r2_c14 q_bar_r2_c14 wwl_2 rwl_2 rbl_14 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r2_c15 wbl_15 wbl_bar_15 q_r2_c15 q_bar_r2_c15 wwl_2 rwl_2 rbl_15 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r2_c16 wbl_16 wbl_bar_16 q_r2_c16 q_bar_r2_c16 wwl_2 rwl_2 rbl_16 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r3_c1 wbl_1 wbl_bar_1 q_r3_c1 q_bar_r3_c1 wwl_3 rwl_3 rbl_1 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r3_c2 wbl_2 wbl_bar_2 q_r3_c2 q_bar_r3_c2 wwl_3 rwl_3 rbl_2 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r3_c3 wbl_3 wbl_bar_3 q_r3_c3 q_bar_r3_c3 wwl_3 rwl_3 rbl_3 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r3_c4 wbl_4 wbl_bar_4 q_r3_c4 q_bar_r3_c4 wwl_3 rwl_3 rbl_4 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r3_c5 wbl_5 wbl_bar_5 q_r3_c5 q_bar_r3_c5 wwl_3 rwl_3 rbl_5 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r3_c6 wbl_6 wbl_bar_6 q_r3_c6 q_bar_r3_c6 wwl_3 rwl_3 rbl_6 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r3_c7 wbl_7 wbl_bar_7 q_r3_c7 q_bar_r3_c7 wwl_3 rwl_3 rbl_7 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r3_c8 wbl_8 wbl_bar_8 q_r3_c8 q_bar_r3_c8 wwl_3 rwl_3 rbl_8 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r3_c9 wbl_9 wbl_bar_9 q_r3_c9 q_bar_r3_c9 wwl_3 rwl_3 rbl_9 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r3_c10 wbl_10 wbl_bar_10 q_r3_c10 q_bar_r3_c10 wwl_3 rwl_3 rbl_10 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r3_c11 wbl_11 wbl_bar_11 q_r3_c11 q_bar_r3_c11 wwl_3 rwl_3 rbl_11 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r3_c12 wbl_12 wbl_bar_12 q_r3_c12 q_bar_r3_c12 wwl_3 rwl_3 rbl_12 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r3_c13 wbl_13 wbl_bar_13 q_r3_c13 q_bar_r3_c13 wwl_3 rwl_3 rbl_13 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r3_c14 wbl_14 wbl_bar_14 q_r3_c14 q_bar_r3_c14 wwl_3 rwl_3 rbl_14 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r3_c15 wbl_15 wbl_bar_15 q_r3_c15 q_bar_r3_c15 wwl_3 rwl_3 rbl_15 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r3_c16 wbl_16 wbl_bar_16 q_r3_c16 q_bar_r3_c16 wwl_3 rwl_3 rbl_16 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r4_c1 wbl_1 wbl_bar_1 q_r4_c1 q_bar_r4_c1 wwl_4 rwl_4 rbl_1 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r4_c2 wbl_2 wbl_bar_2 q_r4_c2 q_bar_r4_c2 wwl_4 rwl_4 rbl_2 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r4_c3 wbl_3 wbl_bar_3 q_r4_c3 q_bar_r4_c3 wwl_4 rwl_4 rbl_3 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r4_c4 wbl_4 wbl_bar_4 q_r4_c4 q_bar_r4_c4 wwl_4 rwl_4 rbl_4 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r4_c5 wbl_5 wbl_bar_5 q_r4_c5 q_bar_r4_c5 wwl_4 rwl_4 rbl_5 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r4_c6 wbl_6 wbl_bar_6 q_r4_c6 q_bar_r4_c6 wwl_4 rwl_4 rbl_6 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r4_c7 wbl_7 wbl_bar_7 q_r4_c7 q_bar_r4_c7 wwl_4 rwl_4 rbl_7 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r4_c8 wbl_8 wbl_bar_8 q_r4_c8 q_bar_r4_c8 wwl_4 rwl_4 rbl_8 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r4_c9 wbl_9 wbl_bar_9 q_r4_c9 q_bar_r4_c9 wwl_4 rwl_4 rbl_9 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r4_c10 wbl_10 wbl_bar_10 q_r4_c10 q_bar_r4_c10 wwl_4 rwl_4 rbl_10 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r4_c11 wbl_11 wbl_bar_11 q_r4_c11 q_bar_r4_c11 wwl_4 rwl_4 rbl_11 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r4_c12 wbl_12 wbl_bar_12 q_r4_c12 q_bar_r4_c12 wwl_4 rwl_4 rbl_12 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r4_c13 wbl_13 wbl_bar_13 q_r4_c13 q_bar_r4_c13 wwl_4 rwl_4 rbl_13 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r4_c14 wbl_14 wbl_bar_14 q_r4_c14 q_bar_r4_c14 wwl_4 rwl_4 rbl_14 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r4_c15 wbl_15 wbl_bar_15 q_r4_c15 q_bar_r4_c15 wwl_4 rwl_4 rbl_15 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r4_c16 wbl_16 wbl_bar_16 q_r4_c16 q_bar_r4_c16 wwl_4 rwl_4 rbl_16 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r5_c1 wbl_1 wbl_bar_1 q_r5_c1 q_bar_r5_c1 wwl_5 rwl_5 rbl_1 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r5_c2 wbl_2 wbl_bar_2 q_r5_c2 q_bar_r5_c2 wwl_5 rwl_5 rbl_2 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r5_c3 wbl_3 wbl_bar_3 q_r5_c3 q_bar_r5_c3 wwl_5 rwl_5 rbl_3 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r5_c4 wbl_4 wbl_bar_4 q_r5_c4 q_bar_r5_c4 wwl_5 rwl_5 rbl_4 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r5_c5 wbl_5 wbl_bar_5 q_r5_c5 q_bar_r5_c5 wwl_5 rwl_5 rbl_5 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r5_c6 wbl_6 wbl_bar_6 q_r5_c6 q_bar_r5_c6 wwl_5 rwl_5 rbl_6 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r5_c7 wbl_7 wbl_bar_7 q_r5_c7 q_bar_r5_c7 wwl_5 rwl_5 rbl_7 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r5_c8 wbl_8 wbl_bar_8 q_r5_c8 q_bar_r5_c8 wwl_5 rwl_5 rbl_8 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r5_c9 wbl_9 wbl_bar_9 q_r5_c9 q_bar_r5_c9 wwl_5 rwl_5 rbl_9 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r5_c10 wbl_10 wbl_bar_10 q_r5_c10 q_bar_r5_c10 wwl_5 rwl_5 rbl_10 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r5_c11 wbl_11 wbl_bar_11 q_r5_c11 q_bar_r5_c11 wwl_5 rwl_5 rbl_11 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r5_c12 wbl_12 wbl_bar_12 q_r5_c12 q_bar_r5_c12 wwl_5 rwl_5 rbl_12 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r5_c13 wbl_13 wbl_bar_13 q_r5_c13 q_bar_r5_c13 wwl_5 rwl_5 rbl_13 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r5_c14 wbl_14 wbl_bar_14 q_r5_c14 q_bar_r5_c14 wwl_5 rwl_5 rbl_14 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r5_c15 wbl_15 wbl_bar_15 q_r5_c15 q_bar_r5_c15 wwl_5 rwl_5 rbl_15 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r5_c16 wbl_16 wbl_bar_16 q_r5_c16 q_bar_r5_c16 wwl_5 rwl_5 rbl_16 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r6_c1 wbl_1 wbl_bar_1 q_r6_c1 q_bar_r6_c1 wwl_6 rwl_6 rbl_1 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r6_c2 wbl_2 wbl_bar_2 q_r6_c2 q_bar_r6_c2 wwl_6 rwl_6 rbl_2 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r6_c3 wbl_3 wbl_bar_3 q_r6_c3 q_bar_r6_c3 wwl_6 rwl_6 rbl_3 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r6_c4 wbl_4 wbl_bar_4 q_r6_c4 q_bar_r6_c4 wwl_6 rwl_6 rbl_4 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r6_c5 wbl_5 wbl_bar_5 q_r6_c5 q_bar_r6_c5 wwl_6 rwl_6 rbl_5 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r6_c6 wbl_6 wbl_bar_6 q_r6_c6 q_bar_r6_c6 wwl_6 rwl_6 rbl_6 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r6_c7 wbl_7 wbl_bar_7 q_r6_c7 q_bar_r6_c7 wwl_6 rwl_6 rbl_7 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r6_c8 wbl_8 wbl_bar_8 q_r6_c8 q_bar_r6_c8 wwl_6 rwl_6 rbl_8 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r6_c9 wbl_9 wbl_bar_9 q_r6_c9 q_bar_r6_c9 wwl_6 rwl_6 rbl_9 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r6_c10 wbl_10 wbl_bar_10 q_r6_c10 q_bar_r6_c10 wwl_6 rwl_6 rbl_10 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r6_c11 wbl_11 wbl_bar_11 q_r6_c11 q_bar_r6_c11 wwl_6 rwl_6 rbl_11 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r6_c12 wbl_12 wbl_bar_12 q_r6_c12 q_bar_r6_c12 wwl_6 rwl_6 rbl_12 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r6_c13 wbl_13 wbl_bar_13 q_r6_c13 q_bar_r6_c13 wwl_6 rwl_6 rbl_13 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r6_c14 wbl_14 wbl_bar_14 q_r6_c14 q_bar_r6_c14 wwl_6 rwl_6 rbl_14 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r6_c15 wbl_15 wbl_bar_15 q_r6_c15 q_bar_r6_c15 wwl_6 rwl_6 rbl_15 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r6_c16 wbl_16 wbl_bar_16 q_r6_c16 q_bar_r6_c16 wwl_6 rwl_6 rbl_16 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r7_c1 wbl_1 wbl_bar_1 q_r7_c1 q_bar_r7_c1 wwl_7 rwl_7 rbl_1 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r7_c2 wbl_2 wbl_bar_2 q_r7_c2 q_bar_r7_c2 wwl_7 rwl_7 rbl_2 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r7_c3 wbl_3 wbl_bar_3 q_r7_c3 q_bar_r7_c3 wwl_7 rwl_7 rbl_3 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r7_c4 wbl_4 wbl_bar_4 q_r7_c4 q_bar_r7_c4 wwl_7 rwl_7 rbl_4 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r7_c5 wbl_5 wbl_bar_5 q_r7_c5 q_bar_r7_c5 wwl_7 rwl_7 rbl_5 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r7_c6 wbl_6 wbl_bar_6 q_r7_c6 q_bar_r7_c6 wwl_7 rwl_7 rbl_6 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r7_c7 wbl_7 wbl_bar_7 q_r7_c7 q_bar_r7_c7 wwl_7 rwl_7 rbl_7 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r7_c8 wbl_8 wbl_bar_8 q_r7_c8 q_bar_r7_c8 wwl_7 rwl_7 rbl_8 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r7_c9 wbl_9 wbl_bar_9 q_r7_c9 q_bar_r7_c9 wwl_7 rwl_7 rbl_9 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r7_c10 wbl_10 wbl_bar_10 q_r7_c10 q_bar_r7_c10 wwl_7 rwl_7 rbl_10 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r7_c11 wbl_11 wbl_bar_11 q_r7_c11 q_bar_r7_c11 wwl_7 rwl_7 rbl_11 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r7_c12 wbl_12 wbl_bar_12 q_r7_c12 q_bar_r7_c12 wwl_7 rwl_7 rbl_12 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r7_c13 wbl_13 wbl_bar_13 q_r7_c13 q_bar_r7_c13 wwl_7 rwl_7 rbl_13 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r7_c14 wbl_14 wbl_bar_14 q_r7_c14 q_bar_r7_c14 wwl_7 rwl_7 rbl_14 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r7_c15 wbl_15 wbl_bar_15 q_r7_c15 q_bar_r7_c15 wwl_7 rwl_7 rbl_15 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r7_c16 wbl_16 wbl_bar_16 q_r7_c16 q_bar_r7_c16 wwl_7 rwl_7 rbl_16 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r8_c1 wbl_1 wbl_bar_1 q_r8_c1 q_bar_r8_c1 wwl_8 rwl_8 rbl_1 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r8_c2 wbl_2 wbl_bar_2 q_r8_c2 q_bar_r8_c2 wwl_8 rwl_8 rbl_2 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r8_c3 wbl_3 wbl_bar_3 q_r8_c3 q_bar_r8_c3 wwl_8 rwl_8 rbl_3 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r8_c4 wbl_4 wbl_bar_4 q_r8_c4 q_bar_r8_c4 wwl_8 rwl_8 rbl_4 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r8_c5 wbl_5 wbl_bar_5 q_r8_c5 q_bar_r8_c5 wwl_8 rwl_8 rbl_5 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r8_c6 wbl_6 wbl_bar_6 q_r8_c6 q_bar_r8_c6 wwl_8 rwl_8 rbl_6 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r8_c7 wbl_7 wbl_bar_7 q_r8_c7 q_bar_r8_c7 wwl_8 rwl_8 rbl_7 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r8_c8 wbl_8 wbl_bar_8 q_r8_c8 q_bar_r8_c8 wwl_8 rwl_8 rbl_8 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r8_c9 wbl_9 wbl_bar_9 q_r8_c9 q_bar_r8_c9 wwl_8 rwl_8 rbl_9 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r8_c10 wbl_10 wbl_bar_10 q_r8_c10 q_bar_r8_c10 wwl_8 rwl_8 rbl_10 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r8_c11 wbl_11 wbl_bar_11 q_r8_c11 q_bar_r8_c11 wwl_8 rwl_8 rbl_11 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r8_c12 wbl_12 wbl_bar_12 q_r8_c12 q_bar_r8_c12 wwl_8 rwl_8 rbl_12 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r8_c13 wbl_13 wbl_bar_13 q_r8_c13 q_bar_r8_c13 wwl_8 rwl_8 rbl_13 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r8_c14 wbl_14 wbl_bar_14 q_r8_c14 q_bar_r8_c14 wwl_8 rwl_8 rbl_14 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r8_c15 wbl_15 wbl_bar_15 q_r8_c15 q_bar_r8_c15 wwl_8 rwl_8 rbl_15 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r8_c16 wbl_16 wbl_bar_16 q_r8_c16 q_bar_r8_c16 wwl_8 rwl_8 rbl_16 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r9_c1 wbl_1 wbl_bar_1 q_r9_c1 q_bar_r9_c1 wwl_9 rwl_9 rbl_1 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r9_c2 wbl_2 wbl_bar_2 q_r9_c2 q_bar_r9_c2 wwl_9 rwl_9 rbl_2 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r9_c3 wbl_3 wbl_bar_3 q_r9_c3 q_bar_r9_c3 wwl_9 rwl_9 rbl_3 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r9_c4 wbl_4 wbl_bar_4 q_r9_c4 q_bar_r9_c4 wwl_9 rwl_9 rbl_4 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r9_c5 wbl_5 wbl_bar_5 q_r9_c5 q_bar_r9_c5 wwl_9 rwl_9 rbl_5 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r9_c6 wbl_6 wbl_bar_6 q_r9_c6 q_bar_r9_c6 wwl_9 rwl_9 rbl_6 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r9_c7 wbl_7 wbl_bar_7 q_r9_c7 q_bar_r9_c7 wwl_9 rwl_9 rbl_7 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r9_c8 wbl_8 wbl_bar_8 q_r9_c8 q_bar_r9_c8 wwl_9 rwl_9 rbl_8 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r9_c9 wbl_9 wbl_bar_9 q_r9_c9 q_bar_r9_c9 wwl_9 rwl_9 rbl_9 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r9_c10 wbl_10 wbl_bar_10 q_r9_c10 q_bar_r9_c10 wwl_9 rwl_9 rbl_10 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r9_c11 wbl_11 wbl_bar_11 q_r9_c11 q_bar_r9_c11 wwl_9 rwl_9 rbl_11 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r9_c12 wbl_12 wbl_bar_12 q_r9_c12 q_bar_r9_c12 wwl_9 rwl_9 rbl_12 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r9_c13 wbl_13 wbl_bar_13 q_r9_c13 q_bar_r9_c13 wwl_9 rwl_9 rbl_13 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r9_c14 wbl_14 wbl_bar_14 q_r9_c14 q_bar_r9_c14 wwl_9 rwl_9 rbl_14 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r9_c15 wbl_15 wbl_bar_15 q_r9_c15 q_bar_r9_c15 wwl_9 rwl_9 rbl_15 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r9_c16 wbl_16 wbl_bar_16 q_r9_c16 q_bar_r9_c16 wwl_9 rwl_9 rbl_16 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r10_c1 wbl_1 wbl_bar_1 q_r10_c1 q_bar_r10_c1 wwl_10 rwl_10 rbl_1 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r10_c2 wbl_2 wbl_bar_2 q_r10_c2 q_bar_r10_c2 wwl_10 rwl_10 rbl_2 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r10_c3 wbl_3 wbl_bar_3 q_r10_c3 q_bar_r10_c3 wwl_10 rwl_10 rbl_3 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r10_c4 wbl_4 wbl_bar_4 q_r10_c4 q_bar_r10_c4 wwl_10 rwl_10 rbl_4 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r10_c5 wbl_5 wbl_bar_5 q_r10_c5 q_bar_r10_c5 wwl_10 rwl_10 rbl_5 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r10_c6 wbl_6 wbl_bar_6 q_r10_c6 q_bar_r10_c6 wwl_10 rwl_10 rbl_6 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r10_c7 wbl_7 wbl_bar_7 q_r10_c7 q_bar_r10_c7 wwl_10 rwl_10 rbl_7 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r10_c8 wbl_8 wbl_bar_8 q_r10_c8 q_bar_r10_c8 wwl_10 rwl_10 rbl_8 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r10_c9 wbl_9 wbl_bar_9 q_r10_c9 q_bar_r10_c9 wwl_10 rwl_10 rbl_9 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r10_c10 wbl_10 wbl_bar_10 q_r10_c10 q_bar_r10_c10 wwl_10 rwl_10 rbl_10 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r10_c11 wbl_11 wbl_bar_11 q_r10_c11 q_bar_r10_c11 wwl_10 rwl_10 rbl_11 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r10_c12 wbl_12 wbl_bar_12 q_r10_c12 q_bar_r10_c12 wwl_10 rwl_10 rbl_12 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r10_c13 wbl_13 wbl_bar_13 q_r10_c13 q_bar_r10_c13 wwl_10 rwl_10 rbl_13 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r10_c14 wbl_14 wbl_bar_14 q_r10_c14 q_bar_r10_c14 wwl_10 rwl_10 rbl_14 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r10_c15 wbl_15 wbl_bar_15 q_r10_c15 q_bar_r10_c15 wwl_10 rwl_10 rbl_15 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r10_c16 wbl_16 wbl_bar_16 q_r10_c16 q_bar_r10_c16 wwl_10 rwl_10 rbl_16 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r11_c1 wbl_1 wbl_bar_1 q_r11_c1 q_bar_r11_c1 wwl_11 rwl_11 rbl_1 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r11_c2 wbl_2 wbl_bar_2 q_r11_c2 q_bar_r11_c2 wwl_11 rwl_11 rbl_2 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r11_c3 wbl_3 wbl_bar_3 q_r11_c3 q_bar_r11_c3 wwl_11 rwl_11 rbl_3 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r11_c4 wbl_4 wbl_bar_4 q_r11_c4 q_bar_r11_c4 wwl_11 rwl_11 rbl_4 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r11_c5 wbl_5 wbl_bar_5 q_r11_c5 q_bar_r11_c5 wwl_11 rwl_11 rbl_5 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r11_c6 wbl_6 wbl_bar_6 q_r11_c6 q_bar_r11_c6 wwl_11 rwl_11 rbl_6 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r11_c7 wbl_7 wbl_bar_7 q_r11_c7 q_bar_r11_c7 wwl_11 rwl_11 rbl_7 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r11_c8 wbl_8 wbl_bar_8 q_r11_c8 q_bar_r11_c8 wwl_11 rwl_11 rbl_8 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r11_c9 wbl_9 wbl_bar_9 q_r11_c9 q_bar_r11_c9 wwl_11 rwl_11 rbl_9 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r11_c10 wbl_10 wbl_bar_10 q_r11_c10 q_bar_r11_c10 wwl_11 rwl_11 rbl_10 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r11_c11 wbl_11 wbl_bar_11 q_r11_c11 q_bar_r11_c11 wwl_11 rwl_11 rbl_11 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r11_c12 wbl_12 wbl_bar_12 q_r11_c12 q_bar_r11_c12 wwl_11 rwl_11 rbl_12 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r11_c13 wbl_13 wbl_bar_13 q_r11_c13 q_bar_r11_c13 wwl_11 rwl_11 rbl_13 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r11_c14 wbl_14 wbl_bar_14 q_r11_c14 q_bar_r11_c14 wwl_11 rwl_11 rbl_14 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r11_c15 wbl_15 wbl_bar_15 q_r11_c15 q_bar_r11_c15 wwl_11 rwl_11 rbl_15 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r11_c16 wbl_16 wbl_bar_16 q_r11_c16 q_bar_r11_c16 wwl_11 rwl_11 rbl_16 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r12_c1 wbl_1 wbl_bar_1 q_r12_c1 q_bar_r12_c1 wwl_12 rwl_12 rbl_1 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r12_c2 wbl_2 wbl_bar_2 q_r12_c2 q_bar_r12_c2 wwl_12 rwl_12 rbl_2 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r12_c3 wbl_3 wbl_bar_3 q_r12_c3 q_bar_r12_c3 wwl_12 rwl_12 rbl_3 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r12_c4 wbl_4 wbl_bar_4 q_r12_c4 q_bar_r12_c4 wwl_12 rwl_12 rbl_4 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r12_c5 wbl_5 wbl_bar_5 q_r12_c5 q_bar_r12_c5 wwl_12 rwl_12 rbl_5 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r12_c6 wbl_6 wbl_bar_6 q_r12_c6 q_bar_r12_c6 wwl_12 rwl_12 rbl_6 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r12_c7 wbl_7 wbl_bar_7 q_r12_c7 q_bar_r12_c7 wwl_12 rwl_12 rbl_7 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r12_c8 wbl_8 wbl_bar_8 q_r12_c8 q_bar_r12_c8 wwl_12 rwl_12 rbl_8 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r12_c9 wbl_9 wbl_bar_9 q_r12_c9 q_bar_r12_c9 wwl_12 rwl_12 rbl_9 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r12_c10 wbl_10 wbl_bar_10 q_r12_c10 q_bar_r12_c10 wwl_12 rwl_12 rbl_10 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r12_c11 wbl_11 wbl_bar_11 q_r12_c11 q_bar_r12_c11 wwl_12 rwl_12 rbl_11 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r12_c12 wbl_12 wbl_bar_12 q_r12_c12 q_bar_r12_c12 wwl_12 rwl_12 rbl_12 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r12_c13 wbl_13 wbl_bar_13 q_r12_c13 q_bar_r12_c13 wwl_12 rwl_12 rbl_13 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r12_c14 wbl_14 wbl_bar_14 q_r12_c14 q_bar_r12_c14 wwl_12 rwl_12 rbl_14 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r12_c15 wbl_15 wbl_bar_15 q_r12_c15 q_bar_r12_c15 wwl_12 rwl_12 rbl_15 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r12_c16 wbl_16 wbl_bar_16 q_r12_c16 q_bar_r12_c16 wwl_12 rwl_12 rbl_16 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r13_c1 wbl_1 wbl_bar_1 q_r13_c1 q_bar_r13_c1 wwl_13 rwl_13 rbl_1 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r13_c2 wbl_2 wbl_bar_2 q_r13_c2 q_bar_r13_c2 wwl_13 rwl_13 rbl_2 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r13_c3 wbl_3 wbl_bar_3 q_r13_c3 q_bar_r13_c3 wwl_13 rwl_13 rbl_3 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r13_c4 wbl_4 wbl_bar_4 q_r13_c4 q_bar_r13_c4 wwl_13 rwl_13 rbl_4 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r13_c5 wbl_5 wbl_bar_5 q_r13_c5 q_bar_r13_c5 wwl_13 rwl_13 rbl_5 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r13_c6 wbl_6 wbl_bar_6 q_r13_c6 q_bar_r13_c6 wwl_13 rwl_13 rbl_6 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r13_c7 wbl_7 wbl_bar_7 q_r13_c7 q_bar_r13_c7 wwl_13 rwl_13 rbl_7 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r13_c8 wbl_8 wbl_bar_8 q_r13_c8 q_bar_r13_c8 wwl_13 rwl_13 rbl_8 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r13_c9 wbl_9 wbl_bar_9 q_r13_c9 q_bar_r13_c9 wwl_13 rwl_13 rbl_9 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r13_c10 wbl_10 wbl_bar_10 q_r13_c10 q_bar_r13_c10 wwl_13 rwl_13 rbl_10 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r13_c11 wbl_11 wbl_bar_11 q_r13_c11 q_bar_r13_c11 wwl_13 rwl_13 rbl_11 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r13_c12 wbl_12 wbl_bar_12 q_r13_c12 q_bar_r13_c12 wwl_13 rwl_13 rbl_12 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r13_c13 wbl_13 wbl_bar_13 q_r13_c13 q_bar_r13_c13 wwl_13 rwl_13 rbl_13 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r13_c14 wbl_14 wbl_bar_14 q_r13_c14 q_bar_r13_c14 wwl_13 rwl_13 rbl_14 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r13_c15 wbl_15 wbl_bar_15 q_r13_c15 q_bar_r13_c15 wwl_13 rwl_13 rbl_15 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r13_c16 wbl_16 wbl_bar_16 q_r13_c16 q_bar_r13_c16 wwl_13 rwl_13 rbl_16 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r14_c1 wbl_1 wbl_bar_1 q_r14_c1 q_bar_r14_c1 wwl_14 rwl_14 rbl_1 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r14_c2 wbl_2 wbl_bar_2 q_r14_c2 q_bar_r14_c2 wwl_14 rwl_14 rbl_2 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r14_c3 wbl_3 wbl_bar_3 q_r14_c3 q_bar_r14_c3 wwl_14 rwl_14 rbl_3 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r14_c4 wbl_4 wbl_bar_4 q_r14_c4 q_bar_r14_c4 wwl_14 rwl_14 rbl_4 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r14_c5 wbl_5 wbl_bar_5 q_r14_c5 q_bar_r14_c5 wwl_14 rwl_14 rbl_5 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r14_c6 wbl_6 wbl_bar_6 q_r14_c6 q_bar_r14_c6 wwl_14 rwl_14 rbl_6 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r14_c7 wbl_7 wbl_bar_7 q_r14_c7 q_bar_r14_c7 wwl_14 rwl_14 rbl_7 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r14_c8 wbl_8 wbl_bar_8 q_r14_c8 q_bar_r14_c8 wwl_14 rwl_14 rbl_8 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r14_c9 wbl_9 wbl_bar_9 q_r14_c9 q_bar_r14_c9 wwl_14 rwl_14 rbl_9 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r14_c10 wbl_10 wbl_bar_10 q_r14_c10 q_bar_r14_c10 wwl_14 rwl_14 rbl_10 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r14_c11 wbl_11 wbl_bar_11 q_r14_c11 q_bar_r14_c11 wwl_14 rwl_14 rbl_11 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r14_c12 wbl_12 wbl_bar_12 q_r14_c12 q_bar_r14_c12 wwl_14 rwl_14 rbl_12 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r14_c13 wbl_13 wbl_bar_13 q_r14_c13 q_bar_r14_c13 wwl_14 rwl_14 rbl_13 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r14_c14 wbl_14 wbl_bar_14 q_r14_c14 q_bar_r14_c14 wwl_14 rwl_14 rbl_14 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r14_c15 wbl_15 wbl_bar_15 q_r14_c15 q_bar_r14_c15 wwl_14 rwl_14 rbl_15 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r14_c16 wbl_16 wbl_bar_16 q_r14_c16 q_bar_r14_c16 wwl_14 rwl_14 rbl_16 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r15_c1 wbl_1 wbl_bar_1 q_r15_c1 q_bar_r15_c1 wwl_15 rwl_15 rbl_1 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r15_c2 wbl_2 wbl_bar_2 q_r15_c2 q_bar_r15_c2 wwl_15 rwl_15 rbl_2 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r15_c3 wbl_3 wbl_bar_3 q_r15_c3 q_bar_r15_c3 wwl_15 rwl_15 rbl_3 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r15_c4 wbl_4 wbl_bar_4 q_r15_c4 q_bar_r15_c4 wwl_15 rwl_15 rbl_4 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r15_c5 wbl_5 wbl_bar_5 q_r15_c5 q_bar_r15_c5 wwl_15 rwl_15 rbl_5 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r15_c6 wbl_6 wbl_bar_6 q_r15_c6 q_bar_r15_c6 wwl_15 rwl_15 rbl_6 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r15_c7 wbl_7 wbl_bar_7 q_r15_c7 q_bar_r15_c7 wwl_15 rwl_15 rbl_7 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r15_c8 wbl_8 wbl_bar_8 q_r15_c8 q_bar_r15_c8 wwl_15 rwl_15 rbl_8 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r15_c9 wbl_9 wbl_bar_9 q_r15_c9 q_bar_r15_c9 wwl_15 rwl_15 rbl_9 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r15_c10 wbl_10 wbl_bar_10 q_r15_c10 q_bar_r15_c10 wwl_15 rwl_15 rbl_10 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r15_c11 wbl_11 wbl_bar_11 q_r15_c11 q_bar_r15_c11 wwl_15 rwl_15 rbl_11 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r15_c12 wbl_12 wbl_bar_12 q_r15_c12 q_bar_r15_c12 wwl_15 rwl_15 rbl_12 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r15_c13 wbl_13 wbl_bar_13 q_r15_c13 q_bar_r15_c13 wwl_15 rwl_15 rbl_13 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r15_c14 wbl_14 wbl_bar_14 q_r15_c14 q_bar_r15_c14 wwl_15 rwl_15 rbl_14 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r15_c15 wbl_15 wbl_bar_15 q_r15_c15 q_bar_r15_c15 wwl_15 rwl_15 rbl_15 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r15_c16 wbl_16 wbl_bar_16 q_r15_c16 q_bar_r15_c16 wwl_15 rwl_15 rbl_16 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r16_c1 wbl_1 wbl_bar_1 q_r16_c1 q_bar_r16_c1 wwl_16 rwl_16 rbl_1 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r16_c2 wbl_2 wbl_bar_2 q_r16_c2 q_bar_r16_c2 wwl_16 rwl_16 rbl_2 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r16_c3 wbl_3 wbl_bar_3 q_r16_c3 q_bar_r16_c3 wwl_16 rwl_16 rbl_3 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r16_c4 wbl_4 wbl_bar_4 q_r16_c4 q_bar_r16_c4 wwl_16 rwl_16 rbl_4 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r16_c5 wbl_5 wbl_bar_5 q_r16_c5 q_bar_r16_c5 wwl_16 rwl_16 rbl_5 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r16_c6 wbl_6 wbl_bar_6 q_r16_c6 q_bar_r16_c6 wwl_16 rwl_16 rbl_6 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r16_c7 wbl_7 wbl_bar_7 q_r16_c7 q_bar_r16_c7 wwl_16 rwl_16 rbl_7 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r16_c8 wbl_8 wbl_bar_8 q_r16_c8 q_bar_r16_c8 wwl_16 rwl_16 rbl_8 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r16_c9 wbl_9 wbl_bar_9 q_r16_c9 q_bar_r16_c9 wwl_16 rwl_16 rbl_9 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r16_c10 wbl_10 wbl_bar_10 q_r16_c10 q_bar_r16_c10 wwl_16 rwl_16 rbl_10 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r16_c11 wbl_11 wbl_bar_11 q_r16_c11 q_bar_r16_c11 wwl_16 rwl_16 rbl_11 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r16_c12 wbl_12 wbl_bar_12 q_r16_c12 q_bar_r16_c12 wwl_16 rwl_16 rbl_12 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r16_c13 wbl_13 wbl_bar_13 q_r16_c13 q_bar_r16_c13 wwl_16 rwl_16 rbl_13 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r16_c14 wbl_14 wbl_bar_14 q_r16_c14 q_bar_r16_c14 wwl_16 rwl_16 rbl_14 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r16_c15 wbl_15 wbl_bar_15 q_r16_c15 q_bar_r16_c15 wwl_16 rwl_16 rbl_15 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r16_c16 wbl_16 wbl_bar_16 q_r16_c16 q_bar_r16_c16 wwl_16 rwl_16 rbl_16 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r17_c1 wbl_1 wbl_bar_1 q_r17_c1 q_bar_r17_c1 wwl_17 rwl_17 rbl_1 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r17_c2 wbl_2 wbl_bar_2 q_r17_c2 q_bar_r17_c2 wwl_17 rwl_17 rbl_2 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r17_c3 wbl_3 wbl_bar_3 q_r17_c3 q_bar_r17_c3 wwl_17 rwl_17 rbl_3 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r17_c4 wbl_4 wbl_bar_4 q_r17_c4 q_bar_r17_c4 wwl_17 rwl_17 rbl_4 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r17_c5 wbl_5 wbl_bar_5 q_r17_c5 q_bar_r17_c5 wwl_17 rwl_17 rbl_5 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r17_c6 wbl_6 wbl_bar_6 q_r17_c6 q_bar_r17_c6 wwl_17 rwl_17 rbl_6 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r17_c7 wbl_7 wbl_bar_7 q_r17_c7 q_bar_r17_c7 wwl_17 rwl_17 rbl_7 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r17_c8 wbl_8 wbl_bar_8 q_r17_c8 q_bar_r17_c8 wwl_17 rwl_17 rbl_8 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r17_c9 wbl_9 wbl_bar_9 q_r17_c9 q_bar_r17_c9 wwl_17 rwl_17 rbl_9 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r17_c10 wbl_10 wbl_bar_10 q_r17_c10 q_bar_r17_c10 wwl_17 rwl_17 rbl_10 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r17_c11 wbl_11 wbl_bar_11 q_r17_c11 q_bar_r17_c11 wwl_17 rwl_17 rbl_11 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r17_c12 wbl_12 wbl_bar_12 q_r17_c12 q_bar_r17_c12 wwl_17 rwl_17 rbl_12 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r17_c13 wbl_13 wbl_bar_13 q_r17_c13 q_bar_r17_c13 wwl_17 rwl_17 rbl_13 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r17_c14 wbl_14 wbl_bar_14 q_r17_c14 q_bar_r17_c14 wwl_17 rwl_17 rbl_14 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r17_c15 wbl_15 wbl_bar_15 q_r17_c15 q_bar_r17_c15 wwl_17 rwl_17 rbl_15 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r17_c16 wbl_16 wbl_bar_16 q_r17_c16 q_bar_r17_c16 wwl_17 rwl_17 rbl_16 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r18_c1 wbl_1 wbl_bar_1 q_r18_c1 q_bar_r18_c1 wwl_18 rwl_18 rbl_1 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r18_c2 wbl_2 wbl_bar_2 q_r18_c2 q_bar_r18_c2 wwl_18 rwl_18 rbl_2 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r18_c3 wbl_3 wbl_bar_3 q_r18_c3 q_bar_r18_c3 wwl_18 rwl_18 rbl_3 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r18_c4 wbl_4 wbl_bar_4 q_r18_c4 q_bar_r18_c4 wwl_18 rwl_18 rbl_4 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r18_c5 wbl_5 wbl_bar_5 q_r18_c5 q_bar_r18_c5 wwl_18 rwl_18 rbl_5 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r18_c6 wbl_6 wbl_bar_6 q_r18_c6 q_bar_r18_c6 wwl_18 rwl_18 rbl_6 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r18_c7 wbl_7 wbl_bar_7 q_r18_c7 q_bar_r18_c7 wwl_18 rwl_18 rbl_7 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r18_c8 wbl_8 wbl_bar_8 q_r18_c8 q_bar_r18_c8 wwl_18 rwl_18 rbl_8 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r18_c9 wbl_9 wbl_bar_9 q_r18_c9 q_bar_r18_c9 wwl_18 rwl_18 rbl_9 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r18_c10 wbl_10 wbl_bar_10 q_r18_c10 q_bar_r18_c10 wwl_18 rwl_18 rbl_10 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r18_c11 wbl_11 wbl_bar_11 q_r18_c11 q_bar_r18_c11 wwl_18 rwl_18 rbl_11 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r18_c12 wbl_12 wbl_bar_12 q_r18_c12 q_bar_r18_c12 wwl_18 rwl_18 rbl_12 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r18_c13 wbl_13 wbl_bar_13 q_r18_c13 q_bar_r18_c13 wwl_18 rwl_18 rbl_13 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r18_c14 wbl_14 wbl_bar_14 q_r18_c14 q_bar_r18_c14 wwl_18 rwl_18 rbl_14 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r18_c15 wbl_15 wbl_bar_15 q_r18_c15 q_bar_r18_c15 wwl_18 rwl_18 rbl_15 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+Xcell_r18_c16 wbl_16 wbl_bar_16 q_r18_c16 q_bar_r18_c16 wwl_18 rwl_18 rbl_16 8t_sram width_N={1.5*width_N} width_N_acc={width_N} width_P={width_N} width_N_read_1={20*LAMBDA} width_N_read_2={20*LAMBDA}
+
+Xpc_c1 rbl_1 pch pre_charge_single width_P={width_pc}
+C_rbl_1 rbl_1 gnd 50fF
+Xwd_c1 rbl_1 wwl_18 wbl_1 wbl_bar_1 write_driver width_N={width_N} width_P={width_P}
+Xpc_c2 rbl_2 pch pre_charge_single width_P={width_pc}
+C_rbl_2 rbl_2 gnd 50fF
+Xwd_c2 rbl_2 wwl_18 wbl_2 wbl_bar_2 write_driver width_N={width_N} width_P={width_P}
+Xpc_c3 rbl_3 pch pre_charge_single width_P={width_pc}
+C_rbl_3 rbl_3 gnd 50fF
+Xwd_c3 rbl_3 wwl_18 wbl_3 wbl_bar_3 write_driver width_N={width_N} width_P={width_P}
+Xpc_c4 rbl_4 pch pre_charge_single width_P={width_pc}
+C_rbl_4 rbl_4 gnd 50fF
+Xwd_c4 rbl_4 wwl_18 wbl_4 wbl_bar_4 write_driver width_N={width_N} width_P={width_P}
+Xpc_c5 rbl_5 pch pre_charge_single width_P={width_pc}
+C_rbl_5 rbl_5 gnd 50fF
+Xwd_c5 rbl_5 wwl_18 wbl_5 wbl_bar_5 write_driver width_N={width_N} width_P={width_P}
+Xpc_c6 rbl_6 pch pre_charge_single width_P={width_pc}
+C_rbl_6 rbl_6 gnd 50fF
+Xwd_c6 rbl_6 wwl_18 wbl_6 wbl_bar_6 write_driver width_N={width_N} width_P={width_P}
+Xpc_c7 rbl_7 pch pre_charge_single width_P={width_pc}
+C_rbl_7 rbl_7 gnd 50fF
+Xwd_c7 rbl_7 wwl_18 wbl_7 wbl_bar_7 write_driver width_N={width_N} width_P={width_P}
+Xpc_c8 rbl_8 pch pre_charge_single width_P={width_pc}
+C_rbl_8 rbl_8 gnd 50fF
+Xwd_c8 rbl_8 wwl_18 wbl_8 wbl_bar_8 write_driver width_N={width_N} width_P={width_P}
+Xpc_c9 rbl_9 pch pre_charge_single width_P={width_pc}
+C_rbl_9 rbl_9 gnd 50fF
+Xwd_c9 rbl_9 wwl_18 wbl_9 wbl_bar_9 write_driver width_N={width_N} width_P={width_P}
+Xpc_c10 rbl_10 pch pre_charge_single width_P={width_pc}
+C_rbl_10 rbl_10 gnd 50fF
+Xwd_c10 rbl_10 wwl_18 wbl_10 wbl_bar_10 write_driver width_N={width_N} width_P={width_P}
+Xpc_c11 rbl_11 pch pre_charge_single width_P={width_pc}
+C_rbl_11 rbl_11 gnd 50fF
+Xwd_c11 rbl_11 wwl_18 wbl_11 wbl_bar_11 write_driver width_N={width_N} width_P={width_P}
+Xpc_c12 rbl_12 pch pre_charge_single width_P={width_pc}
+C_rbl_12 rbl_12 gnd 50fF
+Xwd_c12 rbl_12 wwl_18 wbl_12 wbl_bar_12 write_driver width_N={width_N} width_P={width_P}
+Xpc_c13 rbl_13 pch pre_charge_single width_P={width_pc}
+C_rbl_13 rbl_13 gnd 50fF
+Xwd_c13 rbl_13 wwl_18 wbl_13 wbl_bar_13 write_driver width_N={width_N} width_P={width_P}
+Xpc_c14 rbl_14 pch pre_charge_single width_P={width_pc}
+C_rbl_14 rbl_14 gnd 50fF
+Xwd_c14 rbl_14 wwl_18 wbl_14 wbl_bar_14 write_driver width_N={width_N} width_P={width_P}
+Xpc_c15 rbl_15 pch pre_charge_single width_P={width_pc}
+C_rbl_15 rbl_15 gnd 50fF
+Xwd_c15 rbl_15 wwl_18 wbl_15 wbl_bar_15 write_driver width_N={width_N} width_P={width_P}
+Xpc_c16 rbl_16 pch pre_charge_single width_P={width_pc}
+C_rbl_16 rbl_16 gnd 50fF
+Xwd_c16 rbl_16 wwl_18 wbl_16 wbl_bar_16 write_driver width_N={width_N} width_P={width_P}
+
+V_pc pch gnd pulse 0 1.8 init_time taper_time taper_time wl_dur wl_period
+
+V_rwl_1 rwl_1 gnd pulse 0 1.8 init_time taper_time taper_time wl_dur wl_period
+V_wwl_1 wwl_1 gnd dc 0
+V_rwl_2 rwl_2 gnd dc 0
+V_wwl_2 wwl_2 gnd dc 0
+V_rwl_3 rwl_3 gnd dc 0
+V_wwl_3 wwl_3 gnd dc 0
+V_rwl_4 rwl_4 gnd dc 0
+V_wwl_4 wwl_4 gnd dc 0
+V_rwl_5 rwl_5 gnd dc 0
+V_wwl_5 wwl_5 gnd dc 0
+V_rwl_6 rwl_6 gnd dc 0
+V_wwl_6 wwl_6 gnd dc 0
+V_rwl_7 rwl_7 gnd dc 0
+V_wwl_7 wwl_7 gnd dc 0
+V_rwl_8 rwl_8 gnd dc 0
+V_wwl_8 wwl_8 gnd dc 0
+V_rwl_9 rwl_9 gnd dc 0
+V_wwl_9 wwl_9 gnd dc 0
+V_rwl_10 rwl_10 gnd dc 0
+V_wwl_10 wwl_10 gnd dc 0
+V_rwl_11 rwl_11 gnd dc 0
+V_wwl_11 wwl_11 gnd dc 0
+V_rwl_12 rwl_12 gnd dc 0
+V_wwl_12 wwl_12 gnd dc 0
+V_rwl_13 rwl_13 gnd dc 0
+V_wwl_13 wwl_13 gnd dc 0
+V_rwl_14 rwl_14 gnd dc 0
+V_wwl_14 wwl_14 gnd dc 0
+V_rwl_15 rwl_15 gnd dc 0
+V_wwl_15 wwl_15 gnd dc 0
+V_rwl_16 rwl_16 gnd dc 0
+V_wwl_16 wwl_16 gnd dc 0
+V_rwl_17 rwl_17 gnd pulse 0 1.8 init_time taper_time taper_time wl_dur wl_period
+V_wwl_17 wwl_17 gnd dc 0
+V_rwl_18 rwl_18 gnd dc 0
+V_wwl_18 wwl_18 gnd pulse 0 1.8 init_time taper_time taper_time wl_dur wl_period
+
+* Initial conditions for all cells and read bitlines
+.ic V(rbl_1) = 0
+.ic V(rbl_2) = 0
+.ic V(rbl_3) = 0
+.ic V(rbl_4) = 0
+.ic V(rbl_5) = 0
+.ic V(rbl_6) = 0
+.ic V(rbl_7) = 0
+.ic V(rbl_8) = 0
+.ic V(rbl_9) = 0
+.ic V(rbl_10) = 0
+.ic V(rbl_11) = 0
+.ic V(rbl_12) = 0
+.ic V(rbl_13) = 0
+.ic V(rbl_14) = 0
+.ic V(rbl_15) = 0
+.ic V(rbl_16) = 0
+.ic V(q_r1_c1) = {1*vdd}  V(q_bar_r1_c1) = {vdd - 1*vdd}
+.ic V(q_r1_c2) = {0*vdd}  V(q_bar_r1_c2) = {vdd - 0*vdd}
+.ic V(q_r1_c3) = {0*vdd}  V(q_bar_r1_c3) = {vdd - 0*vdd}
+.ic V(q_r1_c4) = {1*vdd}  V(q_bar_r1_c4) = {vdd - 1*vdd}
+.ic V(q_r1_c5) = {1*vdd}  V(q_bar_r1_c5) = {vdd - 1*vdd}
+.ic V(q_r1_c6) = {0*vdd}  V(q_bar_r1_c6) = {vdd - 0*vdd}
+.ic V(q_r1_c7) = {1*vdd}  V(q_bar_r1_c7) = {vdd - 1*vdd}
+.ic V(q_r1_c8) = {1*vdd}  V(q_bar_r1_c8) = {vdd - 1*vdd}
+.ic V(q_r1_c9) = {1*vdd}  V(q_bar_r1_c9) = {vdd - 1*vdd}
+.ic V(q_r1_c10) = {1*vdd}  V(q_bar_r1_c10) = {vdd - 1*vdd}
+.ic V(q_r1_c11) = {0*vdd}  V(q_bar_r1_c11) = {vdd - 0*vdd}
+.ic V(q_r1_c12) = {1*vdd}  V(q_bar_r1_c12) = {vdd - 1*vdd}
+.ic V(q_r1_c13) = {1*vdd}  V(q_bar_r1_c13) = {vdd - 1*vdd}
+.ic V(q_r1_c14) = {1*vdd}  V(q_bar_r1_c14) = {vdd - 1*vdd}
+.ic V(q_r1_c15) = {0*vdd}  V(q_bar_r1_c15) = {vdd - 0*vdd}
+.ic V(q_r1_c16) = {0*vdd}  V(q_bar_r1_c16) = {vdd - 0*vdd}
+.ic V(q_r2_c1) = {0*vdd}  V(q_bar_r2_c1) = {vdd - 0*vdd}
+.ic V(q_r2_c2) = {0*vdd}  V(q_bar_r2_c2) = {vdd - 0*vdd}
+.ic V(q_r2_c3) = {0*vdd}  V(q_bar_r2_c3) = {vdd - 0*vdd}
+.ic V(q_r2_c4) = {0*vdd}  V(q_bar_r2_c4) = {vdd - 0*vdd}
+.ic V(q_r2_c5) = {0*vdd}  V(q_bar_r2_c5) = {vdd - 0*vdd}
+.ic V(q_r2_c6) = {0*vdd}  V(q_bar_r2_c6) = {vdd - 0*vdd}
+.ic V(q_r2_c7) = {0*vdd}  V(q_bar_r2_c7) = {vdd - 0*vdd}
+.ic V(q_r2_c8) = {0*vdd}  V(q_bar_r2_c8) = {vdd - 0*vdd}
+.ic V(q_r2_c9) = {0*vdd}  V(q_bar_r2_c9) = {vdd - 0*vdd}
+.ic V(q_r2_c10) = {0*vdd}  V(q_bar_r2_c10) = {vdd - 0*vdd}
+.ic V(q_r2_c11) = {0*vdd}  V(q_bar_r2_c11) = {vdd - 0*vdd}
+.ic V(q_r2_c12) = {0*vdd}  V(q_bar_r2_c12) = {vdd - 0*vdd}
+.ic V(q_r2_c13) = {0*vdd}  V(q_bar_r2_c13) = {vdd - 0*vdd}
+.ic V(q_r2_c14) = {0*vdd}  V(q_bar_r2_c14) = {vdd - 0*vdd}
+.ic V(q_r2_c15) = {0*vdd}  V(q_bar_r2_c15) = {vdd - 0*vdd}
+.ic V(q_r2_c16) = {0*vdd}  V(q_bar_r2_c16) = {vdd - 0*vdd}
+.ic V(q_r3_c1) = {0*vdd}  V(q_bar_r3_c1) = {vdd - 0*vdd}
+.ic V(q_r3_c2) = {0*vdd}  V(q_bar_r3_c2) = {vdd - 0*vdd}
+.ic V(q_r3_c3) = {0*vdd}  V(q_bar_r3_c3) = {vdd - 0*vdd}
+.ic V(q_r3_c4) = {0*vdd}  V(q_bar_r3_c4) = {vdd - 0*vdd}
+.ic V(q_r3_c5) = {0*vdd}  V(q_bar_r3_c5) = {vdd - 0*vdd}
+.ic V(q_r3_c6) = {0*vdd}  V(q_bar_r3_c6) = {vdd - 0*vdd}
+.ic V(q_r3_c7) = {0*vdd}  V(q_bar_r3_c7) = {vdd - 0*vdd}
+.ic V(q_r3_c8) = {0*vdd}  V(q_bar_r3_c8) = {vdd - 0*vdd}
+.ic V(q_r3_c9) = {0*vdd}  V(q_bar_r3_c9) = {vdd - 0*vdd}
+.ic V(q_r3_c10) = {0*vdd}  V(q_bar_r3_c10) = {vdd - 0*vdd}
+.ic V(q_r3_c11) = {0*vdd}  V(q_bar_r3_c11) = {vdd - 0*vdd}
+.ic V(q_r3_c12) = {0*vdd}  V(q_bar_r3_c12) = {vdd - 0*vdd}
+.ic V(q_r3_c13) = {0*vdd}  V(q_bar_r3_c13) = {vdd - 0*vdd}
+.ic V(q_r3_c14) = {0*vdd}  V(q_bar_r3_c14) = {vdd - 0*vdd}
+.ic V(q_r3_c15) = {0*vdd}  V(q_bar_r3_c15) = {vdd - 0*vdd}
+.ic V(q_r3_c16) = {0*vdd}  V(q_bar_r3_c16) = {vdd - 0*vdd}
+.ic V(q_r4_c1) = {1*vdd}  V(q_bar_r4_c1) = {vdd - 1*vdd}
+.ic V(q_r4_c2) = {1*vdd}  V(q_bar_r4_c2) = {vdd - 1*vdd}
+.ic V(q_r4_c3) = {1*vdd}  V(q_bar_r4_c3) = {vdd - 1*vdd}
+.ic V(q_r4_c4) = {1*vdd}  V(q_bar_r4_c4) = {vdd - 1*vdd}
+.ic V(q_r4_c5) = {1*vdd}  V(q_bar_r4_c5) = {vdd - 1*vdd}
+.ic V(q_r4_c6) = {1*vdd}  V(q_bar_r4_c6) = {vdd - 1*vdd}
+.ic V(q_r4_c7) = {1*vdd}  V(q_bar_r4_c7) = {vdd - 1*vdd}
+.ic V(q_r4_c8) = {1*vdd}  V(q_bar_r4_c8) = {vdd - 1*vdd}
+.ic V(q_r4_c9) = {1*vdd}  V(q_bar_r4_c9) = {vdd - 1*vdd}
+.ic V(q_r4_c10) = {1*vdd}  V(q_bar_r4_c10) = {vdd - 1*vdd}
+.ic V(q_r4_c11) = {1*vdd}  V(q_bar_r4_c11) = {vdd - 1*vdd}
+.ic V(q_r4_c12) = {1*vdd}  V(q_bar_r4_c12) = {vdd - 1*vdd}
+.ic V(q_r4_c13) = {1*vdd}  V(q_bar_r4_c13) = {vdd - 1*vdd}
+.ic V(q_r4_c14) = {1*vdd}  V(q_bar_r4_c14) = {vdd - 1*vdd}
+.ic V(q_r4_c15) = {1*vdd}  V(q_bar_r4_c15) = {vdd - 1*vdd}
+.ic V(q_r4_c16) = {1*vdd}  V(q_bar_r4_c16) = {vdd - 1*vdd}
+.ic V(q_r5_c1) = {0*vdd}  V(q_bar_r5_c1) = {vdd - 0*vdd}
+.ic V(q_r5_c2) = {0*vdd}  V(q_bar_r5_c2) = {vdd - 0*vdd}
+.ic V(q_r5_c3) = {0*vdd}  V(q_bar_r5_c3) = {vdd - 0*vdd}
+.ic V(q_r5_c4) = {0*vdd}  V(q_bar_r5_c4) = {vdd - 0*vdd}
+.ic V(q_r5_c5) = {0*vdd}  V(q_bar_r5_c5) = {vdd - 0*vdd}
+.ic V(q_r5_c6) = {0*vdd}  V(q_bar_r5_c6) = {vdd - 0*vdd}
+.ic V(q_r5_c7) = {0*vdd}  V(q_bar_r5_c7) = {vdd - 0*vdd}
+.ic V(q_r5_c8) = {0*vdd}  V(q_bar_r5_c8) = {vdd - 0*vdd}
+.ic V(q_r5_c9) = {0*vdd}  V(q_bar_r5_c9) = {vdd - 0*vdd}
+.ic V(q_r5_c10) = {0*vdd}  V(q_bar_r5_c10) = {vdd - 0*vdd}
+.ic V(q_r5_c11) = {0*vdd}  V(q_bar_r5_c11) = {vdd - 0*vdd}
+.ic V(q_r5_c12) = {0*vdd}  V(q_bar_r5_c12) = {vdd - 0*vdd}
+.ic V(q_r5_c13) = {0*vdd}  V(q_bar_r5_c13) = {vdd - 0*vdd}
+.ic V(q_r5_c14) = {0*vdd}  V(q_bar_r5_c14) = {vdd - 0*vdd}
+.ic V(q_r5_c15) = {0*vdd}  V(q_bar_r5_c15) = {vdd - 0*vdd}
+.ic V(q_r5_c16) = {0*vdd}  V(q_bar_r5_c16) = {vdd - 0*vdd}
+.ic V(q_r6_c1) = {0*vdd}  V(q_bar_r6_c1) = {vdd - 0*vdd}
+.ic V(q_r6_c2) = {0*vdd}  V(q_bar_r6_c2) = {vdd - 0*vdd}
+.ic V(q_r6_c3) = {0*vdd}  V(q_bar_r6_c3) = {vdd - 0*vdd}
+.ic V(q_r6_c4) = {0*vdd}  V(q_bar_r6_c4) = {vdd - 0*vdd}
+.ic V(q_r6_c5) = {0*vdd}  V(q_bar_r6_c5) = {vdd - 0*vdd}
+.ic V(q_r6_c6) = {0*vdd}  V(q_bar_r6_c6) = {vdd - 0*vdd}
+.ic V(q_r6_c7) = {0*vdd}  V(q_bar_r6_c7) = {vdd - 0*vdd}
+.ic V(q_r6_c8) = {0*vdd}  V(q_bar_r6_c8) = {vdd - 0*vdd}
+.ic V(q_r6_c9) = {0*vdd}  V(q_bar_r6_c9) = {vdd - 0*vdd}
+.ic V(q_r6_c10) = {0*vdd}  V(q_bar_r6_c10) = {vdd - 0*vdd}
+.ic V(q_r6_c11) = {0*vdd}  V(q_bar_r6_c11) = {vdd - 0*vdd}
+.ic V(q_r6_c12) = {0*vdd}  V(q_bar_r6_c12) = {vdd - 0*vdd}
+.ic V(q_r6_c13) = {0*vdd}  V(q_bar_r6_c13) = {vdd - 0*vdd}
+.ic V(q_r6_c14) = {0*vdd}  V(q_bar_r6_c14) = {vdd - 0*vdd}
+.ic V(q_r6_c15) = {0*vdd}  V(q_bar_r6_c15) = {vdd - 0*vdd}
+.ic V(q_r6_c16) = {0*vdd}  V(q_bar_r6_c16) = {vdd - 0*vdd}
+.ic V(q_r7_c1) = {1*vdd}  V(q_bar_r7_c1) = {vdd - 1*vdd}
+.ic V(q_r7_c2) = {1*vdd}  V(q_bar_r7_c2) = {vdd - 1*vdd}
+.ic V(q_r7_c3) = {1*vdd}  V(q_bar_r7_c3) = {vdd - 1*vdd}
+.ic V(q_r7_c4) = {1*vdd}  V(q_bar_r7_c4) = {vdd - 1*vdd}
+.ic V(q_r7_c5) = {1*vdd}  V(q_bar_r7_c5) = {vdd - 1*vdd}
+.ic V(q_r7_c6) = {1*vdd}  V(q_bar_r7_c6) = {vdd - 1*vdd}
+.ic V(q_r7_c7) = {1*vdd}  V(q_bar_r7_c7) = {vdd - 1*vdd}
+.ic V(q_r7_c8) = {1*vdd}  V(q_bar_r7_c8) = {vdd - 1*vdd}
+.ic V(q_r7_c9) = {1*vdd}  V(q_bar_r7_c9) = {vdd - 1*vdd}
+.ic V(q_r7_c10) = {1*vdd}  V(q_bar_r7_c10) = {vdd - 1*vdd}
+.ic V(q_r7_c11) = {1*vdd}  V(q_bar_r7_c11) = {vdd - 1*vdd}
+.ic V(q_r7_c12) = {1*vdd}  V(q_bar_r7_c12) = {vdd - 1*vdd}
+.ic V(q_r7_c13) = {1*vdd}  V(q_bar_r7_c13) = {vdd - 1*vdd}
+.ic V(q_r7_c14) = {1*vdd}  V(q_bar_r7_c14) = {vdd - 1*vdd}
+.ic V(q_r7_c15) = {1*vdd}  V(q_bar_r7_c15) = {vdd - 1*vdd}
+.ic V(q_r7_c16) = {1*vdd}  V(q_bar_r7_c16) = {vdd - 1*vdd}
+.ic V(q_r8_c1) = {1*vdd}  V(q_bar_r8_c1) = {vdd - 1*vdd}
+.ic V(q_r8_c2) = {1*vdd}  V(q_bar_r8_c2) = {vdd - 1*vdd}
+.ic V(q_r8_c3) = {1*vdd}  V(q_bar_r8_c3) = {vdd - 1*vdd}
+.ic V(q_r8_c4) = {1*vdd}  V(q_bar_r8_c4) = {vdd - 1*vdd}
+.ic V(q_r8_c5) = {1*vdd}  V(q_bar_r8_c5) = {vdd - 1*vdd}
+.ic V(q_r8_c6) = {1*vdd}  V(q_bar_r8_c6) = {vdd - 1*vdd}
+.ic V(q_r8_c7) = {1*vdd}  V(q_bar_r8_c7) = {vdd - 1*vdd}
+.ic V(q_r8_c8) = {1*vdd}  V(q_bar_r8_c8) = {vdd - 1*vdd}
+.ic V(q_r8_c9) = {1*vdd}  V(q_bar_r8_c9) = {vdd - 1*vdd}
+.ic V(q_r8_c10) = {1*vdd}  V(q_bar_r8_c10) = {vdd - 1*vdd}
+.ic V(q_r8_c11) = {1*vdd}  V(q_bar_r8_c11) = {vdd - 1*vdd}
+.ic V(q_r8_c12) = {1*vdd}  V(q_bar_r8_c12) = {vdd - 1*vdd}
+.ic V(q_r8_c13) = {1*vdd}  V(q_bar_r8_c13) = {vdd - 1*vdd}
+.ic V(q_r8_c14) = {1*vdd}  V(q_bar_r8_c14) = {vdd - 1*vdd}
+.ic V(q_r8_c15) = {1*vdd}  V(q_bar_r8_c15) = {vdd - 1*vdd}
+.ic V(q_r8_c16) = {1*vdd}  V(q_bar_r8_c16) = {vdd - 1*vdd}
+.ic V(q_r9_c1) = {0*vdd}  V(q_bar_r9_c1) = {vdd - 0*vdd}
+.ic V(q_r9_c2) = {0*vdd}  V(q_bar_r9_c2) = {vdd - 0*vdd}
+.ic V(q_r9_c3) = {0*vdd}  V(q_bar_r9_c3) = {vdd - 0*vdd}
+.ic V(q_r9_c4) = {0*vdd}  V(q_bar_r9_c4) = {vdd - 0*vdd}
+.ic V(q_r9_c5) = {0*vdd}  V(q_bar_r9_c5) = {vdd - 0*vdd}
+.ic V(q_r9_c6) = {0*vdd}  V(q_bar_r9_c6) = {vdd - 0*vdd}
+.ic V(q_r9_c7) = {0*vdd}  V(q_bar_r9_c7) = {vdd - 0*vdd}
+.ic V(q_r9_c8) = {0*vdd}  V(q_bar_r9_c8) = {vdd - 0*vdd}
+.ic V(q_r9_c9) = {0*vdd}  V(q_bar_r9_c9) = {vdd - 0*vdd}
+.ic V(q_r9_c10) = {0*vdd}  V(q_bar_r9_c10) = {vdd - 0*vdd}
+.ic V(q_r9_c11) = {0*vdd}  V(q_bar_r9_c11) = {vdd - 0*vdd}
+.ic V(q_r9_c12) = {0*vdd}  V(q_bar_r9_c12) = {vdd - 0*vdd}
+.ic V(q_r9_c13) = {0*vdd}  V(q_bar_r9_c13) = {vdd - 0*vdd}
+.ic V(q_r9_c14) = {0*vdd}  V(q_bar_r9_c14) = {vdd - 0*vdd}
+.ic V(q_r9_c15) = {0*vdd}  V(q_bar_r9_c15) = {vdd - 0*vdd}
+.ic V(q_r9_c16) = {0*vdd}  V(q_bar_r9_c16) = {vdd - 0*vdd}
+.ic V(q_r10_c1) = {1*vdd}  V(q_bar_r10_c1) = {vdd - 1*vdd}
+.ic V(q_r10_c2) = {1*vdd}  V(q_bar_r10_c2) = {vdd - 1*vdd}
+.ic V(q_r10_c3) = {1*vdd}  V(q_bar_r10_c3) = {vdd - 1*vdd}
+.ic V(q_r10_c4) = {1*vdd}  V(q_bar_r10_c4) = {vdd - 1*vdd}
+.ic V(q_r10_c5) = {1*vdd}  V(q_bar_r10_c5) = {vdd - 1*vdd}
+.ic V(q_r10_c6) = {1*vdd}  V(q_bar_r10_c6) = {vdd - 1*vdd}
+.ic V(q_r10_c7) = {1*vdd}  V(q_bar_r10_c7) = {vdd - 1*vdd}
+.ic V(q_r10_c8) = {1*vdd}  V(q_bar_r10_c8) = {vdd - 1*vdd}
+.ic V(q_r10_c9) = {1*vdd}  V(q_bar_r10_c9) = {vdd - 1*vdd}
+.ic V(q_r10_c10) = {1*vdd}  V(q_bar_r10_c10) = {vdd - 1*vdd}
+.ic V(q_r10_c11) = {1*vdd}  V(q_bar_r10_c11) = {vdd - 1*vdd}
+.ic V(q_r10_c12) = {1*vdd}  V(q_bar_r10_c12) = {vdd - 1*vdd}
+.ic V(q_r10_c13) = {1*vdd}  V(q_bar_r10_c13) = {vdd - 1*vdd}
+.ic V(q_r10_c14) = {1*vdd}  V(q_bar_r10_c14) = {vdd - 1*vdd}
+.ic V(q_r10_c15) = {1*vdd}  V(q_bar_r10_c15) = {vdd - 1*vdd}
+.ic V(q_r10_c16) = {1*vdd}  V(q_bar_r10_c16) = {vdd - 1*vdd}
+.ic V(q_r11_c1) = {0*vdd}  V(q_bar_r11_c1) = {vdd - 0*vdd}
+.ic V(q_r11_c2) = {0*vdd}  V(q_bar_r11_c2) = {vdd - 0*vdd}
+.ic V(q_r11_c3) = {0*vdd}  V(q_bar_r11_c3) = {vdd - 0*vdd}
+.ic V(q_r11_c4) = {0*vdd}  V(q_bar_r11_c4) = {vdd - 0*vdd}
+.ic V(q_r11_c5) = {0*vdd}  V(q_bar_r11_c5) = {vdd - 0*vdd}
+.ic V(q_r11_c6) = {0*vdd}  V(q_bar_r11_c6) = {vdd - 0*vdd}
+.ic V(q_r11_c7) = {0*vdd}  V(q_bar_r11_c7) = {vdd - 0*vdd}
+.ic V(q_r11_c8) = {0*vdd}  V(q_bar_r11_c8) = {vdd - 0*vdd}
+.ic V(q_r11_c9) = {0*vdd}  V(q_bar_r11_c9) = {vdd - 0*vdd}
+.ic V(q_r11_c10) = {0*vdd}  V(q_bar_r11_c10) = {vdd - 0*vdd}
+.ic V(q_r11_c11) = {0*vdd}  V(q_bar_r11_c11) = {vdd - 0*vdd}
+.ic V(q_r11_c12) = {0*vdd}  V(q_bar_r11_c12) = {vdd - 0*vdd}
+.ic V(q_r11_c13) = {0*vdd}  V(q_bar_r11_c13) = {vdd - 0*vdd}
+.ic V(q_r11_c14) = {0*vdd}  V(q_bar_r11_c14) = {vdd - 0*vdd}
+.ic V(q_r11_c15) = {0*vdd}  V(q_bar_r11_c15) = {vdd - 0*vdd}
+.ic V(q_r11_c16) = {0*vdd}  V(q_bar_r11_c16) = {vdd - 0*vdd}
+.ic V(q_r12_c1) = {0*vdd}  V(q_bar_r12_c1) = {vdd - 0*vdd}
+.ic V(q_r12_c2) = {0*vdd}  V(q_bar_r12_c2) = {vdd - 0*vdd}
+.ic V(q_r12_c3) = {0*vdd}  V(q_bar_r12_c3) = {vdd - 0*vdd}
+.ic V(q_r12_c4) = {0*vdd}  V(q_bar_r12_c4) = {vdd - 0*vdd}
+.ic V(q_r12_c5) = {0*vdd}  V(q_bar_r12_c5) = {vdd - 0*vdd}
+.ic V(q_r12_c6) = {0*vdd}  V(q_bar_r12_c6) = {vdd - 0*vdd}
+.ic V(q_r12_c7) = {0*vdd}  V(q_bar_r12_c7) = {vdd - 0*vdd}
+.ic V(q_r12_c8) = {0*vdd}  V(q_bar_r12_c8) = {vdd - 0*vdd}
+.ic V(q_r12_c9) = {0*vdd}  V(q_bar_r12_c9) = {vdd - 0*vdd}
+.ic V(q_r12_c10) = {0*vdd}  V(q_bar_r12_c10) = {vdd - 0*vdd}
+.ic V(q_r12_c11) = {0*vdd}  V(q_bar_r12_c11) = {vdd - 0*vdd}
+.ic V(q_r12_c12) = {0*vdd}  V(q_bar_r12_c12) = {vdd - 0*vdd}
+.ic V(q_r12_c13) = {0*vdd}  V(q_bar_r12_c13) = {vdd - 0*vdd}
+.ic V(q_r12_c14) = {0*vdd}  V(q_bar_r12_c14) = {vdd - 0*vdd}
+.ic V(q_r12_c15) = {0*vdd}  V(q_bar_r12_c15) = {vdd - 0*vdd}
+.ic V(q_r12_c16) = {0*vdd}  V(q_bar_r12_c16) = {vdd - 0*vdd}
+.ic V(q_r13_c1) = {0*vdd}  V(q_bar_r13_c1) = {vdd - 0*vdd}
+.ic V(q_r13_c2) = {0*vdd}  V(q_bar_r13_c2) = {vdd - 0*vdd}
+.ic V(q_r13_c3) = {0*vdd}  V(q_bar_r13_c3) = {vdd - 0*vdd}
+.ic V(q_r13_c4) = {0*vdd}  V(q_bar_r13_c4) = {vdd - 0*vdd}
+.ic V(q_r13_c5) = {0*vdd}  V(q_bar_r13_c5) = {vdd - 0*vdd}
+.ic V(q_r13_c6) = {0*vdd}  V(q_bar_r13_c6) = {vdd - 0*vdd}
+.ic V(q_r13_c7) = {0*vdd}  V(q_bar_r13_c7) = {vdd - 0*vdd}
+.ic V(q_r13_c8) = {0*vdd}  V(q_bar_r13_c8) = {vdd - 0*vdd}
+.ic V(q_r13_c9) = {0*vdd}  V(q_bar_r13_c9) = {vdd - 0*vdd}
+.ic V(q_r13_c10) = {0*vdd}  V(q_bar_r13_c10) = {vdd - 0*vdd}
+.ic V(q_r13_c11) = {0*vdd}  V(q_bar_r13_c11) = {vdd - 0*vdd}
+.ic V(q_r13_c12) = {0*vdd}  V(q_bar_r13_c12) = {vdd - 0*vdd}
+.ic V(q_r13_c13) = {0*vdd}  V(q_bar_r13_c13) = {vdd - 0*vdd}
+.ic V(q_r13_c14) = {0*vdd}  V(q_bar_r13_c14) = {vdd - 0*vdd}
+.ic V(q_r13_c15) = {0*vdd}  V(q_bar_r13_c15) = {vdd - 0*vdd}
+.ic V(q_r13_c16) = {0*vdd}  V(q_bar_r13_c16) = {vdd - 0*vdd}
+.ic V(q_r14_c1) = {0*vdd}  V(q_bar_r14_c1) = {vdd - 0*vdd}
+.ic V(q_r14_c2) = {0*vdd}  V(q_bar_r14_c2) = {vdd - 0*vdd}
+.ic V(q_r14_c3) = {0*vdd}  V(q_bar_r14_c3) = {vdd - 0*vdd}
+.ic V(q_r14_c4) = {0*vdd}  V(q_bar_r14_c4) = {vdd - 0*vdd}
+.ic V(q_r14_c5) = {0*vdd}  V(q_bar_r14_c5) = {vdd - 0*vdd}
+.ic V(q_r14_c6) = {0*vdd}  V(q_bar_r14_c6) = {vdd - 0*vdd}
+.ic V(q_r14_c7) = {0*vdd}  V(q_bar_r14_c7) = {vdd - 0*vdd}
+.ic V(q_r14_c8) = {0*vdd}  V(q_bar_r14_c8) = {vdd - 0*vdd}
+.ic V(q_r14_c9) = {0*vdd}  V(q_bar_r14_c9) = {vdd - 0*vdd}
+.ic V(q_r14_c10) = {0*vdd}  V(q_bar_r14_c10) = {vdd - 0*vdd}
+.ic V(q_r14_c11) = {0*vdd}  V(q_bar_r14_c11) = {vdd - 0*vdd}
+.ic V(q_r14_c12) = {0*vdd}  V(q_bar_r14_c12) = {vdd - 0*vdd}
+.ic V(q_r14_c13) = {0*vdd}  V(q_bar_r14_c13) = {vdd - 0*vdd}
+.ic V(q_r14_c14) = {0*vdd}  V(q_bar_r14_c14) = {vdd - 0*vdd}
+.ic V(q_r14_c15) = {0*vdd}  V(q_bar_r14_c15) = {vdd - 0*vdd}
+.ic V(q_r14_c16) = {0*vdd}  V(q_bar_r14_c16) = {vdd - 0*vdd}
+.ic V(q_r15_c1) = {1*vdd}  V(q_bar_r15_c1) = {vdd - 1*vdd}
+.ic V(q_r15_c2) = {1*vdd}  V(q_bar_r15_c2) = {vdd - 1*vdd}
+.ic V(q_r15_c3) = {1*vdd}  V(q_bar_r15_c3) = {vdd - 1*vdd}
+.ic V(q_r15_c4) = {1*vdd}  V(q_bar_r15_c4) = {vdd - 1*vdd}
+.ic V(q_r15_c5) = {1*vdd}  V(q_bar_r15_c5) = {vdd - 1*vdd}
+.ic V(q_r15_c6) = {1*vdd}  V(q_bar_r15_c6) = {vdd - 1*vdd}
+.ic V(q_r15_c7) = {1*vdd}  V(q_bar_r15_c7) = {vdd - 1*vdd}
+.ic V(q_r15_c8) = {1*vdd}  V(q_bar_r15_c8) = {vdd - 1*vdd}
+.ic V(q_r15_c9) = {1*vdd}  V(q_bar_r15_c9) = {vdd - 1*vdd}
+.ic V(q_r15_c10) = {1*vdd}  V(q_bar_r15_c10) = {vdd - 1*vdd}
+.ic V(q_r15_c11) = {1*vdd}  V(q_bar_r15_c11) = {vdd - 1*vdd}
+.ic V(q_r15_c12) = {1*vdd}  V(q_bar_r15_c12) = {vdd - 1*vdd}
+.ic V(q_r15_c13) = {1*vdd}  V(q_bar_r15_c13) = {vdd - 1*vdd}
+.ic V(q_r15_c14) = {1*vdd}  V(q_bar_r15_c14) = {vdd - 1*vdd}
+.ic V(q_r15_c15) = {1*vdd}  V(q_bar_r15_c15) = {vdd - 1*vdd}
+.ic V(q_r15_c16) = {1*vdd}  V(q_bar_r15_c16) = {vdd - 1*vdd}
+.ic V(q_r16_c1) = {0*vdd}  V(q_bar_r16_c1) = {vdd - 0*vdd}
+.ic V(q_r16_c2) = {0*vdd}  V(q_bar_r16_c2) = {vdd - 0*vdd}
+.ic V(q_r16_c3) = {0*vdd}  V(q_bar_r16_c3) = {vdd - 0*vdd}
+.ic V(q_r16_c4) = {0*vdd}  V(q_bar_r16_c4) = {vdd - 0*vdd}
+.ic V(q_r16_c5) = {0*vdd}  V(q_bar_r16_c5) = {vdd - 0*vdd}
+.ic V(q_r16_c6) = {0*vdd}  V(q_bar_r16_c6) = {vdd - 0*vdd}
+.ic V(q_r16_c7) = {0*vdd}  V(q_bar_r16_c7) = {vdd - 0*vdd}
+.ic V(q_r16_c8) = {0*vdd}  V(q_bar_r16_c8) = {vdd - 0*vdd}
+.ic V(q_r16_c9) = {0*vdd}  V(q_bar_r16_c9) = {vdd - 0*vdd}
+.ic V(q_r16_c10) = {0*vdd}  V(q_bar_r16_c10) = {vdd - 0*vdd}
+.ic V(q_r16_c11) = {0*vdd}  V(q_bar_r16_c11) = {vdd - 0*vdd}
+.ic V(q_r16_c12) = {0*vdd}  V(q_bar_r16_c12) = {vdd - 0*vdd}
+.ic V(q_r16_c13) = {0*vdd}  V(q_bar_r16_c13) = {vdd - 0*vdd}
+.ic V(q_r16_c14) = {0*vdd}  V(q_bar_r16_c14) = {vdd - 0*vdd}
+.ic V(q_r16_c15) = {0*vdd}  V(q_bar_r16_c15) = {vdd - 0*vdd}
+.ic V(q_r16_c16) = {0*vdd}  V(q_bar_r16_c16) = {vdd - 0*vdd}
+.ic V(q_r17_c1) = {0*vdd}  V(q_bar_r17_c1) = {vdd - 0*vdd}
+.ic V(q_r17_c2) = {0*vdd}  V(q_bar_r17_c2) = {vdd - 0*vdd}
+.ic V(q_r17_c3) = {0*vdd}  V(q_bar_r17_c3) = {vdd - 0*vdd}
+.ic V(q_r17_c4) = {0*vdd}  V(q_bar_r17_c4) = {vdd - 0*vdd}
+.ic V(q_r17_c5) = {0*vdd}  V(q_bar_r17_c5) = {vdd - 0*vdd}
+.ic V(q_r17_c6) = {0*vdd}  V(q_bar_r17_c6) = {vdd - 0*vdd}
+.ic V(q_r17_c7) = {0*vdd}  V(q_bar_r17_c7) = {vdd - 0*vdd}
+.ic V(q_r17_c8) = {0*vdd}  V(q_bar_r17_c8) = {vdd - 0*vdd}
+.ic V(q_r17_c9) = {0*vdd}  V(q_bar_r17_c9) = {vdd - 0*vdd}
+.ic V(q_r17_c10) = {0*vdd}  V(q_bar_r17_c10) = {vdd - 0*vdd}
+.ic V(q_r17_c11) = {0*vdd}  V(q_bar_r17_c11) = {vdd - 0*vdd}
+.ic V(q_r17_c12) = {0*vdd}  V(q_bar_r17_c12) = {vdd - 0*vdd}
+.ic V(q_r17_c13) = {0*vdd}  V(q_bar_r17_c13) = {vdd - 0*vdd}
+.ic V(q_r17_c14) = {0*vdd}  V(q_bar_r17_c14) = {vdd - 0*vdd}
+.ic V(q_r17_c15) = {0*vdd}  V(q_bar_r17_c15) = {vdd - 0*vdd}
+.ic V(q_r17_c16) = {0*vdd}  V(q_bar_r17_c16) = {vdd - 0*vdd}
+.ic V(q_r18_c1) = {0*vdd}  V(q_bar_r18_c1) = {vdd - 0*vdd}
+.ic V(q_r18_c2) = {0*vdd}  V(q_bar_r18_c2) = {vdd - 0*vdd}
+.ic V(q_r18_c3) = {0*vdd}  V(q_bar_r18_c3) = {vdd - 0*vdd}
+.ic V(q_r18_c4) = {0*vdd}  V(q_bar_r18_c4) = {vdd - 0*vdd}
+.ic V(q_r18_c5) = {0*vdd}  V(q_bar_r18_c5) = {vdd - 0*vdd}
+.ic V(q_r18_c6) = {0*vdd}  V(q_bar_r18_c6) = {vdd - 0*vdd}
+.ic V(q_r18_c7) = {0*vdd}  V(q_bar_r18_c7) = {vdd - 0*vdd}
+.ic V(q_r18_c8) = {0*vdd}  V(q_bar_r18_c8) = {vdd - 0*vdd}
+.ic V(q_r18_c9) = {0*vdd}  V(q_bar_r18_c9) = {vdd - 0*vdd}
+.ic V(q_r18_c10) = {0*vdd}  V(q_bar_r18_c10) = {vdd - 0*vdd}
+.ic V(q_r18_c11) = {0*vdd}  V(q_bar_r18_c11) = {vdd - 0*vdd}
+.ic V(q_r18_c12) = {0*vdd}  V(q_bar_r18_c12) = {vdd - 0*vdd}
+.ic V(q_r18_c13) = {0*vdd}  V(q_bar_r18_c13) = {vdd - 0*vdd}
+.ic V(q_r18_c14) = {0*vdd}  V(q_bar_r18_c14) = {vdd - 0*vdd}
+.ic V(q_r18_c15) = {0*vdd}  V(q_bar_r18_c15) = {vdd - 0*vdd}
+.ic V(q_r18_c16) = {0*vdd}  V(q_bar_r18_c16) = {vdd - 0*vdd}

@@ -1,0 +1,134 @@
+8T-SRAM for NOR operation in IMC
+.include "TSMC_180nm.txt"
+.include "sram_8t_helper.cir"
+.param vdd=1.8
+.param LAMBDA=0.09u
+* .param width_N={ 20*LAMBDA }
+.param width_N={ 20*LAMBDA }
+.param width_P_multiplier={ 2 }
+.param width_pc = {40*LAMBDA}
+.param width_P={width_P_multiplier*width_N}
+.global vdd gnd
+
+Vdd vdd gnd dc 1.8
+
+* D G S B
+.subckt inv  out    in     width_N = {width_N} width_P = {width_P}
+    MP    out    in     vdd    vdd    CMOSP   W={width_P}   L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P} AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    MN    out    in     gnd    gnd    CMOSN   W={width_N}   L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N} AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}
+.ends inv
+
+.subckt nand_2ip  out    a    b    width_N = {width_N} width_P = {width_P}
+    MP1   out    a    vdd    vdd    CMOSP   W={width_P}   L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P} AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    MP2   out    b    vdd    vdd    CMOSP   W={width_P}   L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P} AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    MN1   out    a    int1    gnd    CMOSN   W={2*width_N}   L={2*LAMBDA}
+    + AS={5*2*width_N*LAMBDA} PS={10*LAMBDA+4*width_N} AD={5*2*width_N*LAMBDA} PD={10*LAMBDA+4*width_N}
+
+    MN2   int1    b    gnd    gnd    CMOSN   W={2*width_N}   L={2*LAMBDA}
+    + AS={5*2*width_N*LAMBDA} PS={10*LAMBDA+4*width_N} AD={5*2*width_N*LAMBDA} PD={10*LAMBDA+4*width_N}
+.ends nand_2ip
+
+.subckt and_2ip out    a    b    width_N = {width_N} width_P = {width_P}
+    x1 int1 a b nand_2ip width_N = {width_N} width_P = {width_P}
+    x2 out int1 inv width_N = {width_N} width_P = {width_P}
+.ends and_2ip
+
+* D G S B
+.subckt 6t_sram bl bl_bar q q_bar wl width_N={width_N} width_N_acc={width_N_acc} width_P={width_P}
+    M1   q    q_bar     gnd    gnd    CMOSN   W={width_N}   L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N} AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}    
+
+    M2   q    wl     bl    gnd    CMOSN   W={width_N_acc}   L={2*LAMBDA}
+    + AS={5*width_N_acc*LAMBDA} PS={10*LAMBDA+2*width_N_acc} AD={5*width_N_acc*LAMBDA} PD={10*LAMBDA+2*width_N_acc}
+
+    M3    q    q_bar     vdd    vdd    CMOSP   W={width_P}   L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P} AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+
+    M4   q_bar    q     gnd    gnd    CMOSN   W={width_N}   L={2*LAMBDA}
+    + AS={5*width_N*LAMBDA} PS={10*LAMBDA+2*width_N} AD={5*width_N*LAMBDA} PD={10*LAMBDA+2*width_N}    
+
+    M5   q_bar    wl     bl_bar    gnd    CMOSN   W={width_N_acc}   L={2*LAMBDA}
+    + AS={5*width_N_acc*LAMBDA} PS={10*LAMBDA+2*width_N_acc} AD={5*width_N_acc*LAMBDA} PD={10*LAMBDA+2*width_N_acc}
+
+    M6    q_bar    q     vdd    vdd    CMOSP   W={width_P}   L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P} AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+.ends 6t_sram
+
+* 8T SRAM cell
+.subckt 8t_sram wbl wbl_bar q q_bar wwl rwl rbl width_N={width_N} width_N_acc={width_N_acc} width_P={width_P} width_N_read_1={width_N_read_1} width_N_read_2={width_N_read_2}
+    X6t wbl wbl_bar q q_bar wwl 6t_sram width_N={width_N} width_N_acc={width_N_acc} width_P={width_P}
+    
+    * D G S B
+    M_read_1   inter    q   gnd    gnd    CMOSN   W={width_N_read_1}   L={2*LAMBDA}
+    + AS={5*width_N_read_1*LAMBDA} PS={10*LAMBDA+2*width_N_read_1} AD={5*width_N_read_1*LAMBDA} PD={10*LAMBDA+2*width_N_read_1}
+
+    M_read_2   rbl    rwl    inter    gnd    CMOSN   W={width_N_read_2}   L={2*LAMBDA}
+    + AS={5*width_N_read_2*LAMBDA} PS={10*LAMBDA+2*width_N_read_2} AD={5*width_N_read_2*LAMBDA} PD={10*LAMBDA+2*width_N_read_2}
+
+.ends 8t_sram
+
+* D G S B
+.subckt pre_charge_single node pc_en width_P = {width_P}
+    MP_node    node    pc_en    vdd    vdd    CMOSP   W={width_P}   L={2*LAMBDA}
+    + AS={5*width_P*LAMBDA} PS={10*LAMBDA+2*width_P} AD={5*width_P*LAMBDA} PD={10*LAMBDA+2*width_P}
+.ends pre_charge_single
+
+.subckt write_driver rbl write_en bl bl_bar width_N={width_N} width_P={width_P}
+    .param write_mul={1}
+    * .global write_data_bar bl_and bl_bar_and
+    x_inv1 inv1_out rbl inv width_N={width_N} width_P={width_P}
+    x_inv2 nor inv1_out inv width_N={width_N} width_P={width_P}
+    x5 nor_bar nor inv width_N={write_mul*width_N} width_P={write_mul*width_P}
+    x6 bl_and nor_bar write_en and_2ip width_N={write_mul*width_N} width_P={write_mul*width_P}
+    x7 bl_bar_and nor write_en and_2ip width_N={write_mul*width_N} width_P={write_mul*width_P}
+
+    * D G S B
+    .param pdn_write_mult={4}
+    Mbl    bl    bl_and     gnd    gnd    CMOSN   W={pdn_write_mult*width_N}   L={2*LAMBDA}
+    + AS={5*pdn_write_mult*width_N*LAMBDA} PS={10*LAMBDA+2*pdn_write_mult*width_N} AD={5*pdn_write_mult*width_N*LAMBDA} PD={10*LAMBDA+2*pdn_write_mult*width_N}
+
+    Mbl_bar    bl_bar   bl_bar_and     gnd    gnd    CMOSN   W={pdn_write_mult*width_N}   L={2*LAMBDA}
+    + AS={5*pdn_write_mult*width_N*LAMBDA} PS={10*LAMBDA+2*pdn_write_mult*width_N} AD={5*pdn_write_mult*width_N*LAMBDA} PD={10*LAMBDA+2*pdn_write_mult*width_N}
+.ends write_driver
+
+* Capacitors to model bitline caps
+.param bit_cap = {50fF}
+
+* Time parameters for control signals
+.param init_time = {200ps}
+.param wl_dur = {600ps}
+.param wl_period = {1200ps}
+.param taper_time = {5ps}
+
+.param VQ_1  = 0
+.param VQ_2  = 0
+.param VQ_3  = 0
+
+* .tran 10ps 80ns 5ns
+.tran 1ps 2ns
+* .measure tran t_delay TRIG V(sa_en) VAL='0.9' RISE=1 TARG V(bl) VAL='0.18' FALL=1
+* .measure tran t_delay TRIG V(sa_en) VAL='0.9' RISE=1 TARG V(bl) VAL='1.72' RISE=1
+@MEAS_CMD@
+
+.control
+set hcopypscolor = 1 
+set color0=white 
+set color1=black
+set color7=Brown
+* brushwidth
+set xbrushwidth=5
+set xfont_size = 15
+
+run
+let x = -(Vdd#branch)
+
+@PLOT_CMD@
+
+.endc
