@@ -8,3 +8,5 @@
 - Phase 7 implements an MxN array to do the same. (Up until now, memory was integrated only to work with symmetric SAs)
 - Phase 8 brings tiles of size MxN to work with. (Up until now, tiles were only of size MxM and the PEs were just idle)
 - Phase 9 improves on Phase 6 by implementing data-reuse (prior to this each matrix for a multiplication was fetched from memory every time).
+- Phase 10 is just a combination of Phases 8 and 9, bringing data-reuse to MxN arrays with MxN tiles.
+- Phase 11 is Phase10, created fresh for testing purposes.

@@ -9,11 +9,11 @@
 // Define the dimensions of the Systolic Array
 // Use PE_ROWS and PE_COLS to avoid conflicts with SystemC template parameters
 #ifndef PE_ROWS
-#define PE_ROWS 7 // Default: 7x7 square grid
+#define PE_ROWS 2 // Default number of rows
 #endif
 
 #ifndef PE_COLS
-#define PE_COLS 7  // Default: 7x7 square grid
+#define PE_COLS 7  // Default number of columns (supports MxN grids)
 #endif
 
 // Backward compatibility aliases
@@ -133,6 +133,7 @@ SC_MODULE(MatMul_Controller)
     sc_in<int> K1; 
     sc_in<int> K2; 
     sc_in<int> K3;
+    sc_in<int> tile_stride;  // Buffer stride = max(M, N)
 
     // --- Internal Components ---
     SA_MxN* sa_grid; 
@@ -189,9 +190,10 @@ SC_MODULE(MatMul_Controller)
                 
                 for (int i = 0; i < M; ++i) { 
                     for (int j = 0; j < N; ++j) { 
-                        // Use M for buffer stride
+                        // Use tile_stride for buffer access
+                        int stride = tile_stride.read();
                         if (i < k2 && j < k3) {
-                            sa_preload_data[i * N + j].write(W_ptr[i * M + j]);
+                            sa_preload_data[i * N + j].write(W_ptr[i * stride + j]);
                         } else {
                             sa_preload_data[i * N + j].write(0.0f);
                         }
@@ -206,6 +208,8 @@ SC_MODULE(MatMul_Controller)
                 // --- Phase 2: Stream A_tile and Drain C_tile ---
                 int total_cycles = k1 + M + N;
                 
+                int stride = tile_stride.read();
+                
                 for (int clk_cycle = 0; clk_cycle < total_cycles; ++clk_cycle) 
                 {
                     // Feed A_tile with skew
@@ -213,7 +217,7 @@ SC_MODULE(MatMul_Controller)
                         int a_row = clk_cycle - i;
                         
                         if (a_row >= 0 && a_row < k1 && i < k2) {
-                            sa_in_left[i].write(A_ptr[a_row * M + i]);
+                            sa_in_left[i].write(A_ptr[a_row * stride + i]);
                         } else {
                             sa_in_left[i].write(0.0f);
                         }
@@ -225,7 +229,7 @@ SC_MODULE(MatMul_Controller)
                         
                         if (r_out >= 0 && r_out < k1 && j < k3) {
                             float partial_sum = sa_out_bottom[j].read();
-                            C_ptr[r_out * M + j] += partial_sum;
+                            C_ptr[r_out * stride + j] += partial_sum;
                         }
                     } 
                     
@@ -247,6 +251,7 @@ SC_MODULE(MatMul_Controller)
                 // --- Phase 2: Accumulate Phase ---
                 sa_preload_valid.write(false);
                 
+                int stride = tile_stride.read();
                 int stream_cycles = k2 + M + N + 1;
                 
                 for (int clk_cycle = 0; clk_cycle < stream_cycles; ++clk_cycle)
@@ -255,9 +260,9 @@ SC_MODULE(MatMul_Controller)
                     for (int i = 0; i < M; ++i) {
                         int k = clk_cycle - i;
                         
-                        // Use M for buffer stride
+                        // Use tile_stride for buffer access
                         if (k >= 0 && k < k2 && i < k1) {
-                            sa_in_left[i].write(A_ptr[i * M + k]);
+                            sa_in_left[i].write(A_ptr[i * stride + k]);
                         } else {
                             sa_in_left[i].write(0.0f);
                         }
@@ -267,9 +272,9 @@ SC_MODULE(MatMul_Controller)
                     for (int j = 0; j < N; ++j) {
                         int k = clk_cycle - j;
                         
-                        // Use M for buffer stride
+                        // Use tile_stride for buffer access
                         if (k >= 0 && k < k2 && j < k3) {
-                            sa_in_top[j].write(W_ptr[k * M + j]);
+                            sa_in_top[j].write(W_ptr[k * stride + j]);
                         } else {
                             sa_in_top[j].write(0.0f);
                         }
@@ -293,10 +298,10 @@ SC_MODULE(MatMul_Controller)
                     for (int j = 0; j < N; ++j) {
                         int i_out = M - 1 - clk_cycle;
                         
-                        // Use M for buffer stride
+                        // Use tile_stride for buffer access
                         if (i_out >= 0 && i_out < k1 && j < k3) {
                             float result = sa_out_bottom[j].read();
-                            C_ptr[i_out * M + j] += result;  // ACCUMULATE across k-tiles
+                            C_ptr[i_out * stride + j] += result;  // ACCUMULATE across k-tiles
                         }
                     }
                     

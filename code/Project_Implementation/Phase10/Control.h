@@ -44,12 +44,13 @@ SC_MODULE(MemoryBackedController)
     float* A_tile;
     float* W_tile;
     float* C_tile;
-    int tile_stride;  // Buffer stride = M (square grid)
+    int tile_stride;  // Buffer stride = max(M, N) for MxN grids
+    sc_signal<int> tile_stride_sig;
     
     // Data reuse optimization: cache entire rows/columns of tiles
-    float** A_tile_cache;  // Cache for entire row of A tiles [num_i_tiles][M*M]
-    float** W_tile_cache;  // Cache for entire column of W tiles [num_j_tiles][M*M]
-    float** C_tile_cache;  // Cache for all output tiles [num_i_tiles*num_j_tiles][M*M]
+    float** A_tile_cache;  // Cache for entire row of A tiles [num_i_tiles][stride*stride]
+    float** W_tile_cache;  // Cache for entire column of W tiles [num_j_tiles][stride*stride]
+    float** C_tile_cache;  // Cache for all output tiles [num_i_tiles*num_j_tiles][stride*stride]
     int cached_k_tile;     // Which k-tile is currently cached
     
     // Memory access tracking
@@ -58,10 +59,10 @@ SC_MODULE(MemoryBackedController)
     
     SC_CTOR(MemoryBackedController)
     {
-        tile_stride = M;  // Square grid: M = N = 7
-        A_tile = new float[M * M];
-        W_tile = new float[M * M];
-        C_tile = new float[M * M];
+        tile_stride = (M > N) ? M : N;  // max(M, N) for MxN grids
+        A_tile = new float[tile_stride * tile_stride];
+        W_tile = new float[tile_stride * tile_stride];
+        C_tile = new float[tile_stride * tile_stride];
         
         // Initialize cache pointers to nullptr (allocated dynamically per operation)
         A_tile_cache = nullptr;
@@ -72,9 +73,9 @@ SC_MODULE(MemoryBackedController)
         total_memory_reads = 0;
         total_memory_writes = 0;
         
-        cout << "Fixed-size buffers allocated: " << M << "x" << M 
-             << " (" << (M*M) << " floats each)" << endl;
-        cout << "PE Grid Size: " << M << "x" << M << " (SQUARE)" << endl;
+        cout << "Fixed-size buffers allocated: " << tile_stride << "x" << tile_stride
+             << " (" << (tile_stride*tile_stride) << " floats each)" << endl;
+        cout << "PE Grid Size: " << M << "x" << N << endl;
         cout << "Tile stride: " << tile_stride << endl;
         cout << "Data Reuse Optimization: ENABLED" << endl;
         
@@ -101,6 +102,9 @@ SC_MODULE(MemoryBackedController)
         matmul_ctrl->K2(tile_k2);
         matmul_ctrl->K3(tile_k3);
         
+        tile_stride_sig.write(tile_stride);
+        matmul_ctrl->tile_stride(tile_stride_sig);
+        
         SC_THREAD(control_process);
         sensitive << clk.pos();
         dont_initialize();
@@ -126,7 +130,7 @@ SC_MODULE(MemoryBackedController)
     
     void read_A_tile(int a_base, int k1, int k2, int i_tile, int k_tile)
     {
-        for (int i = 0; i < M * M; i++) A_tile[i] = 0.0f;
+        for (int i = 0; i < tile_stride * tile_stride; i++) A_tile[i] = 0.0f;
         
         for (int i = 0; i < M; i++) {
             for (int j = 0; j < M; j++) {
@@ -142,7 +146,7 @@ SC_MODULE(MemoryBackedController)
                     wait();
                     wait(SC_ZERO_TIME);
                     
-                    A_tile[i * M + j] = mem_read_data.read();
+                    A_tile[i * tile_stride + j] = mem_read_data.read();
                     mem_read_enable.write(false);
                     
                     total_memory_reads++;  // Track memory access
@@ -153,12 +157,12 @@ SC_MODULE(MemoryBackedController)
     
     void read_W_tile(int w_base, int k2, int k3, int k_tile, int j_tile)
     {
-        for (int i = 0; i < M * M; i++) W_tile[i] = 0.0f;
+        for (int i = 0; i < tile_stride * tile_stride; i++) W_tile[i] = 0.0f;
         
         for (int i = 0; i < M; i++) {
-            for (int j = 0; j < M; j++) {  // Square grid: M = N
+            for (int j = 0; j < N; j++) {  // Use N columns when N > M
                 int global_row = k_tile * M + i;
-                int global_col = j_tile * M + j;
+                int global_col = j_tile * N + j;  // Each j-tile spans N columns
                 
                 if (global_row < k2 && global_col < k3) {
                     int byte_addr = w_base + (global_row * k3 + global_col) * 4;
@@ -169,7 +173,7 @@ SC_MODULE(MemoryBackedController)
                     wait();
                     wait(SC_ZERO_TIME);
                     
-                    W_tile[i * M + j] = mem_read_data.read();
+                    W_tile[i * tile_stride + j] = mem_read_data.read();
                     mem_read_enable.write(false);
                     
                     total_memory_reads++;  // Track memory access
@@ -181,15 +185,15 @@ SC_MODULE(MemoryBackedController)
     void write_C_tile(int c_base, int k1, int k3, int i_tile, int j_tile)
     {
         for (int i = 0; i < M; i++) {
-            for (int j = 0; j < M; j++) {  // Square grid: M = N
+            for (int j = 0; j < N; j++) {  // Use N columns when N > M
                 int global_row = i_tile * M + i;
-                int global_col = j_tile * M + j;
+                int global_col = j_tile * N + j;  // Each j-tile spans N columns
                 
                 if (global_row < k1 && global_col < k3) {
                     int byte_addr = c_base + (global_row * k3 + global_col) * 4;
                     
                     mem_address.write(byte_addr);
-                    mem_write_data.write(C_tile[i * M + j]);
+                    mem_write_data.write(C_tile[i * tile_stride + j]);
                     mem_read_enable.write(false);
                     mem_write_enable.write(true);
                     wait();
@@ -232,17 +236,18 @@ SC_MODULE(MemoryBackedController)
             cout << "Matrix A: " << k1 << "x" << k2 << " at byte address " << a_base << endl;
             cout << "Matrix W: " << k2 << "x" << k3 << " at byte address " << w_base << endl;
             cout << "Matrix C: " << k1 << "x" << k3 << " at byte address " << c_base << endl;
-            cout << "PE Grid Size: " << M << "x" << M << " (SQUARE)" << endl;
+            cout << "PE Grid Size: " << M << "x" << N << endl;
             
             // K-STATIONARY TILING STRATEGY for Data Reuse:
             // Loop order: k → i → j
             // - Outer k-loop: Load A[:,k] and W[k,:] once, reuse for all output tiles
             // - Middle i-loop: Reuse W[k,:] across all rows
             // - Inner j-loop: Reuse A[i,k] across all columns
+            // Tiling: i-tiles use M rows, j-tiles use N columns, k-tiles use M elements
             
-            int num_i_tiles = (k1 + M - 1) / M;  // Rows
-            int num_j_tiles = (k3 + M - 1) / M;  // Cols (M = N for square grid)
-            int num_k_tiles = (k2 + M - 1) / M;  // K-dimension
+            int num_i_tiles = (k1 + M - 1) / M;  // Rows: based on M (PE rows)
+            int num_j_tiles = (k3 + N - 1) / N;  // Cols: based on N (PE cols)
+            int num_k_tiles = (k2 + M - 1) / M;  // K-dimension: based on M
             
             cout << "Number of tiles: i=" << num_i_tiles 
                  << ", j=" << num_j_tiles 
@@ -252,19 +257,19 @@ SC_MODULE(MemoryBackedController)
             // Allocate tile caches for this operation
             A_tile_cache = new float*[num_i_tiles];
             for (int i = 0; i < num_i_tiles; i++) {
-                A_tile_cache[i] = new float[M * M];
+                A_tile_cache[i] = new float[tile_stride * tile_stride];
             }
             
             W_tile_cache = new float*[num_j_tiles];
             for (int j = 0; j < num_j_tiles; j++) {
-                W_tile_cache[j] = new float[M * M];
+                W_tile_cache[j] = new float[tile_stride * tile_stride];
             }
             
             // Allocate C tile cache and initialize to zero
             C_tile_cache = new float*[num_i_tiles * num_j_tiles];
             for (int idx = 0; idx < num_i_tiles * num_j_tiles; idx++) {
-                C_tile_cache[idx] = new float[M * M];
-                for (int i = 0; i < M * M; i++) {
+                C_tile_cache[idx] = new float[tile_stride * tile_stride];
+                for (int i = 0; i < tile_stride * tile_stride; i++) {
                     C_tile_cache[idx][i] = 0.0f;
                 }
             }
@@ -281,7 +286,7 @@ SC_MODULE(MemoryBackedController)
                 for (int i_tile = 0; i_tile < num_i_tiles; i_tile++) {
                     read_A_tile(a_base, k1, k2, i_tile, k_tile);
                     // Copy to cache
-                    for (int idx = 0; idx < M * M; idx++) {
+                    for (int idx = 0; idx < tile_stride * tile_stride; idx++) {
                         A_tile_cache[i_tile][idx] = A_tile[idx];
                     }
                 }
@@ -293,7 +298,7 @@ SC_MODULE(MemoryBackedController)
                 for (int j_tile = 0; j_tile < num_j_tiles; j_tile++) {
                     read_W_tile(w_base, k2, k3, k_tile, j_tile);
                     // Copy to cache
-                    for (int idx = 0; idx < M * M; idx++) {
+                    for (int idx = 0; idx < tile_stride * tile_stride; idx++) {
                         W_tile_cache[j_tile][idx] = W_tile[idx];
                     }
                 }
@@ -310,12 +315,12 @@ SC_MODULE(MemoryBackedController)
                         int c_idx = i_tile * num_j_tiles + j_tile;
                         
                         // Load cached C tile (accumulated across k-tiles)
-                        for (int idx = 0; idx < M * M; idx++) {
+                        for (int idx = 0; idx < tile_stride * tile_stride; idx++) {
                             C_tile[idx] = C_tile_cache[c_idx][idx];
                         }
                         
                         // Load cached A and W tiles into working buffers
-                        for (int idx = 0; idx < M * M; idx++) {
+                        for (int idx = 0; idx < tile_stride * tile_stride; idx++) {
                             A_tile[idx] = A_tile_cache[i_tile][idx];
                             W_tile[idx] = W_tile_cache[j_tile][idx];
                         }
@@ -327,7 +332,7 @@ SC_MODULE(MemoryBackedController)
                         
                         int actual_i = min(M, k1 - i_tile * M);
                         int actual_k = min(M, k2 - k_tile * M);
-                        int actual_j = min(M, k3 - j_tile * M);
+                        int actual_j = min(N, k3 - j_tile * N);  // Use N for columns
                         
                         tile_k1.write(actual_i);
                         tile_k2.write(actual_k);
@@ -348,7 +353,7 @@ SC_MODULE(MemoryBackedController)
                         }
                         
                         // Save result back to C cache (accumulates across k-tiles)
-                        for (int idx = 0; idx < M * M; idx++) {
+                        for (int idx = 0; idx < tile_stride * tile_stride; idx++) {
                             C_tile_cache[c_idx][idx] = C_tile[idx];
                         }
                     }
@@ -366,7 +371,7 @@ SC_MODULE(MemoryBackedController)
                     int c_idx = i_tile * num_j_tiles + j_tile;
                     
                     // Load C tile from cache
-                    for (int idx = 0; idx < M * M; idx++) {
+                    for (int idx = 0; idx < tile_stride * tile_stride; idx++) {
                         C_tile[idx] = C_tile_cache[c_idx][idx];
                     }
                     
@@ -403,8 +408,10 @@ SC_MODULE(MemoryBackedController)
             cout << "  Total Writes: " << total_memory_writes << endl;
             
             // Calculate theoretical baseline (without data reuse)
-            int baseline_reads = num_i_tiles * num_j_tiles * num_k_tiles * 2 * M * M;
-            int actual_reads = num_k_tiles * (num_i_tiles + num_j_tiles) * M * M;
+            int baseline_a_reads = num_i_tiles * num_j_tiles * num_k_tiles * M * M;
+            int baseline_w_reads = num_i_tiles * num_j_tiles * num_k_tiles * M * N;
+            int baseline_reads = baseline_a_reads + baseline_w_reads;
+            int actual_reads = num_k_tiles * (num_i_tiles * M * M + num_j_tiles * M * N);
             float reduction = 100.0 * (1.0 - (float)actual_reads / baseline_reads);
             
             cout << "  Baseline (no reuse): " << baseline_reads << " reads" << endl;
